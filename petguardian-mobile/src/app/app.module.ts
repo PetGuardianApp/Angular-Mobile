@@ -11,6 +11,8 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
 import { SideNavComponent } from './components/side-nav/side-nav.component';
 import { SidenavLinkComponent } from './components/sidenav-link/sidenav-link.component';
+import { MapPageComponent } from './components/map-page/map-page.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -18,10 +20,12 @@ import { SidenavLinkComponent } from './components/sidenav-link/sidenav-link.com
     LoginComponent,
     SideNavComponent,
     SidenavLinkComponent,
+    MapPageComponent,
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
