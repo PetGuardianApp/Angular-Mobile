@@ -1,0 +1,18 @@
+.wrapper{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;   
+}
+.logo{
+    height: 130px;
+    margin-bottom: 10px;
+}
+
+.body{
+    width: 100%;
+    max-width: 330px;
+    margin: auto;
+    padding: 30px;
+    text-align: center;
+}
