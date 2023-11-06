@@ -17,6 +17,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SideNavComponent } from './components/side-nav/side-nav.component';
 import { SidenavLinkComponent } from './components/sidenav-link/sidenav-link.component';
 import { MapPageComponent } from './components/map-page/map-page.component';
+import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
