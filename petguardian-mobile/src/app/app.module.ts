@@ -5,7 +5,6 @@ import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 import { environment } from '../enviroments/enviroments';
-import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -41,7 +40,9 @@ import { HttpClientModule } from '@angular/common/http';
     AngularFireDatabaseModule,
 
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    ToastrModule,
+    NgbModule
   ],
   providers: [],
   bootstrap: [AppComponent]
