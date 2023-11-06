@@ -9,11 +9,15 @@ import { environment } from '../enviroments/enviroments';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
+import { SideNavComponent } from './components/side-nav/side-nav.component';
+import { SidenavLinkComponent } from './components/sidenav-link/sidenav-link.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent
+    LoginComponent,
+    SideNavComponent,
+    SidenavLinkComponent,
   ],
   imports: [
     BrowserModule,
