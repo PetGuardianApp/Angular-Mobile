@@ -1,8 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { MapPageComponent } from './components/map-page/map-page.component';
 import { HomeComponent } from './components/home/home.component';
 
 const routes: Routes = [
+  {path: 'map', component: MapPageComponent},
+
   {path: 'home', component: HomeComponent}
 ];
 
