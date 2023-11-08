@@ -1,15 +1,43 @@
 <h1>
-    Benvingut
+    Benvingut {{client.name}}
 </h1>
 <h2> {{ currentDate | date: 'EEEE' }}, {{ currentDate | date: 'd' }} {{ currentDate | date: 'MMMM' }}</h2>
-<h2>Great to have you here!</h2>
-
-<h2 style="margin-top: 100px;">
-    Today's visits
+<h2>
+    Visites per avui!
 </h2>
+<ng-container *ngIf="isTodayVisits.length > 0; then thenBlock else elseBlock">
+</ng-container>
+<ng-template #thenBlock>
+    <div *ngFor="let visit of clientAppointments">
+        <ng-container *ngIf="isTodayVisit(visit.end_date || ''); then thenBlock ">
+        </ng-container>
+        <ng-template #thenBlock>
+            <div>
+                <div>
+                    <h3> Matter: {{ visit.matter }}</h3>
+                </div>
+                <div>
+                    <h4> Start: {{formatStartDate(visit.start_date || '')}}</h4>
+                    <h4> End: {{formatStartDate(visit.end_date || '')}}</h4>
+                </div>
+            </div>
+        </ng-template>
+    </div>
+</ng-template>
+<ng-template #elseBlock>
+    <div>
+        <p>No tens visites per avui</p>
+    </div>
+</ng-template>
 
-<div _ngcontent-ng-c1661546195="" class="image-container ng-star-inserted"><img _ngcontent-ng-c1661546195="" alt="Pet" src="">
-    <div _ngcontent-ng-c1661546195="" class="overlay">
-        <p _ngcontent-ng-c1661546195="">Toby</p>
+<h2>
+    Les teves mascotes
+</h2>
+<div *ngFor="let pet of petsArray">
+    <div _ngcontent-ng-c1661546195="" class="image-container ng-star-inserted"><img _ngcontent-ng-c1661546195=""
+            alt="Pet" src="">
+        <div _ngcontent-ng-c1661546195="" class="overlay">
+            <p _ngcontent-ng-c1661546195="">{{ pet.name }}</p>
+        </div>
     </div>
 </div>

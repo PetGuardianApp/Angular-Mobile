@@ -5,7 +5,6 @@ import { HomeComponent } from './components/home/home.component';
 
 const routes: Routes = [
   {path: 'map', component: MapPageComponent},
-
   {path: 'home', component: HomeComponent}
 ];
 

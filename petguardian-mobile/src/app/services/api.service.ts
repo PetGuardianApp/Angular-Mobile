@@ -29,7 +29,19 @@ export class ApiService {
         );
     });
   }
-
+  getClientAppointments(uid: string): Promise<AppointmentModel[]> {
+    return new Promise((resolve, reject) => {
+      this.http.get<AppointmentModel[]>(this.apiUrl + 'client/findAppointments/' + uid)
+        .subscribe(
+          (response: AppointmentModel[]) => {
+            resolve(response);
+          },
+          (error) => {
+            reject(error);
+          }
+        );
+    });
+  }
   getClients(uid: string): Promise<ClientModel[]> {
     return new Promise((resolve, reject) => {
       this.http.get<ClientModel[]>(this.apiUrl + 'vet/findClients/' + uid)
