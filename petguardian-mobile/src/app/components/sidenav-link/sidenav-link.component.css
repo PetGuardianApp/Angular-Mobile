@@ -27,21 +27,4 @@ a {
         text-overflow: ellipsis;
         white-space: nowrap;
     }
-
-    &.active {
-        background-color: #2D6F28;
-        font-weight: bold;
-        color: #afeebb;
-    }
-
-    &.inactive {
-        background-color: #afeebb;
-        font-weight: bold;
-        color: #2D6F28;
-    }
-}
-
-a:hover {
-    background-color: #afeebb;
-    color: #2D6F28;
 }

@@ -1,5 +1,6 @@
 {
   "dependencies": {
-    "@angular/fire": "^16.0.0"
+    "@angular/fire": "^16.0.0",
+    "@angular/google-maps": "^16.2.11"
   }
 }
