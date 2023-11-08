@@ -49,7 +49,7 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  
+
   formatDate(inputDate: string): string {
     // Use a regular expression to capture the date components
     const dateRegex: RegExp = /(\d{2})(\d{2})(\d{4})_(\d{2}):(\d{2})/;
@@ -81,6 +81,16 @@ export class HomeComponent implements OnInit {
       return false;
     }
   }
+  redirectPetPage(id: string) {
+    this.router.navigate(['pet-profile'], {
+      queryParams: { petId: id }
+    });
+  }
+  redirectVisitPage(id: string) {
+    this.router.navigate(['appointment'], {
+      queryParams: { appointmentId: id }
+    });
+  }
   showData() {
 
     this.apiService.getSingleClient("VPUnbME8Kt27zmF7q7ne").then((client) => {
@@ -90,8 +100,17 @@ export class HomeComponent implements OnInit {
 
     this.apiService.getClientPets("VPUnbME8Kt27zmF7q7ne").then((petsArray) => {
       this.petsArray = petsArray;
+      for (let i = 0; i < petsArray.length; i++) {
+        if (petsArray[i].name == "Toby") {
+          petsArray[i].profile_image = "/assets/img/dogImage1.jpg";
+        } else if (petsArray[i].name == "Dobby") {
+          petsArray[i].profile_image = "/assets/img/dogImage2.jpg";
+        } else if (petsArray[i].name == "Darwin") {
+          petsArray[i].profile_image = "/assets/img/catImage.avif";
+        }
+      }
       console.log(petsArray)
-    })
+    });
 
     this.apiService.getClientAppointments("VPUnbME8Kt27zmF7q7ne").then((clientAppointments) => {
       this.clientAppointments = clientAppointments;

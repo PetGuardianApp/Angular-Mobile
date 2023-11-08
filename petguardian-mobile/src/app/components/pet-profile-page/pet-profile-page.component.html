@@ -1,0 +1,58 @@
+<div>
+    <h1 style="text-align: center;">{{petInfo.name}}</h1>
+</div>
+<div>
+    <img src="{{petInfo.profile_image}}" style="width: 300px; text-align: center;">
+</div>
+
+<div class="module" style="column-count: 2;">
+    <h2>Personal information</h2>
+    <div class="info-container">
+        <div style="column-count:  2;">
+            <div>
+                <label><b>Name:</b></label>
+                <span> {{petInfo.name}}</span><br>
+
+                <label><b>Bith date:</b></label>
+                <span> {{getBirth(petInfo.birth)}}</span><br>
+
+                <label for="petTypeBreed"><b>Type:</b></label>
+                <span id="petTypeBreed"> {{petInfo.type}}, {{petInfo.breed}}</span><br>
+            </div>
+            <div>
+                <label for="petWeight"><b>Weight:</b></label>
+                <span id="petWeight"> {{getLatestWeight()}}g</span><br>
+
+                <label for="petHeight"><b>Height:</b></label>
+                <span id="petHeight"> {{petInfo.height}}cm</span><br>
+            </div>
+        </div>
+
+        <div class="module" style="padding-right: 20px;">
+            <h2>Mandatory Vaccines</h2>
+            <ul>
+                <li>Anti-rabic ✓</li>
+                <li>Polivalents ✓</li>
+            </ul>
+        </div>
+
+        <div class="module" style="padding-right: 20px;">
+            <h2>Pet resume</h2>
+            <p style="text-align: justify;">{{petInfo.health_info?.observations}}
+            </p>
+        </div>
+    </div>
+
+</div>
+
+<div class="module">
+    <h2>Statistics</h2>
+    <div class="image-container">
+
+    </div>
+    <div id="chart_div">
+        <apx-chart [series]="chartOptions.series" [chart]="chartOptions.chart"></apx-chart>
+        <apx-chart [series]="chartOptions2.series" [chart]="chartOptions2.chart"></apx-chart>
+    </div>
+
+</div>

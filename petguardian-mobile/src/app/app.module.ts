@@ -5,6 +5,7 @@ import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 import { environment } from '../enviroments/enviroments';
+import { NgApexchartsModule } from "ng-apexcharts";
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -19,7 +20,8 @@ import { SideNavComponent } from './components/side-nav/side-nav.component';
 import { SidenavLinkComponent } from './components/sidenav-link/sidenav-link.component';
 import { MapPageComponent } from './components/map-page/map-page.component';
 import { HttpClientModule } from '@angular/common/http';
-import { GoogleMapsModule } from '@angular/google-maps'
+import { GoogleMapsModule } from '@angular/google-maps';
+import { PetProfilePageComponent } from './components/pet-profile-page/pet-profile-page.component'
 
 @NgModule({
   declarations: [
@@ -29,6 +31,7 @@ import { GoogleMapsModule } from '@angular/google-maps'
     SideNavComponent,
     SidenavLinkComponent,
     MapPageComponent,
+    PetProfilePageComponent,
   ],
   imports: [
     AngularFireModule.initializeApp(environment.firebase),
@@ -46,6 +49,7 @@ import { GoogleMapsModule } from '@angular/google-maps'
     ToastrModule,
     GoogleMapsModule,
     NgbModule,
+    NgApexchartsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
