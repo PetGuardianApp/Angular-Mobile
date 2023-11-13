@@ -1,0 +1,126 @@
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { AppointmentModel } from 'src/app/models/appointment.model';
+import { ClientModel } from 'src/app/models/client.model';
+import { PetModel } from 'src/app/models/pet.model';
+import { ApiService } from 'src/app/services/api.service';
+import { StorageService } from 'src/app/services/storage.service';
+
+@Component({
+  selector: 'app-home',
+  templateUrl: './home.component.html',
+  styleUrls: ['./home.component.css']
+})
+export class HomeComponent implements OnInit {
+  constructor(private router: Router, private apiService: ApiService,
+    private storageService: StorageService) {
+    this.showData();
+    this.client = new ClientModel;
+    this.petsArray = [];
+    this.clientAppointments = [];
+    this.ifvisit = false;
+    this.isTodayVisits = [];
+  }
+  currentDate: Date = new Date();
+  public client: ClientModel;
+  public petsArray: PetModel[];
+  public clientAppointments: AppointmentModel[];
+  public ifvisit: Boolean;
+  public isTodayVisits: string[];
+  ngOnInit() {
+  }
+
+  formatStartDate(inputDate: string): string {
+    // Use a regular expression to capture the date components
+    const dateRegex: RegExp = /(\d{2})(\d{2})(\d{4})_(\d{2}):(\d{2})/;
+    // Match the regular expression and capture groups
+    const match: RegExpMatchArray | null = inputDate.match(dateRegex);
+
+    if (match) {
+      // Extract the captured groups for hour, min
+      const hour: string = match[4];
+      const min: string = match[5];
+
+      // Format the date as "ddmmyyyy"
+      const formattedStartDate: string = `${hour}:${min}`;
+      return formattedStartDate;
+    } else {
+      return '';
+    }
+  }
+
+
+  formatDate(inputDate: string): string {
+    // Use a regular expression to capture the date components
+    const dateRegex: RegExp = /(\d{2})(\d{2})(\d{4})_(\d{2}):(\d{2})/;
+    // Match the regular expression and capture groups
+    const match: RegExpMatchArray | null = inputDate.match(dateRegex);
+
+    if (match) {
+      // Extract the captured groups for day, month, and year
+      const day: string = match[1];
+      const month: string = match[2];
+      const year: string = match[3];
+
+      // Format the date as "ddmmyyyy"
+      const formattedDate: string = `${day}${month}${year}`;
+      return formattedDate;
+    } else {
+      return '';
+    }
+  }
+
+  isTodayVisit(visit_date: string): Boolean {
+    const day = this.currentDate.getDate().toString().padStart(2, '0'); // Ensure a leading zero if needed
+    const month = (this.currentDate.getMonth() + 1).toString().padStart(2, '0'); // Months are zero-based
+    const year = this.currentDate.getFullYear().toString();
+    const formattedDate = `${day}${month}${year}`;
+    if (this.formatDate(visit_date) == formattedDate) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+  redirectPetPage(id: string) {
+    this.router.navigate(['pet-profile'], {
+      queryParams: { petId: id }
+    });
+  }
+  redirectVisitPage(id: string) {
+    this.router.navigate(['appointment'], {
+      queryParams: { appointmentId: id }
+    });
+  }
+  showData() {
+
+    this.apiService.getSingleClient("VPUnbME8Kt27zmF7q7ne").then((client) => {
+      this.client = client;
+      console.log(client)
+    });
+
+    this.apiService.getClientPets("VPUnbME8Kt27zmF7q7ne").then((petsArray) => {
+      this.petsArray = petsArray;
+      for (let i = 0; i < petsArray.length; i++) {
+        if (petsArray[i].name == "Toby") {
+          petsArray[i].profile_image = "/assets/img/dogImage1.jpg";
+        } else if (petsArray[i].name == "Dobby") {
+          petsArray[i].profile_image = "/assets/img/dogImage2.jpg";
+        } else if (petsArray[i].name == "Darwin") {
+          petsArray[i].profile_image = "/assets/img/catImage.avif";
+        }
+      }
+      console.log(petsArray)
+    });
+
+    this.apiService.getClientAppointments("VPUnbME8Kt27zmF7q7ne").then((clientAppointments) => {
+      this.clientAppointments = clientAppointments;
+      let today_visit: Boolean = false;
+      for (const element of this.clientAppointments) {
+        if (today_visit = this.isTodayVisit(element.end_date || '')) {
+          this.isTodayVisits.push(element.end_date || '');
+        }
+      }
+    })
+  }
+
+}

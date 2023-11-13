@@ -1,0 +1,50 @@
+<h1>
+    Benvingut {{client.name}}
+</h1>
+<h2> {{ currentDate | date: 'EEEE' }}, {{ currentDate | date: 'd' }} {{ currentDate | date: 'MMMM' }}</h2>
+<h1>
+    Visites per avui!
+</h1>
+<ng-container *ngIf="isTodayVisits.length > 0; then thenBlock else elseBlock">
+</ng-container>
+<ng-template #thenBlock>
+    <div *ngFor="let visit of clientAppointments">
+        <ng-container *ngIf="isTodayVisit(visit.end_date || ''); then thenBlock ">
+        </ng-container>
+        <ng-template #thenBlock>
+            <button class="whiteButton" id="{{visit.id}}" (click)="redirectVisitPage(visit.id || '')">
+                <div style="column-count: 2;">
+                    <div>
+                        <img src="/assets/img/dogImage2.jpg" style="width: 150px;" height="100px">
+                    </div>
+                    <div style="text-align: left;">
+                        <ul>
+                            <li><b>Pet: </b> Dobby</li>
+                            <li><b>Matter:</b> {{ visit.matter }}</li>
+                            <li><b>Start:</b> {{formatStartDate(visit.start_date || '')}}</li>
+                            <li><b>End:</b> {{formatStartDate(visit.end_date || '')}}</li>
+
+                        </ul>
+                    </div>
+                </div>
+            </button>
+        </ng-template>
+    </div>
+</ng-template>
+<ng-template #elseBlock>
+    <div>
+        <p>No tens visites per avui</p>
+    </div>
+</ng-template>
+
+<h1>
+    Les teves mascotes
+</h1>
+<div *ngFor="let pet of petsArray" class="module" style="text-align: center;">
+    <div class="image-container" (click)="redirectPetPage(pet.id || '')" id="{{pet.id}}">
+        <img width="50px" src="{{pet.profile_image}}" alt="Pet">
+        <div class="overlay">
+            <p>{{pet.name}}</p>
+        </div>
+    </div>
+</div>
