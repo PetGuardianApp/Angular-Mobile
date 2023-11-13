@@ -1,91 +1,145 @@
+.whiteButton {
+    border-color: transparent;
+    background-color: white;
+    padding: 10px;
+    border-radius: 20px;
+    width: 350px;
+
+    margin-right: 40px;
+
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+
+.whiteButton img {
+    border-radius: 20px;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+img {
+    border-radius: 20px;
+}
+
+.image-container {
+    position: relative;
+    display: inline-block;
+    margin-right: 50px;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    /* Color de fondo opaco (negro con 50% de opacidad) */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: #fff;
+    border-radius: 20px;
+}
+
+.overlay p {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.image-container img {
+    width: 278px;
+    height: 178px;
+}
+
+.image-container:hover .overlay {
+    transform: scale(1.1);
+}
+
+.image-container:hover img {
+    transform: scale(1.1);
+    transition: transform 0.3s;
+}
+
+.overlay {
+    transform: scale(1);
+    transition: transform 0.3s;
+}
 
 * {
 	box-sizing: border-box;
 }
 
-body {
-	--h: 212deg;
-	--l: 43%;
-	--brandColor: hsl(var(--h), 71%, var(--l));
-	font-family: Montserrat, sans-serif;
-	margin: 0;
-	background-color: whitesmoke;
+/* Button used to open the contact form - fixed at the bottom of the page */
+.open-button {
+	background-color: #555;
+	color: white;
+	padding: 16px 20px;
+	border: none;
+	cursor: pointer;
+	opacity: 0.8;
+	position: fixed;
+	bottom: 80px;
+	right: 10px;
 }
 
-p {
-	margin: 0;
-	line-height: 1.6;
+/* The popup form - hidden by default */
+.form-popup {
+	display: none;
+	position: fixed;
+	bottom: 80px;
+	right: 15px;
+	border: 3px solid #f1f1f1;
+	z-index: 9;
 }
 
-ol {
-	list-style: none;
-	counter-reset: list;
-	padding: 0 1rem;
-}
-
-li {
-	position: relative;
-	counter-increment: list;
-	max-width: 45rem;
-	margin: 2rem auto;
-	padding: 2rem 1rem 1rem;
-	box-shadow: 0.1rem 0.1rem 1.5rem rgba(0, 0, 0, 0.3);
-	border-radius: 0.25rem;
-	overflow: hidden;
+/* Add styles to the form container */
+.form-container {
+	max-width: 300px;
+	padding: 10px;
 	background-color: white;
 }
 
-li::before {
-	--stop: calc(100% / var(--length) * var(--i));
-	--l: 62%;
-	--l2: 88%;
-	--c1: hsl(var(--h), 71%, var(--l));
-	--c2: hsl(var(--h), 71%, var(--l2));
-	
-	content: '';
-	display: block;
+/* Full-width input fields */
+.form-container input[type=text],
+.form-container input[type=password] {
 	width: 100%;
-	height: 1rem;
-	position: absolute;
-	top: 0;
-	left: 0;
-	background: linear-gradient(to right, var(--c1) var(--stop), var(--c2) var(--stop));
+	padding: 15px;
+	margin: 5px 0 22px 0;
+	border: none;
+	background: #f1f1f1;
 }
 
-h3 {
-	display: flex;
-	align-items: baseline;
-	margin: 0 0 1rem;
-	color: var(--brandColor);
+/* When the inputs get focus, do something */
+.form-container input[type=text]:focus,
+.form-container input[type=password]:focus {
+	background-color: #ddd;
+	outline: none;
 }
 
-h3::before {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	flex: 0 0 auto;
-	margin-right: 1rem;
-	width: 3rem;
-	height: 3rem;
-	content: counter(list);
-	padding: 1rem;
-	border-radius: 50%;
-	background-color: var(--brandColor);
+/* Set a style for the submit/login button */
+.form-container .btn {
+	background-color: #04AA6D;
 	color: white;
+	padding: 16px 20px;
+	border: none;
+	cursor: pointer;
+	width: 50%;
+	margin-bottom: 10px;
+	opacity: 0.8;
 }
 
-@media (min-width: 40em) {
-	li {
-		margin: 3rem auto;
-		padding: 3rem 2rem 2rem;
-	}
-	
-	h3 {
-		font-size: 2.25rem;
-		margin: 0 0 2rem;
-	}
-	
-	h3::before {
-		margin-right: 1.5rem;
-	}
+/* Add a red background color to the cancel button */
+.form-container .cancel {
+	background-color: red;
+}
+
+/* Add some hover effects to buttons */
+.form-container .btn:hover,
+.open-button:hover {
+	opacity: 1;
 }
