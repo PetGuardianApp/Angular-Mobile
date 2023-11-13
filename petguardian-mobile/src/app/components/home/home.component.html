@@ -15,12 +15,11 @@
             <button class="whiteButton" id="{{visit.id}}" (click)="redirectVisitPage(visit.id || '')">
                 <div style="column-count: 2;">
                     <div>
-                        <img src="/assets/img/dogImage2.jpg" style="width: 150px;" height="100px">
+                        <img src="{{VisitPet.profile_image}}" style="width: 130px; height: 80px;">
                     </div>
                     <div style="text-align: left;">
                         <ul>
-                            <li><b>Pet: </b> Dobby</li>
-                            <li><b>Matter:</b> {{ visit.matter }}</li>
+                            <li><b>Pet: </b> {{VisitPet.name}}</li>
                             <li><b>Start:</b> {{formatStartDate(visit.start_date || '')}}</li>
                             <li><b>End:</b> {{formatStartDate(visit.end_date || '')}}</li>
 
@@ -36,7 +35,6 @@
         <p>No tens visites per avui</p>
     </div>
 </ng-template>
-
 <h1>
     Les teves mascotes
 </h1>
