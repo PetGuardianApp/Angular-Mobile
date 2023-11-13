@@ -20,6 +20,7 @@ export class HomeComponent implements OnInit {
     this.clientAppointments = [];
     this.ifvisit = false;
     this.isTodayVisits = [];
+    this.VisitPet = new PetModel;
   }
   currentDate: Date = new Date();
   public client: ClientModel;
@@ -27,6 +28,7 @@ export class HomeComponent implements OnInit {
   public clientAppointments: AppointmentModel[];
   public ifvisit: Boolean;
   public isTodayVisits: string[];
+  public VisitPet: PetModel;
   ngOnInit() {
   }
 
@@ -48,7 +50,6 @@ export class HomeComponent implements OnInit {
       return '';
     }
   }
-
 
   formatDate(inputDate: string): string {
     // Use a regular expression to capture the date components
@@ -91,6 +92,7 @@ export class HomeComponent implements OnInit {
       queryParams: { appointmentId: id }
     });
   }
+
   showData() {
 
     this.apiService.getSingleClient("VPUnbME8Kt27zmF7q7ne").then((client) => {
@@ -116,6 +118,9 @@ export class HomeComponent implements OnInit {
       this.clientAppointments = clientAppointments;
       let today_visit: Boolean = false;
       for (const element of this.clientAppointments) {
+        this.apiService.getPet(element.pet_id || '').then((pet) => {
+          this.VisitPet = pet;
+        })
         if (today_visit = this.isTodayVisit(element.end_date || '')) {
           this.isTodayVisits.push(element.end_date || '');
         }

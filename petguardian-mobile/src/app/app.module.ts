@@ -21,7 +21,8 @@ import { SidenavLinkComponent } from './components/sidenav-link/sidenav-link.com
 import { MapPageComponent } from './components/map-page/map-page.component';
 import { HttpClientModule } from '@angular/common/http';
 import { GoogleMapsModule } from '@angular/google-maps';
-import { PetProfilePageComponent } from './components/pet-profile-page/pet-profile-page.component'
+import { PetProfilePageComponent } from './components/pet-profile-page/pet-profile-page.component';
+import { MenuPetAppointmentComponent } from './components/menu-pet-appointment/menu-pet-appointment.component'
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { PetProfilePageComponent } from './components/pet-profile-page/pet-profi
     SidenavLinkComponent,
     MapPageComponent,
     PetProfilePageComponent,
+    MenuPetAppointmentComponent,
   ],
   imports: [
     AngularFireModule.initializeApp(environment.firebase),
