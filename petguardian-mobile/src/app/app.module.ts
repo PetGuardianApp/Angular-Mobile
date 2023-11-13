@@ -9,6 +9,8 @@ import { environment } from '../enviroments/enviroments';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
+import { PetsListComponent } from './components/pets-list/pets-list.component';
+import { PetsListComponent } from './components/pets-list/pets-list.component';
 import { ToastrModule } from 'ngx-toastr';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
@@ -24,6 +26,8 @@ import { HttpClientModule } from '@angular/common/http';
   declarations: [
     AppComponent,
     LoginComponent,
+    PetsListComponent,
+    PetsListComponent,
     SideNavComponent,
     SidenavLinkComponent,
     MapPageComponent,
