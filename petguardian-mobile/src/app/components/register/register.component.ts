@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, ValidatorFn, AbstractControl, ValidationErrors } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { FirebaseErrorService } from '../../services/firebase-error.service';
@@ -9,24 +9,29 @@ import { Subscription } from 'rxjs';
 import { ApiService } from '../../services/api.service';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  selector: 'app-register',
+  templateUrl: './register.component.html',
+  styleUrls: ['./register.component.css']
 })
 
-
-export class LoginComponent {
-
-  loginUser: FormGroup;
+export class RegisterComponent {
+  registerUser: FormGroup;
   subscription: Subscription;
+
+  
 
 
   constructor(private fb:FormBuilder, private afAuth: AngularFireAuth, private router: Router,
      private fireBaseErrorService: FirebaseErrorService, private toastr:ToastrService,private storageService:StorageService,
      private apiService:ApiService){
-      this.loginUser = this.fb.group({
+      this.registerUser = this.fb.group({
         email: ['',[Validators.required, Validators.email]],
-        password: ['',Validators.required]
+        password: ['',Validators.required],
+        password_rep: ['',[Validators.required]],
+        name: ['',Validators.required],
+        surnames: ['',[Validators.required]],
+        phone: [' ',[Validators.required,Validators.min(100000000),Validators.max(999999999)]],
+        address: ['',Validators.required],
       })
 
 
@@ -44,15 +49,18 @@ export class LoginComponent {
       
   }
 
-  login(){
-    const email = this.loginUser.value.email;
-    const password = this.loginUser.value.password;
+  
 
-    this.afAuth.signInWithEmailAndPassword(email,password).then((user) => { //Realitza login
-      this.storageService.isLoggedNext(true);
-      this.storageService.SessionAddStorage("uid", user.user?.uid);
-      this.router.navigate(['appointments']);
+  register(){
+    const email = this.registerUser.value.email;
+    const password = this.registerUser.value.password;
+    if(this.registerUser.value.password_rep != this.registerUser.value.password ){
+      this.toastr.error("Passwords do not match","Password error")
+    }
 
+    this.afAuth.createUserWithEmailAndPassword(email,password).then((user) => { //Realitza Registre
+      this.router.navigate(['']);
+      this.toastr.success("Register completed","Congratulations!")
       
     }).catch((error) => {
       
@@ -60,8 +68,4 @@ export class LoginComponent {
     })
     
   }
-
-  
-
-
 }

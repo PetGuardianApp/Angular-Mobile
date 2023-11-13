@@ -1,0 +1,106 @@
+<h1>Appointments</h1>
+<br>
+      <div class="row text-center">
+          <div class="col-md-4">
+            <div class="btn-group">
+              <div
+                class="btn btn-dark"
+                mwlCalendarPreviousView
+                [view]="view"
+                [(viewDate)]="viewDate"
+                (viewDateChange)="closeOpenMonthViewDay()"
+              >
+                Previous
+              </div>
+              <div
+                class="btn btn-outline-secondary"
+                mwlCalendarToday
+                [(viewDate)]="viewDate"
+              >
+                Today
+              </div>
+              <div
+                class="btn btn-dark"
+                mwlCalendarNextView
+                [view]="view"
+                [(viewDate)]="viewDate"
+                (viewDateChange)="closeOpenMonthViewDay()"
+              >
+                Next
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h3>
+          </div>
+          <div class="col-md-4">
+            <div class="btn-group">
+              <div
+                class="btn btn-dark"
+                (click)="setView(CalendarView.Month)"
+                [class.active]="view === CalendarView.Month"
+               
+              >
+                Month
+              </div>
+              <div
+                class="btn btn-dark"
+                (click)="setView(CalendarView.Week)"
+                [class.active]="view === CalendarView.Week"
+              >
+                Week
+              </div>
+              <div
+                class="btn btn-dark"
+                (click)="setView(CalendarView.Day)"
+                [class.active]="view === CalendarView.Day"
+              >
+                Day
+              </div>
+            </div>
+          </div>
+        </div>
+        <br />
+        <div [ngSwitch]="view" class="calendar-size">
+          <mwl-calendar-month-view
+            [locale]="locale"
+            *ngSwitchCase="CalendarView.Month"
+            [viewDate]="viewDate"
+            [events]="events"
+            [refresh]="refresh"
+            [activeDayIsOpen]="activeDayIsOpen"
+            (dayClicked)="dayClicked($event.day)"
+            (eventClicked)="eventClicked($event)"
+          >
+          </mwl-calendar-month-view>
+          <mwl-calendar-week-view
+            [locale]="locale"
+            *ngSwitchCase="CalendarView.Week"
+            [viewDate]="viewDate"
+            [events]="events"
+            [refresh]="refresh"
+          >
+          </mwl-calendar-week-view>
+          <mwl-calendar-day-view
+            [locale]="locale"
+            *ngSwitchCase="CalendarView.Day"
+            [viewDate]="viewDate"
+            [events]="events"
+            [refresh]="refresh"
+          >
+          </mwl-calendar-day-view>
+        </div>
+        <br>
+        <h3 style="width: 100%; align-self: center;">Next Appointments</h3>
+        
+        
+        <div style="justify-content: center; height: 80px;">
+            <div class="appointment-container" style="display: flex; text-align:center;">
+                <img src="../../../assets/imgs/Add.svg" style="height: 70%; padding-left: 5%; padding-top: 5%;">
+                <div style="align-items: center; text-align: center;">
+                <p >Add new Appointment</p>
+                </div>
+            </div>
+        </div>
+        <p>For appointments</p>
+    
