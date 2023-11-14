@@ -1,23 +1,24 @@
-
-
 <button class="open-button" (click)="openForm()">+</button>
 
 <div class="form-popup" id="myForm">
     <form class="form-container">
         <h1>Register a new pet</h1>
 
-        <label for="pet-name"><b>Pet Name</b></label>
         <input type="text" placeholder="Enter Pet name" [(ngModel)]="petModel.name" name="pet-name" required>
 
-        <label for="pet-type"><b>Pet Type</b></label>
         <input type="text" placeholder="Enter pet type" [(ngModel)]="petModel.type" name="pet-type" required>
 
-        <label for="pet-name"><b>Pet Breed</b></label>
         <input type="text" placeholder="Enter Pet breed" [(ngModel)]="petModel.breed" name="pet-breed" required>
 
-        <label for="pet-type"><b>Pet Birth</b></label>
-        <input type="text" placeholder="Enter pet birth" [(ngModel)]="petModel.birth" name="pet-birth" required>
-        
+        <mat-form-field>
+            <mat-label>Enter pet birth</mat-label>
+            <input matInput [matDatepicker]="picker" (dateInput)="onDateInput($event)">
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+          
+          
         <button type="button" class="btn" (click)="registerPet()">Register</button>
         <button type="button" class="btn cancel" (click)="closeForm()">Close</button>
     </form>
