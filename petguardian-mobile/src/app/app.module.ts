@@ -24,6 +24,11 @@ import { HttpClientModule } from '@angular/common/http';
 import { GoogleMapsModule } from '@angular/google-maps';
 import { PetProfilePageComponent } from './components/pet-profile-page/pet-profile-page.component';
 import { MenuPetAppointmentComponent } from './components/menu-pet-appointment/menu-pet-appointment.component'
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatInputModule } from '@angular/material/input'; 
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { DatePipe } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -53,9 +58,15 @@ import { MenuPetAppointmentComponent } from './components/menu-pet-appointment/m
     ToastrModule,
     GoogleMapsModule,
     NgbModule,
-    NgApexchartsModule
+    NgApexchartsModule,
+    BrowserAnimationsModule,
+    MatDatepickerModule,
+    MatInputModule,
+    MatNativeDateModule,
   ],
-  providers: [],
+  providers: [
+    DatePipe,
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
