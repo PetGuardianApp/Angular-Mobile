@@ -1,3 +1,8 @@
 <h1>Interactive Map</h1>
 
-<google-map></google-map>
+<input class="input" type="text" placeholder="Av/ John Doe num 18, Lleida">
+<google-map height="500px" width="100%" [zoom]="12" [center]="center">
+  <map-marker *ngFor="let marker of markers"  
+  [options]="markerOptions" [position]="marker.getPosition()">
+  </map-marker>
+</google-map>

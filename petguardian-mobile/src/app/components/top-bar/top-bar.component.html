@@ -1,0 +1,8 @@
+<div class="barra" id="barra">
+    <p>PetGuardian App</p>
+    <img src="/assets/menuIcons/userOff.svg" alt="User profile" (click)="togglePopup()">
+    <div class="popup" *ngIf="showPopup">
+        <a href="#">User profile</a>
+        <a href="#">Logout</a>
+    </div>
+</div>
