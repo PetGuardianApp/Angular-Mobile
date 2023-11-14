@@ -7,6 +7,7 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { StorageService } from '../../services/storage.service';
 import { Subscription } from 'rxjs';
 import { ApiService } from '../../services/api.service';
+import { ClientModel } from 'src/app/models/client.model';
 
 @Component({
   selector: 'app-register',
@@ -58,9 +59,23 @@ export class RegisterComponent {
       this.toastr.error("Passwords do not match","Password error")
     }
 
+
+
     this.afAuth.createUserWithEmailAndPassword(email,password).then((user) => { //Realitza Registre
-      this.router.navigate(['']);
+      
+      
+      var dbuser : ClientModel = {
+        id:user.user?.uid,
+        name:this.registerUser.value.name,
+        address: {latitude:"0.0",longitude:"0.0"},
+        email: this.registerUser.value.email,
+        phone:this.registerUser.value.phone,
+        surnames:this.registerUser.value.surnames
+      }
+      this.apiService.addUser(dbuser);
       this.toastr.success("Register completed","Congratulations!")
+      this.router.navigate(['']);
+      
       
     }).catch((error) => {
       
