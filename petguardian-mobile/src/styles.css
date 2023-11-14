@@ -2,6 +2,9 @@
 @import "~bootstrap/dist/css/bootstrap.css";
 @import 'ngx-toastr/toastr';
 
+.bg-pink {
+    background-color: rgb(255, 0, 128) !important;
+  }
 
 body {
     margin: 0;

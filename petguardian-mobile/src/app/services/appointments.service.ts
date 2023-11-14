@@ -44,11 +44,13 @@ export class AppointmentsService {
 
   constructor(private storageService:StorageService,private apiservice:ApiService, private petService:PetService) {
     var uid = storageService.SessionGetStorage("uid");
-    
+    console.log(uid)
     this.apiservice.getAppointments(uid).then (data => {
     this.petService.pet_list
       
       data.forEach(element =>{
+        console.log("a")
+        console.log(element)
         var color = ''
         var name = ""
         if(this.parseDateFromString(element.start_date!)! < new Date()){

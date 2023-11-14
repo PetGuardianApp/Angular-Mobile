@@ -71,6 +71,7 @@
             [activeDayIsOpen]="activeDayIsOpen"
             (dayClicked)="dayClicked($event.day)"
             (eventClicked)="eventClicked($event)"
+            (beforeViewRender)="beforeMonthViewRender($event)"
           >
           </mwl-calendar-month-view>
           <mwl-calendar-week-view
@@ -79,6 +80,7 @@
             [viewDate]="viewDate"
             [events]="events"
             [refresh]="refresh"
+            (beforeViewRender)="beforeWeekViewRender($event)"
           >
           </mwl-calendar-week-view>
           <mwl-calendar-day-view
@@ -87,6 +89,7 @@
             [viewDate]="viewDate"
             [events]="events"
             [refresh]="refresh"
+            (beforeViewRender)="beforeDayViewRender($event)"
           >
           </mwl-calendar-day-view>
         </div>

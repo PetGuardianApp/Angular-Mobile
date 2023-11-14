@@ -17,10 +17,13 @@ import {
 import { Subject, buffer } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import {
+  CalendarDayViewBeforeRenderEvent,
   CalendarEvent,
   CalendarEventAction,
   CalendarEventTimesChangedEvent,
+  CalendarMonthViewBeforeRenderEvent,
   CalendarView,
+  CalendarWeekViewBeforeRenderEvent,
 } from 'angular-calendar';
 import { EventColor } from 'calendar-utils';
 import localeEn from '@angular/common/locales/en';
@@ -60,7 +63,7 @@ const colors: Record<string, EventColor> = {
 @Component({
   selector: 'app-appointments',
   templateUrl: './appointments.component.html',
-  styleUrls: ['./appointments.component.css']
+  styleUrls: ['./appointments.component.css'],
 })
 export class AppointmentsComponent {
   locale: string = "en"
@@ -98,9 +101,11 @@ export class AppointmentsComponent {
 
   ngOnInit() {
     this.events = this.appointmentService.eventList;
+    console.log(this.events);
     // Suscríbete al Observable después de inicializar eventList
     this.appointmentService.EventList.subscribe((events) => {
       this.events = events; // Actualiza la propiedad local con la lista de eventos
+      console.log(this.events);
     });
   }
 
@@ -129,6 +134,46 @@ export class AppointmentsComponent {
     }
   }
 
+
+  beforeMonthViewRender(renderEvent: CalendarMonthViewBeforeRenderEvent): void {
+    renderEvent.body.forEach((day) => {
+      const dayOfMonth = day.date.getDate();
+      console.log("a")
+      if (day.isPast) {
+        day.cssClass = 'bg-pink';
+        
+        console.log("b")
+      }
+    });
+  }
+
+  beforeWeekViewRender(renderEvent: CalendarWeekViewBeforeRenderEvent) {
+    renderEvent.hourColumns.forEach((hourColumn) => {
+      hourColumn.hours.forEach((hour) => {
+        hour.segments.forEach((segment) => {
+          if (
+            segment.date.getHours() >= 2 &&
+            segment.date.getHours() <= 5 &&
+            segment.date.getDay() === 2
+          ) {
+            segment.cssClass = 'bg-pink';
+          }
+        });
+      });
+    });
+  }
+
+  beforeDayViewRender(renderEvent: CalendarDayViewBeforeRenderEvent) {
+    renderEvent.hourColumns.forEach((hourColumn) => {
+      hourColumn.hours.forEach((hour) => {
+        hour.segments.forEach((segment) => {
+          if (segment.date.getHours() >= 2 && segment.date.getHours() <= 5) {
+            segment.cssClass = 'bg-pink';
+          }
+        });
+      });
+    });
+  }
 
 
 

@@ -19,7 +19,7 @@ export class ApiService {
 
   getAppointments(uid: string): Promise<AppointmentModel[]> {
     return new Promise((resolve, reject) => {
-      this.http.get<AppointmentModel[]>(this.apiUrl + 'vet/findAppointments/' + uid)
+      this.http.get<AppointmentModel[]>(this.apiUrl + 'client/findAppointments/' + uid)
         .subscribe(
           (response: AppointmentModel[]) => {
             resolve(response);
