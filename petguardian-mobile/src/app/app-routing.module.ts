@@ -7,7 +7,6 @@ import { HomeComponent } from './components/home/home.component';
 import { PetProfilePageComponent } from './components/pet-profile-page/pet-profile-page.component';
 import { MenuPetAppointmentComponent } from './components/menu-pet-appointment/menu-pet-appointment.component';
 const routes: Routes = [
-  {path: 'petsList', component: PetsListComponent},
   {path: '', component: LoginComponent},
   {path: 'map', component: MapPageComponent},
   {path: 'home', component: HomeComponent},
