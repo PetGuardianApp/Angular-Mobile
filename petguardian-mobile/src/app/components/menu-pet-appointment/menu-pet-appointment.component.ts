@@ -12,14 +12,10 @@ export class MenuPetAppointmentComponent {
 
   }
 
-  redirectPetsPage(id: string) {
-    this.router.navigate(['pet-list'], {
-      queryParams: { petId: id }
-    });
+  redirectPetsPage() {
+    this.router.navigate(['petsList']);
   }
-  redirectVisitPage(id: string) {
-    this.router.navigate(['appointment'], {
-      queryParams: { appointmentId: id }
-    });
+  redirectVisitPage() {
+    this.router.navigate(['appointment']);
   }
 }
