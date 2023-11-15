@@ -109,6 +109,8 @@ export class HomeComponent implements OnInit {
           petsArray[i].profile_image = "/assets/img/dogImage2.jpg";
         } else if (petsArray[i].name == "Darwin") {
           petsArray[i].profile_image = "/assets/img/catImage.avif";
+        } else {
+          petsArray[i].profile_image = '/assets/img/logo_default.svg';
         }
       }
       console.log(petsArray)
@@ -120,6 +122,17 @@ export class HomeComponent implements OnInit {
       for (const element of this.clientAppointments) {
         this.apiService.getPet(element.pet_id || '').then((pet) => {
           this.VisitPet = pet;
+          if (this.VisitPet.profile_image == '') {
+            this.VisitPet.profile_image = '/assets/img/logo_default.svg';
+          } else{
+            if (this.VisitPet.name == "Toby") {
+              this.VisitPet.profile_image = "/assets/img/dogImage1.jpg";
+            } else if (this.VisitPet.name == "Dobby") {
+              this.VisitPet.profile_image = "/assets/img/dogImage2.jpg";
+            } else if (this.VisitPet.name == "Darwin") {
+              this.VisitPet.profile_image = "/assets/img/catImage.avif";
+            }           
+          }
         })
         if (today_visit = this.isTodayVisit(element.end_date || '')) {
           this.isTodayVisits.push(element.end_date || '');
