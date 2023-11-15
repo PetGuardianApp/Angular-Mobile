@@ -5,6 +5,7 @@ import { ApiService } from './api.service';
 import { CalendarEvent } from 'angular-calendar';
 import { EventColor } from 'calendar-utils';
 import { PetService } from './pet.service';
+import { PetModel } from '../models/pet.model';
 
 const colors: Record<string, EventColor> = {
   red: {
@@ -46,7 +47,6 @@ export class AppointmentsService {
     var uid = storageService.SessionGetStorage("uid");
     console.log(uid)
     this.apiservice.getAppointments(uid).then (data => {
-    this.petService.pet_list
       
       data.forEach(element =>{
         console.log("a")
@@ -58,6 +58,7 @@ export class AppointmentsService {
         }else{
           color='green'
         }
+        console.log("asdasd"+petService.pet_list)
         petService.pet_list.forEach(pet => {
           if("CL7E6IRjyJgOzaLxCV8O" == element.pet_id){
             name = "Tobby"
@@ -65,6 +66,7 @@ export class AppointmentsService {
             name = "Dobby"
           }else{
             name = "Bobby"
+            console.log("")
           }
         })
         this.addEvent({
@@ -72,10 +74,19 @@ export class AppointmentsService {
           end: this.parseDateFromString(element.end_date!)!,
           title: name,
           pet_id:element.pet_id,
+          matter:element.matter,
+          //vet:element
           color: { ...colors[color] },
         })
       })
     })
+   }
+
+   getVetfromPet(pet_id:String):string{
+    
+    var pet_list: PetModel[] =  this.storageService.SessionGetStorage("pets");
+    
+    return pet_list.find(x => x.id ==  pet_id)?.vet_id!
    }
 
 

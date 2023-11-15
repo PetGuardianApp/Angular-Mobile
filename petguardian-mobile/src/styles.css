@@ -3,7 +3,8 @@
 @import 'ngx-toastr/toastr';
 
 .bg-pink {
-    background-color: rgb(255, 0, 128) !important;
+    background-color: #e9f4df !important;
+    
   }
 
 body {

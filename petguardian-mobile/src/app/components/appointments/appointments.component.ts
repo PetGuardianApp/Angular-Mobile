@@ -89,6 +89,9 @@ export class AppointmentsComponent {
     
   ];
 
+  displayed_events: CalendarEvent[] = [
+    
+  ];
 
   activeDayIsOpen: boolean = true;
 
@@ -100,12 +103,19 @@ export class AppointmentsComponent {
   }
 
   ngOnInit() {
-    this.events = this.appointmentService.eventList;
-    console.log(this.events);
+   
+
+    
     // Suscríbete al Observable después de inicializar eventList
     this.appointmentService.EventList.subscribe((events) => {
       this.events = events; // Actualiza la propiedad local con la lista de eventos
       console.log(this.events);
+      var today:Date = new Date();
+      this.events.forEach(element => {
+        if(element.start>today){
+          this.displayed_events.push(element);
+        }
+      })
     });
   }
 
@@ -137,12 +147,10 @@ export class AppointmentsComponent {
 
   beforeMonthViewRender(renderEvent: CalendarMonthViewBeforeRenderEvent): void {
     renderEvent.body.forEach((day) => {
-      const dayOfMonth = day.date.getDate();
-      console.log("a")
+      
+      
       if (day.isPast) {
         day.cssClass = 'bg-pink';
-        
-        console.log("b")
       }
     });
   }
@@ -151,13 +159,17 @@ export class AppointmentsComponent {
     renderEvent.hourColumns.forEach((hourColumn) => {
       hourColumn.hours.forEach((hour) => {
         hour.segments.forEach((segment) => {
-          if (
-            segment.date.getHours() >= 2 &&
-            segment.date.getHours() <= 5 &&
-            segment.date.getDay() === 2
+          /*if (
+            segment.date.getHours() >= 0 &&
+            segment.date.getHours() <= 8 ||
+            segment.date.getHours() >= 20 &&
+            segment.date.getHours() <= 23
+            
+            //segment.date.getDay() === 2
           ) {
             segment.cssClass = 'bg-pink';
-          }
+          }*/
+          
         });
       });
     });
@@ -167,9 +179,16 @@ export class AppointmentsComponent {
     renderEvent.hourColumns.forEach((hourColumn) => {
       hourColumn.hours.forEach((hour) => {
         hour.segments.forEach((segment) => {
-          if (segment.date.getHours() >= 2 && segment.date.getHours() <= 5) {
+          /*if (
+            segment.date.getHours() >= 0 &&
+            segment.date.getHours() <= 8 ||
+            segment.date.getHours() >= 20 &&
+            segment.date.getHours() <= 23
+            
+            //segment.date.getDay() === 2
+          ) {
             segment.cssClass = 'bg-pink';
-          }
+          }*/
         });
       });
     });

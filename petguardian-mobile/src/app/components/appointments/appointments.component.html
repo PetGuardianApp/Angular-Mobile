@@ -94,7 +94,7 @@
           </mwl-calendar-day-view>
         </div>
         <br>
-        <h3 style="width: 100%; align-self: center;">Next Appointments</h3>
+        <h3 style="width: 100%; align-self: center;">Upcommig Appointments</h3>
         
         
         <div style="justify-content: center; height: 80px;">
@@ -105,5 +105,15 @@
                 </div>
             </div>
         </div>
-        <p>For appointments</p>
+        <div style="justify-content: center; height: 80px;" *ngFor="let event of displayed_events">
+          <div class="appointment-container" style="display: flex; text-align:center;">
+              <img src="../../../assets/imgs/Add.svg" style="height: 70%; padding-left: 5%; padding-top: 5%;">
+              <div style="align-items: center; text-align: center;">
+                <p >{{ event.start | date:"MMM dd 'at' hh:mm a" }}</p>
+                <p >Pet: {{ event.title }}</p>
+                <p >Vet: Ramon </p>
+                <p >Matter: {{ event.matter }}</p>
+              </div>
+          </div>
+      </div>
     
