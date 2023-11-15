@@ -17,25 +17,85 @@ export class MapPageComponent implements OnInit {
     minZoom: 8,
     disableDefaultUI: true,
   };
-  markerOptions: google.maps.MarkerOptions = { draggable: false };
+  markerOptions: google.maps.MarkerOptions = {
+    draggable: false,
+    icon: {
+      url: "../assets/mapIcons/user_position.svg",
+      scaledSize: new google.maps.Size(50, 50)
+    }
+  };
+
+  parkMarkerOptions: google.maps.MarkerOptions = {
+    draggable: false,
+    icon: {
+      url: "../assets/mapIcons/map_park.svg",
+      scaledSize: new google.maps.Size(50, 50)
+    }
+  };
+
+  cofeeMarkerOptions: google.maps.MarkerOptions = {
+    draggable: false,
+    icon: {
+      url: "../assets/mapIcons/map_cofee.svg",
+      scaledSize: new google.maps.Size(50, 50)
+    }
+  };
+
+  hairMarkerOptions: google.maps.MarkerOptions = {
+    draggable: false,
+    icon: {
+      url: "../assets/mapIcons/map_hair.svg",
+      scaledSize: new google.maps.Size(50, 50)
+    }
+  };
+
+  hotelMarkerOptions: google.maps.MarkerOptions = {
+    draggable: false,
+    icon: {
+      url: "../assets/mapIcons/map_hotel.svg",
+      scaledSize: new google.maps.Size(50, 50)
+    }
+  };
+
+  storeMarkerOptions: google.maps.MarkerOptions = {
+    draggable: false,
+    icon: {
+      url: "../assets/mapIcons/map_store.svg",
+      scaledSize: new google.maps.Size(50, 50)
+    }
+  };
+
+  toystoreMarkerOptions: google.maps.MarkerOptions = {
+    draggable: false,
+    icon: {
+      url: "../assets/mapIcons/map_toystore.svg",
+      scaledSize: new google.maps.Size(50, 50)
+    }
+  };
+
   markers: google.maps.Marker[] = [];
+  userMarker: google.maps.Marker = new google.maps.Marker;
+  marker1: google.maps.Marker = new google.maps.Marker;
+  marker2: google.maps.Marker = new google.maps.Marker;
+  marker3: google.maps.Marker = new google.maps.Marker;
+  marker4: google.maps.Marker = new google.maps.Marker;
+  marker5: google.maps.Marker = new google.maps.Marker;
+  marker6: google.maps.Marker = new google.maps.Marker;
+
   apiKey = 'AIzaSyAouWao_x1bulJ9RkrfYpYP49u2a9RzSXw';
 
   constructor() {
-    
+
   }
 
   ngOnInit() {
     this.getPosition().then(position => {
       if (position) {
         this.center = position;
-
-        var marker:google.maps.Marker = new google.maps.Marker;
-        marker.setPosition(position);
-        marker.setIcon("/assets/mapIcons/map_park.svg");
+        this.userMarker.setPosition(position);
 
         // Put a marker in user location
-        this.markers.push(marker);
+        //this.markers.push(marker);
 
         /*
         // Get near sites of interest
@@ -55,7 +115,45 @@ export class MapPageComponent implements OnInit {
         });
         */
       }
-    });    
+    });
+
+    this.generateMockMarkers();
+  }
+
+  generateMockMarkers() {
+    var position1 = {
+      lat: 41.616858,
+      lng: 0.644994
+    }
+    var position2 = {
+      lat: 41.602403,
+      lng: 0.646611
+    }
+    var position3 = {
+      lat: 41.593508,
+      lng: 0.629787
+    }
+    var position4 = {
+      lat: 41.639440,
+      lng: 0.627794
+    }
+    var position5 = {
+      lat: 41.627029,
+      lng: 0.617831
+    }
+    var position6 = {
+      lat: 41.623057,
+      lng: 0.601558
+    }
+
+    this.marker1.setPosition(position1);
+    this.marker2.setPosition(position2);
+    this.marker3.setPosition(position3);
+    this.marker4.setPosition(position4);
+    this.marker5.setPosition(position5);
+    this.marker6.setPosition(position6);
+    this.marker1.setIcon()
+
   }
 
   getNearbyRestaurants(position: google.maps.LatLngLiteral): Promise<any[]> {
@@ -86,5 +184,20 @@ export class MapPageComponent implements OnInit {
         }
       );
     });
+  }
+
+  toggleButtonClass(buttonId: string): void {
+    var button = document.getElementById(buttonId);
+    if (button instanceof HTMLButtonElement) {
+      const hasButtonOnClass = button.classList.contains('button-on');
+      
+      if (hasButtonOnClass) {
+        button.classList.remove('button-on');
+        button.classList.add('button-off');
+      } else {
+        button.classList.add('button-on');
+        button.classList.remove('button-off');
+      }
+    }
   }
 }
