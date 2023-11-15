@@ -1,6 +1,11 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~bootstrap/dist/css/bootstrap.css";
+@import 'ngx-toastr/toastr';
 
+.bg-pink {
+    background-color: #e9f4df !important;
+    
+  }
 
 body {
     margin: 0;
@@ -81,3 +86,5 @@ h2{
 .module {
     margin-top: 30px;
 }
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

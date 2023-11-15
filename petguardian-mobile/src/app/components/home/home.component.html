@@ -2,9 +2,9 @@
     Benvingut {{client.name}}
 </h1>
 <h2> {{ currentDate | date: 'EEEE' }}, {{ currentDate | date: 'd' }} {{ currentDate | date: 'MMMM' }}</h2>
-<h2>
+<h1>
     Visites per avui!
-</h2>
+</h1>
 <ng-container *ngIf="isTodayVisits.length > 0; then thenBlock else elseBlock">
 </ng-container>
 <ng-template #thenBlock>
@@ -12,15 +12,21 @@
         <ng-container *ngIf="isTodayVisit(visit.end_date || ''); then thenBlock ">
         </ng-container>
         <ng-template #thenBlock>
-            <div>
-                <div>
-                    <h3> Matter: {{ visit.matter }}</h3>
+            <button class="whiteButton" id="{{visit.id}}" (click)="redirectVisitPage(visit.id || '')">
+                <div style="column-count: 2;">
+                    <div>
+                        <img src="{{VisitPet.profile_image}}" style="width: 70%;">
+                    </div>
+                    <div style="text-align: left;">
+                        <ul>
+                            <li><b>Pet: </b> {{VisitPet.name}}</li>
+                            <li><b>Start:</b> {{formatStartDate(visit.start_date || '')}}</li>
+                            <li><b>End:</b> {{formatStartDate(visit.end_date || '')}}</li>
+
+                        </ul>
+                    </div>
                 </div>
-                <div>
-                    <h4> Start: {{formatStartDate(visit.start_date || '')}}</h4>
-                    <h4> End: {{formatStartDate(visit.end_date || '')}}</h4>
-                </div>
-            </div>
+            </button>
         </ng-template>
     </div>
 </ng-template>
@@ -29,15 +35,14 @@
         <p>No tens visites per avui</p>
     </div>
 </ng-template>
-
-<h2>
+<h1>
     Les teves mascotes
-</h2>
-<div *ngFor="let pet of petsArray">
-    <div _ngcontent-ng-c1661546195="" class="image-container ng-star-inserted"><img _ngcontent-ng-c1661546195=""
-            alt="Pet" src="">
-        <div _ngcontent-ng-c1661546195="" class="overlay">
-            <p _ngcontent-ng-c1661546195="">{{ pet.name }}</p>
+</h1>
+<div *ngFor="let pet of petsArray" class="module" style="text-align: center;">
+    <div class="image-container" (click)="redirectPetPage(pet.id || '')" id="{{pet.id}}">
+        <img width="50px" src="{{pet.profile_image}}" alt="Pet">
+        <div class="overlay">
+            <p>{{pet.name}}</p>
         </div>
     </div>
 </div>z

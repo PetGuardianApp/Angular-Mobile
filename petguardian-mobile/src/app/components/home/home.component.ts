@@ -20,6 +20,7 @@ export class HomeComponent implements OnInit {
     this.clientAppointments = [];
     this.ifvisit = false;
     this.isTodayVisits = [];
+    this.VisitPet = new PetModel;
   }
   currentDate: Date = new Date();
   public client: ClientModel;
@@ -27,6 +28,7 @@ export class HomeComponent implements OnInit {
   public clientAppointments: AppointmentModel[];
   public ifvisit: Boolean;
   public isTodayVisits: string[];
+  public VisitPet: PetModel;
   ngOnInit() {
   }
 
@@ -49,7 +51,6 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  
   formatDate(inputDate: string): string {
     // Use a regular expression to capture the date components
     const dateRegex: RegExp = /(\d{2})(\d{2})(\d{4})_(\d{2}):(\d{2})/;
@@ -81,6 +82,17 @@ export class HomeComponent implements OnInit {
       return false;
     }
   }
+  redirectPetPage(id: string) {
+    this.router.navigate(['pet-profile'], {
+      queryParams: { petId: id }
+    });
+  }
+  redirectVisitPage(id: string) {
+    this.router.navigate(['appointment'], {
+      queryParams: { appointmentId: id }
+    });
+  }
+
   showData() {
 
     this.apiService.getSingleClient("VPUnbME8Kt27zmF7q7ne").then((client) => {
@@ -90,13 +102,38 @@ export class HomeComponent implements OnInit {
 
     this.apiService.getClientPets("VPUnbME8Kt27zmF7q7ne").then((petsArray) => {
       this.petsArray = petsArray;
+      for (let i = 0; i < petsArray.length; i++) {
+        if (petsArray[i].name == "Toby") {
+          petsArray[i].profile_image = "/assets/img/dogImage1.jpg";
+        } else if (petsArray[i].name == "Dobby") {
+          petsArray[i].profile_image = "/assets/img/dogImage2.jpg";
+        } else if (petsArray[i].name == "Darwin") {
+          petsArray[i].profile_image = "/assets/img/catImage.avif";
+        } else {
+          petsArray[i].profile_image = '/assets/img/logo_default.svg';
+        }
+      }
       console.log(petsArray)
-    })
+    });
 
     this.apiService.getClientAppointments("VPUnbME8Kt27zmF7q7ne").then((clientAppointments) => {
       this.clientAppointments = clientAppointments;
       let today_visit: Boolean = false;
       for (const element of this.clientAppointments) {
+        this.apiService.getPet(element.pet_id || '').then((pet) => {
+          this.VisitPet = pet;
+          if (this.VisitPet.profile_image == '') {
+            this.VisitPet.profile_image = '/assets/img/logo_default.svg';
+          } else{
+            if (this.VisitPet.name == "Toby") {
+              this.VisitPet.profile_image = "/assets/img/dogImage1.jpg";
+            } else if (this.VisitPet.name == "Dobby") {
+              this.VisitPet.profile_image = "/assets/img/dogImage2.jpg";
+            } else if (this.VisitPet.name == "Darwin") {
+              this.VisitPet.profile_image = "/assets/img/catImage.avif";
+            }           
+          }
+        })
         if (today_visit = this.isTodayVisit(element.end_date || '')) {
           this.isTodayVisits.push(element.end_date || '');
         }

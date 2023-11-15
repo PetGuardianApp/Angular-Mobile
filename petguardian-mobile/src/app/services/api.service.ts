@@ -5,6 +5,7 @@ import { AppointmentModel } from '../models/appointment.model';
 import { Observable, catchError, of, tap } from 'rxjs';
 import { StorageService } from './storage.service';
 import { PetModel } from '../models/pet.model';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -12,13 +13,14 @@ import { PetModel } from '../models/pet.model';
 export class ApiService {
   private apiUrl = 'https://petguardian-api.uc.r.appspot.com/'
   private temp!: Observable<ClientModel[]>;
-  constructor(private http: HttpClient, private storageService: StorageService) {
+  public petsArray: PetModel[] = [];
 
+  constructor(private http: HttpClient, private storageService: StorageService) {
   }
 
   getAppointments(uid: string): Promise<AppointmentModel[]> {
     return new Promise((resolve, reject) => {
-      this.http.get<AppointmentModel[]>(this.apiUrl + 'vet/findAppointments/' + uid)
+      this.http.get<AppointmentModel[]>(this.apiUrl + 'client/findAppointments/' + uid)
         .subscribe(
           (response: AppointmentModel[]) => {
             resolve(response);
@@ -84,6 +86,42 @@ export class ApiService {
     });
   }
 
+  postClientPets(pet: PetModel): Promise<any> {
+    const requestBody: PetModel = {
+      birth: '',
+      breed: '',
+      weight: {},
+      health_info: {
+        cardiac_freq: {},
+        vaccines: [],
+        observations: '',
+        steps: {}
+      },
+      height: 0,
+      name: '', // Use provided name or empty string if not provided
+      type: '', // Use provided type or empty string if not provided
+      vet_id: '',
+      client_id: '',
+      profile_image: '',
+      id: '',
+      ...pet // Spread provided pet object to override default values if they are provided
+    };
+    console.log(requestBody);
+    return new Promise((resolve, reject) => {
+      this.http.post(this.apiUrl + 'pet/create', requestBody, {responseType: 'text'})
+        .subscribe({
+          next: data => {
+            this.petsArray.push(pet);
+          },
+          error: error => {
+            console.error('There was an error!', error);
+          }
+
+
+        });
+    });
+  }
+
   getPet(petId: string): Promise<PetModel> {
     return new Promise((resolve, reject) => {
       this.http.get<PetModel>(this.apiUrl + '/pet/find/' + petId)
@@ -98,6 +136,28 @@ export class ApiService {
     });
   }
 
+  
+addUser(client: ClientModel): Promise<any> {
+
+  const headers = { 'content-type': 'application/json'}
+  
+  return new Promise((resolve, reject) => {
+    this.http.post(this.apiUrl + 'client/create/'+client.id, JSON.stringify(client), {'headers':headers})
+      .subscribe({
+        next: data => {
+          
+        },
+        error: error => {
+          console.log('Result', error);
+        }
+
+
+      });
+  });
+}
+
+
+
   getAllPets(): Promise<PetModel[]> {
     return new Promise((resolve, reject) => {
       this.http.get<PetModel[]>(this.apiUrl + '/pet/all')
@@ -111,5 +171,7 @@ export class ApiService {
         );
     });
   }
+
+  
 
 }

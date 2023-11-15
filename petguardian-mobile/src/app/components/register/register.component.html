@@ -1,0 +1,67 @@
+
+<div class="wrapper">
+    <div class="body">
+      <h1>Register</h1>
+      <form (ngSubmit)="register()" [formGroup]="registerUser">
+          <div class="form-floating mb-3">
+              <input type="email" formControlName="email" class="form-control" placeholder="name@example.com">
+              <label>Email</label>
+              <span *ngIf="registerUser.get('email')?.hasError('required')  && registerUser.get('email')?.touched" class="text-danger errorLabel">
+               <strong>Mail</strong> is required
+              </span>
+              <span *ngIf="registerUser.get('email')?.hasError('email')  && registerUser.get('email')?.touched" class="text-danger errorLabel">
+                Mail must be <strong>valid</strong>
+              </span>
+            </div>
+            <div class="form-floating mb-3">
+              <input type="password" formControlName="password" class="form-control" placeholder="Password">
+              <label>Password</label>
+              <span *ngIf="registerUser.get('password')?.hasError('required')  && registerUser.get('password')?.touched" class="text-danger errorLabel">
+               <strong>Password</strong> is required
+              </span>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="password" formControlName="password_rep" class="form-control" placeholder="Password Repeat">
+                <label>Repeat Password</label>
+                <span *ngIf="registerUser.get('password_rep')?.hasError('checkPasswords')  && registerUser.get('passwor_rep')?.touched" class="text-danger errorLabel">
+                 <strong>Password</strong> is different
+                </span>
+              </div>
+            <div class="form-floating mb-3">
+                <input type="text" formControlName="name" class="form-control" placeholder="Name">
+                <label>Name</label>
+                <span *ngIf="registerUser.get('name')?.hasError('required')  && registerUser.get('name')?.touched" class="text-danger errorLabel">
+                 <strong>Name</strong> is required
+                </span>
+              </div>
+              <div class="form-floating mb-3">
+                <input type="text" formControlName="surnames" class="form-control" placeholder="Surnames">
+                <label>Surnames</label>
+                <span *ngIf="registerUser.get('surnames')?.hasError('required')  && registerUser.get('surnames')?.touched" class="text-danger errorLabel">
+                 Provide at least <strong>one surname</strong>
+                </span>
+              </div>
+              <div class="form-floating mb-3">
+                <input type="number" formControlName="phone" class="form-control" placeholder="Phone">
+                <label>Phone number</label>
+                <span *ngIf="registerUser.get('phone')?.hasError('required')  && registerUser.get('phone')?.touched" class="text-danger errorLabel">
+                 <strong>Phone number</strong> is required
+                </span>
+                <span *ngIf="(registerUser.get('phone')?.hasError('min') || registerUser.get('phone')?.hasError('max'))  && registerUser.get('phone')?.touched" class="text-danger errorLabel">
+                    Phone number <strong>must be valid </strong>
+                   </span>
+              </div>
+              <div class="form-floating mb-3">
+                <input type="text" formControlName="address" class="form-control" placeholder="Address">
+                <label>Address</label>
+                <span *ngIf="registerUser.get('address')?.hasError('address')  && registerUser.get('address')?.touched" class="text-danger errorLabel">
+                 <strong>Address</strong> is required
+                </span>
+              </div>
+            <div class="d-grid gap-2">
+              <button class="btn btn-primary btn-lg" type="submit" [disabled]="registerUser.invalid">Register</button>
+            </div>
+      </form>
+    </div>
+  </div>
+  
