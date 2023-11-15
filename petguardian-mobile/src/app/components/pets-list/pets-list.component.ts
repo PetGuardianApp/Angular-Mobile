@@ -52,9 +52,23 @@ export class PetsListComponent {
       this.apiService.petsArray = petsArray;
       for (const pet of this.apiService.petsArray) {
         if (pet.profile_image == '') {
-          pet.profile_image = '/assets/img/dogImage1.jpg';
+          if (pet.name == "Toby") {
+            pet.profile_image = "/assets/img/dogImage1.jpg";
+          } else if (pet.name == "Dobby") {
+            pet.profile_image = "/assets/img/dogImage2.jpg";
+          } else if (pet.name == "Darwin") {
+            pet.profile_image = "/assets/img/catImage.avif";
+          } else  {
+            pet.profile_image = '/assets/img/logo_default.svg';
+          }
         } else{
-          pet.profile_image = '/assets/img/dogImage2.jpg';
+          if (pet.name == "Toby") {
+            pet.profile_image = "/assets/img/dogImage1.jpg";
+          } else if (pet.name == "Dobby") {
+            pet.profile_image = "/assets/img/dogImage2.jpg";
+          } else if (pet.name == "Darwin") {
+            pet.profile_image = "/assets/img/catImage.avif";
+          }          
         }
       }
       console.log(petsArray);

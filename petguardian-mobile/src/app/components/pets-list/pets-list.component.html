@@ -13,7 +13,6 @@
         <mat-form-field>
             <mat-label>Enter pet birth</mat-label>
             <input matInput [matDatepicker]="picker" (dateInput)="onDateInput($event)">
-            <mat-hint>MM/DD/YYYY</mat-hint>
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
           </mat-form-field>
