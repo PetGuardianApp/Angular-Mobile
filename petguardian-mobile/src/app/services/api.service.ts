@@ -13,8 +13,9 @@ import { Router } from '@angular/router';
 export class ApiService {
   private apiUrl = 'https://petguardian-api.uc.r.appspot.com/'
   private temp!: Observable<ClientModel[]>;
-  constructor(private http: HttpClient, private storageService: StorageService,private router:Router) {
+  public petsArray: PetModel[] = [];
 
+  constructor(private http: HttpClient, private storageService: StorageService) {
   }
 
   getAppointments(uid: string): Promise<AppointmentModel[]> {
@@ -30,7 +31,19 @@ export class ApiService {
         );
     });
   }
-
+  getClientAppointments(uid: string): Promise<AppointmentModel[]> {
+    return new Promise((resolve, reject) => {
+      this.http.get<AppointmentModel[]>(this.apiUrl + 'client/findAppointments/' + uid)
+        .subscribe(
+          (response: AppointmentModel[]) => {
+            resolve(response);
+          },
+          (error) => {
+            reject(error);
+          }
+        );
+    });
+  }
   getClients(uid: string): Promise<ClientModel[]> {
     return new Promise((resolve, reject) => {
       this.http.get<ClientModel[]>(this.apiUrl + 'vet/findClients/' + uid)
@@ -70,6 +83,42 @@ export class ApiService {
             reject(error);
           }
         );
+    });
+  }
+
+  postClientPets(pet: PetModel): Promise<any> {
+    const requestBody: PetModel = {
+      birth: '',
+      breed: '',
+      weight: {},
+      health_info: {
+        cardiac_freq: {},
+        vaccines: [],
+        observations: '',
+        steps: {}
+      },
+      height: 0,
+      name: '', // Use provided name or empty string if not provided
+      type: '', // Use provided type or empty string if not provided
+      vet_id: '',
+      client_id: '',
+      profile_image: '',
+      id: '',
+      ...pet // Spread provided pet object to override default values if they are provided
+    };
+    console.log(requestBody);
+    return new Promise((resolve, reject) => {
+      this.http.post(this.apiUrl + 'pet/create', requestBody, {responseType: 'text'})
+        .subscribe({
+          next: data => {
+            this.petsArray.push(pet);
+          },
+          error: error => {
+            console.error('There was an error!', error);
+          }
+
+
+        });
     });
   }
 

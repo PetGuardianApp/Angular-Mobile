@@ -6,10 +6,13 @@ import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 import { environment } from '../enviroments/enviroments';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgApexchartsModule } from "ng-apexcharts";
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
+import { HomeComponent } from './components/home/home.component';
+import { PetsListComponent } from './components/pets-list/pets-list.component';
 import { ToastrModule } from 'ngx-toastr';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
@@ -23,17 +26,28 @@ import { RegisterComponent } from './components/register/register.component';
 import { AppointmentsComponent } from './components/appointments/appointments.component';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
-
+import { GoogleMapsModule } from '@angular/google-maps';
+import { PetProfilePageComponent } from './components/pet-profile-page/pet-profile-page.component';
+import { MenuPetAppointmentComponent } from './components/menu-pet-appointment/menu-pet-appointment.component'
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatInputModule } from '@angular/material/input'; 
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { DatePipe } from '@angular/common';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
+    HomeComponent,
+    PetsListComponent,
     SideNavComponent,
     SidenavLinkComponent,
     MapPageComponent,
     RegisterComponent,
     AppointmentsComponent,
+    PetProfilePageComponent,
+    MenuPetAppointmentComponent,
   ],
   imports: [
     AngularFireModule.initializeApp(environment.firebase),
@@ -52,8 +66,17 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
     ToastrModule,
     NgbModule,
     CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory })
+    GoogleMapsModule,
+    NgbModule,
+    NgApexchartsModule,
+    BrowserAnimationsModule,
+    MatDatepickerModule,
+    MatInputModule,
+    MatNativeDateModule,
   ],
-  providers: [],
+  providers: [
+    DatePipe,
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

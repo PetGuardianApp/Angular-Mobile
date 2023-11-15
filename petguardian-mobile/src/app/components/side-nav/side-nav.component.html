@@ -4,30 +4,27 @@
 
 
 <div class="mainSidenav">
-    <app-sidenav-link routerLink="dashboard">
-        <img src="/assets/imgs/dashboard.svg" alt="dashboard">
+    <app-sidenav-link routerLink="home" (click)="changeIcon('dashboardIcon')">
+        <img id="dashboardIcon" src="/assets/menuIcons/homeOn.svg" alt="dashboard">
     </app-sidenav-link>
 
-    <app-sidenav-link routerLink="appointments">
-        <img src="/assets/imgs/petsPage.svg" alt="pets">
+    <app-sidenav-link routerLink="menu-pet-appointment" (click)="changeIcon('petsIcon')">
+        <img id="petsIcon" src="/assets/menuIcons/dogOff.svg" alt="pets">
     </app-sidenav-link>
 
-    <app-sidenav-link routerLink="clients">
-        <img src="/assets/imgs/map.svg" alt="map">
-    </app-sidenav-link>
-    
-    <app-sidenav-link routerLink="client">
-        <img src="/assets/imgs/chat.svg" alt="chat">
+    <app-sidenav-link routerLink="map" (click)="changeIcon('mapIcon')">
+        <img id="mapIcon" src="/assets/menuIcons/mapOff.svg" alt="map">
     </app-sidenav-link>
 
-    <app-sidenav-link routerLink="client">
-        <img src="/assets/imgs/qr.svg" alt="qr">
+    <app-sidenav-link routerLink="client" (click)="changeIcon('chatIcon')">
+        <img id="chatIcon" src="/assets/menuIcons/chatOff.svg" alt="chat">
     </app-sidenav-link>
 
-    <app-sidenav-link routerLink="client">
-        <img src="/assets/imgs/info.svg" alt="info">
+    <app-sidenav-link routerLink="client" (click)="changeIcon('qrIcon')">
+        <img id="qrIcon" src="/assets/menuIcons/qrOff.svg" alt="qr">
     </app-sidenav-link>
 
+    <!--
     <app-sidenav-link routerLink="client">
         <img src="/assets/imgs/userIcon.svg" alt="info">
     </app-sidenav-link>
@@ -35,4 +32,5 @@
     <app-sidenav-link routerLink="client">
         <img src="/assets/imgs/signOut.svg" alt="sOut">
     </app-sidenav-link>
+    -->
 </div>
