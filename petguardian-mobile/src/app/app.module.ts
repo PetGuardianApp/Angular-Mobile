@@ -5,6 +5,7 @@ import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 import { environment } from '../enviroments/enviroments';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgApexchartsModule } from "ng-apexcharts";
 
 import { AppRoutingModule } from './app-routing.module';
@@ -21,6 +22,10 @@ import { SideNavComponent } from './components/side-nav/side-nav.component';
 import { SidenavLinkComponent } from './components/sidenav-link/sidenav-link.component';
 import { MapPageComponent } from './components/map-page/map-page.component';
 import { HttpClientModule } from '@angular/common/http';
+import { RegisterComponent } from './components/register/register.component';
+import { AppointmentsComponent } from './components/appointments/appointments.component';
+import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { GoogleMapsModule } from '@angular/google-maps';
 import { PetProfilePageComponent } from './components/pet-profile-page/pet-profile-page.component';
 import { MenuPetAppointmentComponent } from './components/menu-pet-appointment/menu-pet-appointment.component'
@@ -39,6 +44,8 @@ import { DatePipe } from '@angular/common';
     SideNavComponent,
     SidenavLinkComponent,
     MapPageComponent,
+    RegisterComponent,
+    AppointmentsComponent,
     PetProfilePageComponent,
     MenuPetAppointmentComponent,
   ],
@@ -54,8 +61,11 @@ import { DatePipe } from '@angular/common';
     AngularFireStorageModule,
     AngularFireDatabaseModule,
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     ToastrModule,
+    NgbModule,
+    CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory })
     GoogleMapsModule,
     NgbModule,
     NgApexchartsModule,

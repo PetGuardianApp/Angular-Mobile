@@ -5,6 +5,7 @@ import { AppointmentModel } from '../models/appointment.model';
 import { Observable, catchError, of, tap } from 'rxjs';
 import { StorageService } from './storage.service';
 import { PetModel } from '../models/pet.model';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -13,13 +14,13 @@ export class ApiService {
   private apiUrl = 'https://petguardian-api.uc.r.appspot.com/'
   private temp!: Observable<ClientModel[]>;
   public petsArray: PetModel[] = [];
-  constructor(private http: HttpClient, private storageService: StorageService) {
 
+  constructor(private http: HttpClient, private storageService: StorageService) {
   }
 
   getAppointments(uid: string): Promise<AppointmentModel[]> {
     return new Promise((resolve, reject) => {
-      this.http.get<AppointmentModel[]>(this.apiUrl + 'vet/findAppointments/' + uid)
+      this.http.get<AppointmentModel[]>(this.apiUrl + 'client/findAppointments/' + uid)
         .subscribe(
           (response: AppointmentModel[]) => {
             resolve(response);
@@ -135,6 +136,28 @@ export class ApiService {
     });
   }
 
+  
+addUser(client: ClientModel): Promise<any> {
+
+  const headers = { 'content-type': 'application/json'}
+  
+  return new Promise((resolve, reject) => {
+    this.http.post(this.apiUrl + 'client/create/'+client.id, JSON.stringify(client), {'headers':headers})
+      .subscribe({
+        next: data => {
+          
+        },
+        error: error => {
+          console.log('Result', error);
+        }
+
+
+      });
+  });
+}
+
+
+
   getAllPets(): Promise<PetModel[]> {
     return new Promise((resolve, reject) => {
       this.http.get<PetModel[]>(this.apiUrl + '/pet/all')
@@ -148,5 +171,7 @@ export class ApiService {
         );
     });
   }
+
+  
 
 }

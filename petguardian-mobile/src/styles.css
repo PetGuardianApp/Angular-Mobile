@@ -1,6 +1,11 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~bootstrap/dist/css/bootstrap.css";
+@import 'ngx-toastr/toastr';
 
+.bg-pink {
+    background-color: #e9f4df !important;
+    
+  }
 
 body {
     margin: 0;
