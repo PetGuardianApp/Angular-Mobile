@@ -105,15 +105,18 @@
                 </div>
             </div>
         </div>
-        <div style="justify-content: center; height: 80px;" *ngFor="let event of displayed_events">
-          <div class="appointment-container" style="display: flex; text-align:center;">
-              <img src="../../../assets/imgs/Add.svg" style="height: 70%; padding-left: 5%; padding-top: 5%;">
-              <div style="align-items: center; text-align: center;">
-                <p >{{ event.start | date:"MMM dd 'at' hh:mm a" }}</p>
-                <p >Pet: {{ event.title }}</p>
-                <p >Vet: Ramon </p>
-                <p >Matter: {{ event.matter }}</p>
+        <br>
+        <div style="justify-content: center; height: 100px;" *ngFor="let event of displayed_events">
+          <div class="appointment-container" style="display: flex; text-align: center;">
+              <img src="../../../assets/imgs/vet_img.svg" style="height: 70%; padding-left: 5%; padding-top: 5%;">
+              <div style="align-items: center;  text-align: left; max-width: 200px; padding-left: 10px;">
+                  <b style="word-wrap: break-word; margin: 0; color: #286024;">{{ event.start | date:"MMM dd 'at' hh:mm a" }}</b>
+                  <p style="word-wrap: break-word; margin: 0;">Pet: {{ event.title }}</p>
+                  <p style="word-wrap: break-word; margin: 0;">Vet: Ramon</p>
+                  <p style="word-wrap: break-word; margin: 0;">Matter: {{ event.matter }}</p>
               </div>
+              <img src="../../../assets/imgs/edit_icon.svg" style="height: 70%; padding-left: 5%; padding-top: 5%;">
+              <img src="../../../assets/imgs/delete_icon.svg" style="height: 70%; padding-left: 5%; padding-top: 5%;">
           </div>
       </div>
     
