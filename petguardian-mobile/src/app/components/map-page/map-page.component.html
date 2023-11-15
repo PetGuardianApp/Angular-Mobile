@@ -1,3 +1,43 @@
 <h1>Interactive Map</h1>
 
-<google-map></google-map>
+<input class="input" type="text" placeholder="Av/ John Doe num 18, Lleida">
+<google-map height="500px" width="100%" [zoom]="12" [center]="center">
+  <map-marker [options]="markerOptions" [position]="userMarker.getPosition()">
+  </map-marker>
+  <map-marker [options]="parkMarkerOptions" [position]="marker1.getPosition()">
+  </map-marker>
+  <map-marker [options]="cofeeMarkerOptions" [position]="marker2.getPosition()">
+  </map-marker>
+  <map-marker [options]="hairMarkerOptions" [position]="marker3.getPosition()">
+  </map-marker>
+  <map-marker [options]="hotelMarkerOptions" [position]="marker4.getPosition()">
+  </map-marker>
+  <map-marker [options]="storeMarkerOptions" [position]="marker5.getPosition()">
+  </map-marker>
+  <map-marker [options]="toystoreMarkerOptions" [position]="marker6.getPosition()">
+  </map-marker>
+</google-map>
+
+<div class="button-container">
+  <button id="cafeBtn" class="button-off" (click)="toggleButtonClass('cafeBtn')">
+    <img src="/assets/mapIcons/samp/cafe_ico.svg" alt="">
+  </button>
+  <button id="hairBtn" class="button-on" (click)="toggleButtonClass('hairBtn')">
+    <img src="/assets/mapIcons/samp/cafe_ico.svg" alt="">
+  </button>
+  <button id="petstoreBtn" class="button-on" (click)="toggleButtonClass('petstoreBtn')">
+    <img src="/assets/mapIcons/samp/cafe_ico.svg" alt="">
+  </button>
+</div>
+
+<div class="button-container">
+  <button id="homeBtn" class="button-off" (click)="toggleButtonClass('homeBtn')">
+    <img src="/assets/mapIcons/samp/cafe_ico.svg" alt="">
+  </button>
+  <button id="storeBtn" class="button-on" (click)="toggleButtonClass('storeBtn')">
+    <img src="/assets/mapIcons/samp/cafe_ico.svg" alt="">
+  </button>
+  <button id="parkBtn" class="button-on" (click)="toggleButtonClass('parkBtn')">
+    <img src="/assets/mapIcons/samp/cafe_ico.svg" alt="">
+  </button>
+</div>

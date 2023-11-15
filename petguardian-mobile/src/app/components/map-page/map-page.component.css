@@ -1,0 +1,32 @@
+.input {
+    width: 100%;
+    margin: 25px 0px 25px 0px;
+    border-radius: 10px;
+}
+
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    margin: 25px 50px 25px 50px;
+}
+
+.button-on {
+    margin: 10px 0px 10px 0px;
+    padding: 30px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    border: none;
+    transition: background-color 0.3s ease;
+}
+
+.button-off {
+    margin: 10px 0px 10px 0px;
+    padding: 30px;
+    background-color: #a9dfaa;
+    border-radius: 10px;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+    /* Inner shadow */
+    border: none;
+    transition: background-color 0.3s ease;
+}
