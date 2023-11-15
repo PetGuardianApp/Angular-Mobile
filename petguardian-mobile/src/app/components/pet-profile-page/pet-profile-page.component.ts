@@ -151,6 +151,8 @@ export class PetProfilePageComponent {
           petData.profile_image = "/assets/img/dogImage2.jpg";
         } else if (petData.name == "Darwin") {
           petData.profile_image = "/assets/img/catImage.avif";
+        } else {
+          petData.profile_image = '/assets/img/logo_default.svg';
         }
       });
     }

@@ -11,6 +11,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
 import { HomeComponent } from './components/home/home.component';
+import { PetsListComponent } from './components/pets-list/pets-list.component';
 import { ToastrModule } from 'ngx-toastr';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
@@ -23,12 +24,18 @@ import { HttpClientModule } from '@angular/common/http';
 import { GoogleMapsModule } from '@angular/google-maps';
 import { PetProfilePageComponent } from './components/pet-profile-page/pet-profile-page.component';
 import { MenuPetAppointmentComponent } from './components/menu-pet-appointment/menu-pet-appointment.component'
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatInputModule } from '@angular/material/input'; 
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { DatePipe } from '@angular/common';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     HomeComponent,
+    PetsListComponent,
     SideNavComponent,
     SidenavLinkComponent,
     MapPageComponent,
@@ -51,9 +58,15 @@ import { MenuPetAppointmentComponent } from './components/menu-pet-appointment/m
     ToastrModule,
     GoogleMapsModule,
     NgbModule,
-    NgApexchartsModule
+    NgApexchartsModule,
+    BrowserAnimationsModule,
+    MatDatepickerModule,
+    MatInputModule,
+    MatNativeDateModule,
   ],
-  providers: [],
+  providers: [
+    DatePipe,
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
