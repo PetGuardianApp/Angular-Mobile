@@ -5,8 +5,12 @@ import { ToastrService } from 'ngx-toastr';
 import { FirebaseErrorService } from '../../services/firebase-error.service';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { StorageService } from '../../services/storage.service';
-import { Subscription } from 'rxjs';
+import { Subscription, async, asyncScheduler } from 'rxjs';
 import { ApiService } from '../../services/api.service';
+import { GoogleAuthProvider } from 'firebase/auth';
+import firebase from 'firebase/compat';
+
+
 
 @Component({
   selector: 'app-login',
@@ -23,7 +27,7 @@ export class LoginComponent {
 
   constructor(private fb:FormBuilder, private afAuth: AngularFireAuth, private router: Router,
      private fireBaseErrorService: FirebaseErrorService, private toastr:ToastrService,private storageService:StorageService,
-     private apiService:ApiService){
+     public apiService:ApiService){
       this.loginUser = this.fb.group({
         email: ['',[Validators.required, Validators.email]],
         password: ['',Validators.required]
@@ -61,6 +65,24 @@ export class LoginComponent {
     
   }
 
+  public GoogleAuth() {
+    return this.AuthLogin(new GoogleAuthProvider());
+  }
+  // Auth logic to run auth providers
+  AuthLogin(provider: firebase.auth.AuthProvider | GoogleAuthProvider) {
+    return this.afAuth
+      .signInWithPopup(provider)
+      .then((result) => {
+        this.storageService.isLoggedNext(true);
+      this.storageService.SessionAddStorage("uid", result.user?.uid);
+      console.log(result.user?.uid);
+      this.router.navigate(['home']);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+ 
   
 
 

@@ -4,6 +4,7 @@ import { ApiService } from 'src/app/services/api.service';
 import { Router } from '@angular/router';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { DatePipe } from '@angular/common';
+import { StorageService } from 'src/app/services/storage.service';
 
 @Component({
   selector: 'app-pets-list',
@@ -13,7 +14,7 @@ import { DatePipe } from '@angular/common';
 export class PetsListComponent {
   petModel: PetModel;
   savedPets: any[] = [];
-  constructor(public apiService: ApiService, private router: Router, private datePipe: DatePipe) { 
+  constructor(public apiService: ApiService, private router: Router, private datePipe: DatePipe, private storageService:StorageService) { 
     this.petModel = new PetModel;
     this.showData();
   }
@@ -40,7 +41,7 @@ export class PetsListComponent {
 
   registerPet(): void {
     // Code for registering a new pet (same as before)
-    this.petModel.client_id = "VPUnbME8Kt27zmF7q7ne"
+    this.petModel.client_id = this.storageService.SessionGetStorage("uid")
     this.apiService.postClientPets(this.petModel);
     location.reload()
     // Close the form
@@ -48,7 +49,7 @@ export class PetsListComponent {
   }
 
   showData(): void {
-    this.apiService.getClientPets("VPUnbME8Kt27zmF7q7ne").then((petsArray) => {
+    this.apiService.getClientPets(this.storageService.SessionGetStorage("uid")).then((petsArray) => {
       this.apiService.petsArray = petsArray;
       for (const pet of this.apiService.petsArray) {
         if (pet.profile_image == '') {

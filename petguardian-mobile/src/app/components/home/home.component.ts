@@ -94,13 +94,13 @@ export class HomeComponent implements OnInit {
   }
 
   showData() {
-
-    this.apiService.getSingleClient("VPUnbME8Kt27zmF7q7ne").then((client) => {
+    
+    this.apiService.getSingleClient(this.storageService.SessionGetStorage("uid")).then((client) => {
       this.client = client;
       console.log(client)
     });
-
-    this.apiService.getClientPets("VPUnbME8Kt27zmF7q7ne").then((petsArray) => {
+    //VPUnbME8Kt27zmF7q7ne
+    this.apiService.getClientPets(this.storageService.SessionGetStorage("uid")).then((petsArray) => {
       this.petsArray = petsArray;
       for (let i = 0; i < petsArray.length; i++) {
         if (petsArray[i].name == "Toby") {
@@ -116,7 +116,7 @@ export class HomeComponent implements OnInit {
       console.log(petsArray)
     });
 
-    this.apiService.getClientAppointments("VPUnbME8Kt27zmF7q7ne").then((clientAppointments) => {
+    this.apiService.getClientAppointments(this.storageService.SessionGetStorage("uid")).then((clientAppointments) => {
       this.clientAppointments = clientAppointments;
       let today_visit: Boolean = false;
       for (const element of this.clientAppointments) {

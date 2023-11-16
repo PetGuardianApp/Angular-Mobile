@@ -6,6 +6,10 @@ import { Observable, catchError, of, tap } from 'rxjs';
 import { StorageService } from './storage.service';
 import { PetModel } from '../models/pet.model';
 import { Router } from '@angular/router';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { GoogleAuthProvider } from 'firebase/auth';
+import firebase from 'firebase/compat';
+
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +19,22 @@ export class ApiService {
   private temp!: Observable<ClientModel[]>;
   public petsArray: PetModel[] = [];
 
-  constructor(private http: HttpClient, private storageService: StorageService) {
+  constructor(private http: HttpClient, private storageService: StorageService, public afAuth: AngularFireAuth) {
+  }
+
+  GoogleAuth() {
+    return this.AuthLogin(new GoogleAuthProvider());
+  }
+  // Auth logic to run auth providers
+  AuthLogin(provider: firebase.auth.AuthProvider | GoogleAuthProvider) {
+    return this.afAuth
+      .signInWithPopup(provider)
+      .then((result) => {
+        console.log('You have been successfully logged in!');
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
   getAppointments(uid: string): Promise<AppointmentModel[]> {
