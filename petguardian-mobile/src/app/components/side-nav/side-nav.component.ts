@@ -1,4 +1,8 @@
 import { Component } from '@angular/core';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { Router } from '@angular/router';
+import { Subscription, Observable } from 'rxjs';
+import { StorageService } from 'src/app/services/storage.service';
 /*
 import { StorageService } from '../services/storage.service';
 import { Observable, Subscription } from 'rxjs';
@@ -77,7 +81,7 @@ export class SideNavComponent {
     const iconElement = document.getElementById(imageId) as HTMLImageElement;
     iconElement.src = "/assets/menuIcons/" + iconName + "Off.svg";
   }
-  /*
+  
   subscription: Subscription;
   isLoggedIn$: Observable<boolean>;
   
@@ -92,11 +96,5 @@ export class SideNavComponent {
       });
   }
 
-  logout() {
-    this.afAuth.signOut().then(() => {
-      this.storageService.isLoggedNext(false);
-      this.router.navigate(['/'])
-    })
-  }
-  */
+  
 }

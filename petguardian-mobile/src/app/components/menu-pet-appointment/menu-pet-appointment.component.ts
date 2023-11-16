@@ -16,6 +16,6 @@ export class MenuPetAppointmentComponent {
     this.router.navigate(['petsList']);
   }
   redirectVisitPage() {
-    this.router.navigate(['appointment']);
+    this.router.navigate(['appointments']);
   }
 }

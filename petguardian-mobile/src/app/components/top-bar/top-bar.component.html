@@ -1,4 +1,4 @@
-<div class="barra" id="barra">
+<div class="barra" id="barra" *ngIf="isLoggedIn$ | async as isLoggedIn" >
     <p>PetGuardian App</p>
     <img src="/assets/menuIcons/userOff.svg" alt="User profile" (click)="togglePopup()">
     <div class="popup" *ngIf="showPopup">

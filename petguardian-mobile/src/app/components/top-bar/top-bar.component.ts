@@ -1,4 +1,8 @@
 import { Component, HostListener } from '@angular/core';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { Router } from '@angular/router';
+import { Subscription, Observable } from 'rxjs';
+import { StorageService } from 'src/app/services/storage.service';
 
 @Component({
   selector: 'app-top-bar',
@@ -8,6 +12,19 @@ import { Component, HostListener } from '@angular/core';
 export class TopBarComponent {
   prevScrollPos = window.pageYOffset;
   showPopup = false;
+
+  subscription: Subscription;
+  isLoggedIn$: Observable<boolean>;
+
+  constructor(private afAuth: AngularFireAuth, private router: Router, private storageService: StorageService) {
+    this.isLoggedIn$ = this.storageService.isLoggedIn;
+    this.subscription = this.storageService.isLoggedIn
+      .subscribe(data => {
+        if (data == false) {
+          this.router.navigate(['/']);
+        }
+      });
+  }
 
   togglePopup() {
     this.showPopup = !this.showPopup;

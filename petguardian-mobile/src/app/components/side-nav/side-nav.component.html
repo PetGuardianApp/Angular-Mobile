@@ -3,7 +3,7 @@
 -->
 
 
-<div class="mainSidenav">
+<div class="mainSidenav" *ngIf="isLoggedIn$ | async as isLoggedIn">
     <app-sidenav-link routerLink="home" (click)="changeIcon('dashboardIcon')">
         <img id="dashboardIcon" src="/assets/menuIcons/homeOn.svg" alt="dashboard">
     </app-sidenav-link>
