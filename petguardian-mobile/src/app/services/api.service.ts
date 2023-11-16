@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { GoogleAuthProvider } from 'firebase/auth';
 import firebase from 'firebase/compat';
+import { ToastrService } from 'ngx-toastr';
 
 
 @Injectable({
@@ -19,7 +20,7 @@ export class ApiService {
   private temp!: Observable<ClientModel[]>;
   public petsArray: PetModel[] = [];
 
-  constructor(private http: HttpClient, private storageService: StorageService, public afAuth: AngularFireAuth) {
+  constructor(private http: HttpClient, private storageService: StorageService, public afAuth: AngularFireAuth, private toastr:ToastrService) {
   }
 
   GoogleAuth() {
@@ -130,10 +131,13 @@ export class ApiService {
       this.http.post(this.apiUrl + 'pet/create', requestBody, {responseType: 'text'})
         .subscribe({
           next: data => {
+            pet.profile_image = '/assets/img/logo_default.svg';
             this.petsArray.push(pet);
+            this.toastr.success("Register completed","Congratulations!");
           },
           error: error => {
             console.error('There was an error!', error);
+            this.toastr.error("Error registering pet", "Error");
           }
 
 

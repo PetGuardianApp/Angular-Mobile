@@ -4,6 +4,7 @@ import { ApiService } from 'src/app/services/api.service';
 import { Router } from '@angular/router';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { DatePipe } from '@angular/common';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { StorageService } from 'src/app/services/storage.service';
 
 @Component({
@@ -12,10 +13,16 @@ import { StorageService } from 'src/app/services/storage.service';
   styleUrls: ['./pets-list.component.css']
 })
 export class PetsListComponent {
-  petModel: PetModel;
+  registerPetForm: FormGroup;
   savedPets: any[] = [];
-  constructor(public apiService: ApiService, private router: Router, private datePipe: DatePipe, private storageService:StorageService) { 
-    this.petModel = new PetModel;
+  constructor(public apiService: ApiService, private router: Router, private datePipe: DatePipe,
+    private fb:FormBuilder, private storageService:StorageService) { 
+      this.registerPetForm = this.fb.group({
+        name: ['',[Validators.required]],
+        type: ['',Validators.required],
+        breed: ['',[Validators.required]],
+        birth: ['',Validators.required],
+      })
     this.showData();
   }
 
@@ -41,9 +48,16 @@ export class PetsListComponent {
 
   registerPet(): void {
     // Code for registering a new pet (same as before)
-    this.petModel.client_id = this.storageService.SessionGetStorage("uid")
-    this.apiService.postClientPets(this.petModel);
-    location.reload()
+    var pet: PetModel = {
+      client_id: this.storageService.SessionGetStorage("uid"),
+      name: this.registerPetForm.value.name,
+      type: this.registerPetForm.value.type,
+      breed: this.registerPetForm.value.breed,
+      birth: this.registerPetForm.value.birth
+    };
+    console.log(pet);
+    
+    this.apiService.postClientPets(pet);
     // Close the form
     this.closeForm();
   }
@@ -78,6 +92,6 @@ export class PetsListComponent {
 
   onDateInput(event: MatDatepickerInputEvent<Date>): void {
     // Customize the date format as per your requirement
-    this.petModel.birth = this.datePipe.transform(event.value, 'ddMMyyyy') + '_00:00';
+    this.registerPetForm.value.birth = this.datePipe.transform(event.value, 'ddMMyyyy') + '_00:00';
   }
 }
