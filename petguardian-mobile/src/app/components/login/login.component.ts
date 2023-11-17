@@ -25,7 +25,7 @@ export class LoginComponent {
   subscription: Subscription;
 
 
-  constructor(private fb:FormBuilder, private afAuth: AngularFireAuth, private router: Router,
+  constructor(private fb:FormBuilder, private afAuth: AngularFireAuth, public router: Router,
      private fireBaseErrorService: FirebaseErrorService, private toastr:ToastrService,private storageService:StorageService,
      public apiService:ApiService){
       this.loginUser = this.fb.group({

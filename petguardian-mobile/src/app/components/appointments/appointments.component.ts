@@ -109,7 +109,7 @@ export class AppointmentsComponent {
     // Suscríbete al Observable después de inicializar eventList
     this.appointmentService.EventList.subscribe((events) => {
       this.events = events; // Actualiza la propiedad local con la lista de eventos
-      console.log(this.events);
+      
       var today:Date = new Date();
       this.events.forEach(element => {
         if(element.start>today){
@@ -194,6 +194,13 @@ export class AppointmentsComponent {
     });
   }
 
+
+  public delete_event(event : CalendarEvent){
+    this.displayed_events.splice(this.displayed_events.indexOf(event),1);
+    this.events.splice(this.events.indexOf(event),1);
+    this.appointmentService.deleteEvent(event);
+
+  }
 
 
 
