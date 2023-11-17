@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -84,9 +85,7 @@ export class MapPageComponent implements OnInit {
 
   apiKey = 'AIzaSyAouWao_x1bulJ9RkrfYpYP49u2a9RzSXw';
 
-  constructor() {
-
-  }
+  constructor(private httpClient: HttpClient) { }
 
   ngOnInit() {
     this.getPosition().then(position => {
@@ -186,18 +185,38 @@ export class MapPageComponent implements OnInit {
     });
   }
 
-  toggleButtonClass(buttonId: string): void {
+  toggleButtonClass(buttonId: string, marker: google.maps.Marker): void {
     var button = document.getElementById(buttonId);
     if (button instanceof HTMLButtonElement) {
-      const hasButtonOnClass = button.classList.contains('button-on');
-      
-      if (hasButtonOnClass) {
+      const isActive = button.classList.contains('button-on');
+
+      if (isActive) {
         button.classList.remove('button-on');
         button.classList.add('button-off');
+
+        marker.setVisible(true);
       } else {
         button.classList.add('button-on');
         button.classList.remove('button-off');
+
+        marker.setVisible(false);
       }
     }
+  }
+
+  obtainCoordByStr() {
+    const direccionInput = document.getElementById("searchInput") as HTMLInputElement;
+    const direccion = direccionInput.value;
+    const dirFormatQuery = encodeURIComponent(direccion);
+
+    const apiUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${dirFormatQuery}&key=${this.apiKey}`;
+    this.httpClient.get(apiUrl).subscribe((data: any) => {
+      if (data.status === 'OK' && data.results.length > 0) {
+        const location = data.results[0].geometry.location;
+        console.log(direccion, location)
+        this.center = location;
+        this.userMarker.setPosition(location);
+      }
+    });
   }
 }

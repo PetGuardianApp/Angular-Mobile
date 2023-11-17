@@ -10,8 +10,6 @@ import { ApiService } from '../../services/api.service';
 import { GoogleAuthProvider } from 'firebase/auth';
 import firebase from 'firebase/compat';
 
-
-
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -25,44 +23,57 @@ export class LoginComponent {
   subscription: Subscription;
 
 
-  constructor(private fb:FormBuilder, private afAuth: AngularFireAuth, private router: Router,
-     private fireBaseErrorService: FirebaseErrorService, private toastr:ToastrService,private storageService:StorageService,
-     public apiService:ApiService){
-      this.loginUser = this.fb.group({
-        email: ['',[Validators.required, Validators.email]],
-        password: ['',Validators.required]
-      })
+  constructor(private fb: FormBuilder, private afAuth: AngularFireAuth, private router: Router,
+    private fireBaseErrorService: FirebaseErrorService, private toastr: ToastrService, private storageService: StorageService,
+    public apiService: ApiService) {
+    this.loginUser = this.fb.group({
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', Validators.required]
+    })
 
-
-      this.subscription = this.storageService.isLoggedIn
+    this.subscription = this.storageService.isLoggedIn
       .subscribe(data => {
-        if(data==true){
-          
+        if (data == true) {
           this.router.navigate(['dashboard']);
-          
         }
       });
 
-      
-
-      
+    this.checkSession();
   }
 
-  login(){
-    const email = this.loginUser.value.email;
-    const password = this.loginUser.value.password;
+  checkSession() {
+    const email = localStorage.getItem('usrMail') || '';
+    const pswd = localStorage.getItem('usrPswd') || '';
 
-    this.afAuth.signInWithEmailAndPassword(email,password).then((user) => { //Realitza login
+    this.login(email, pswd);
+  }
+
+  login(localEmail: string, localPassword: string) {
+    var email;
+    var password;
+
+    if (localEmail == "" || localPassword == "") {
+      email = this.loginUser.value.email;
+      password = this.loginUser.value.password;
+
+      localStorage.setItem('usrMail', email);
+      localStorage.setItem('usrPswd', password);
+    } else {
+      email = localEmail;
+      password = localPassword;
+    }
+
+    console.log("Email: " + email + " Password: " + password);
+
+    this.afAuth.signInWithEmailAndPassword(email, password).then((user) => { //Realitza login
       this.storageService.isLoggedNext(true);
       this.storageService.SessionAddStorage("uid", user.user?.uid);
       this.router.navigate(['home']);
-
-      
     }).catch((error) => {
-      
-      this.toastr.error(this.fireBaseErrorService.firebaseError(error.code),'Error');
+
+      this.toastr.error(this.fireBaseErrorService.firebaseError(error.code), 'Error');
     })
-    
+
   }
 
   public GoogleAuth() {
@@ -74,16 +85,12 @@ export class LoginComponent {
       .signInWithPopup(provider)
       .then((result) => {
         this.storageService.isLoggedNext(true);
-      this.storageService.SessionAddStorage("uid", result.user?.uid);
-      console.log(result.user?.uid);
-      this.router.navigate(['home']);
+        this.storageService.SessionAddStorage("uid", result.user?.uid);
+        console.log(result.user?.uid);
+        this.router.navigate(['home']);
       })
       .catch((error) => {
         console.log(error);
       });
   }
- 
-  
-
-
 }
