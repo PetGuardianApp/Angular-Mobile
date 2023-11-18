@@ -1,58 +1,56 @@
 <div>
     <h1 style="text-align: center;">{{petInfo.name}}
-    <img id="petsIcon" src="/assets/menuIcons/edit.svg" alt="pets">
-    <img id="petsIcon" src="/assets/menuIcons/delete.svg" alt="pets">
-</h1>
+        <img id="petsIcon" src="/assets/menuIcons/edit.svg" alt="pets">
+        <img id="petsIcon" src="/assets/menuIcons/delete.svg" alt="pets">
+    </h1>
 </div>
-<div style ="text-align: center;">
+<div style="text-align: center;">
     <img src="{{petInfo.profile_image}}" style="width: 300px;">
 </div>
 
 <div class="module" style="column-count: 2;">
-    <h1>Personal information</h1>
+    <h1 i18n>Informació personal</h1>
     <div class="info-container">
-        <div >
+        <div>
             <div>
-                <label><b>Name:</b></label>
+                <label><b i18n>Nom:</b></label>
                 <span> {{petInfo.name}}</span><br>
 
-                <label><b>Bith date:</b></label>
+                <label><b i18n>Aniversari:</b></label>
                 <span> {{getBirth(petInfo.birth)}}</span><br>
 
-                <label for="petTypeBreed"><b>Type:</b></label>
+                <label for="petTypeBreed"><b i18n>Tipus:</b></label>
                 <span id="petTypeBreed"> {{petInfo.type}}, {{petInfo.breed}}</span><br>
             </div>
             <div>
-                <label for="petWeight"><b>Weight:</b></label>
+                <label for="petWeight"><b i18n>Pes:</b></label>
                 <span id="petWeight"> {{getLatestWeight()}}g</span><br>
 
-                <label for="petHeight"><b>Height:</b></label>
+                <label for="petHeight"><b i18n>Altura:</b></label>
                 <span id="petHeight"> {{petInfo.height}}cm</span><br>
             </div>
         </div>
 
         <div class="module" style="padding-right: 5px;">
-            <h1>Mandatory Vaccines</h1>
-            <ul *ngFor="let vaccine of petInfo.health_info?.vaccines"> 
+            <h1 i18n>Vacunes obligatories</h1>
+            <ul *ngFor="let vaccine of petInfo.health_info?.vaccines">
                 <li>{{vaccine}} ✓</li>
             </ul>
         </div>
     </div>
-    
+
 </div>
 <div class="module info-container" style="padding-right: 5px;">
-    <h1>Pet resume</h1>
+    <h1 i18n>Resum mascota</h1>
     <p style="text-align: justify;">{{petInfo.health_info?.observations}}
     </p>
 </div>
 <div class="module">
-    <h1>Statistics</h1>
+    <h1 i18n>Estadistiques</h1>
     <div class="image-container">
-
     </div>
     <div id="chart_div">
         <apx-chart [series]="chartOptions.series" [chart]="chartOptions.chart"></apx-chart>
         <apx-chart [series]="chartOptions2.series" [chart]="chartOptions2.chart"></apx-chart>
     </div>
-
 </div>

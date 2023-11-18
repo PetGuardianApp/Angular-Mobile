@@ -260,7 +260,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="2956670300604504058" datatype="html">
-        <source>Pet: </source>
+        <source>Mascota: </source>
         <target> Mascota: </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/home/home.component.html</context>
@@ -268,7 +268,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="6816326784504885062" datatype="html">
-        <source>Start:</source>
+        <source>Començament:</source>
         <target>Comienzo:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/home/home.component.html</context>
@@ -276,7 +276,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="1908524204371641029" datatype="html">
-        <source>End:</source>
+        <source>Finalitza:</source>
         <target>Termina:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/home/home.component.html</context>
@@ -297,6 +297,78 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/home/home.component.html</context>
           <context context-type="linenumber">38,40</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6114901922807294685" datatype="html">
+        <source>Informació personal</source>
+        <target>Informacion personal</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/pet-profile-page/pet-profile-page.component.html</context>
+          <context context-type="linenumber">12</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6464762764535793966" datatype="html">
+        <source>Nom:</source>
+        <target>Nombre:</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/pet-profile-page/pet-profile-page.component.html</context>
+          <context context-type="linenumber">16</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5489253752744652654" datatype="html">
+        <source>Aniversari:</source>
+        <target>Aniversario:</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/pet-profile-page/pet-profile-page.component.html</context>
+          <context context-type="linenumber">19</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7320266366861192638" datatype="html">
+        <source>Tipus:</source>
+        <target>Tipo:</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/pet-profile-page/pet-profile-page.component.html</context>
+          <context context-type="linenumber">22</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2150128897856771926" datatype="html">
+        <source>Pes:</source>
+        <target>Peso:</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/pet-profile-page/pet-profile-page.component.html</context>
+          <context context-type="linenumber">26</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6212906342143456070" datatype="html">
+        <source>Altura:</source>
+        <target>Altura:</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/pet-profile-page/pet-profile-page.component.html</context>
+          <context context-type="linenumber">29</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6545602027030508845" datatype="html">
+        <source>Vacunes obligatories</source>
+        <target>Vacunas obligatorias</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/pet-profile-page/pet-profile-page.component.html</context>
+          <context context-type="linenumber">35</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1920708540165879015" datatype="html">
+        <source>Resum mascota</source>
+        <target>Resumen mascotas</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/pet-profile-page/pet-profile-page.component.html</context>
+          <context context-type="linenumber">44</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7354022482735410961" datatype="html">
+        <source>Estadistiques</source>
+        <target>Estadisticas</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/pet-profile-page/pet-profile-page.component.html</context>
+          <context context-type="linenumber">49</context>
         </context-group>
       </trans-unit>
     </body>
