@@ -1,8 +1,8 @@
-<h1>
+<h1 i18n>
     Benvingut {{client.name}}
 </h1>
 <h2> {{ currentDate | date: 'EEEE' }}, {{ currentDate | date: 'd' }} {{ currentDate | date: 'MMMM' }}</h2>
-<h1>
+<h1 i18n>
     Visites per avui!
 </h1>
 <ng-container *ngIf="isTodayVisits.length > 0; then thenBlock else elseBlock">
@@ -19,9 +19,9 @@
                     </div>
                     <div style="text-align: left;">
                         <ul>
-                            <li><b>Pet: </b> {{VisitPet.name}}</li>
-                            <li><b>Start:</b> {{formatStartDate(visit.start_date || '')}}</li>
-                            <li><b>End:</b> {{formatStartDate(visit.end_date || '')}}</li>
+                            <li><b i18n>Pet: </b> {{VisitPet.name}}</li>
+                            <li><b i18n>Start:</b> {{formatStartDate(visit.start_date || '')}}</li>
+                            <li><b i18n>End:</b> {{formatStartDate(visit.end_date || '')}}</li>
 
                         </ul>
                     </div>
@@ -32,10 +32,10 @@
 </ng-template>
 <ng-template #elseBlock>
     <div>
-        <p>No tens visites per avui</p>
+        <p i18n>No tens visites per avui</p>
     </div>
 </ng-template>
-<h1>
+<h1 i18n>
     Les teves mascotes
 </h1>
 <div *ngFor="let pet of petsArray" class="module" style="text-align: center;">
