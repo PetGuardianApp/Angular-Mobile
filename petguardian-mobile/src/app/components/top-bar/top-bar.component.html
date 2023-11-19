@@ -1,8 +1,13 @@
-<div class="barra" id="barra" *ngIf="isLoggedIn$ | async as isLoggedIn" >
+<div class="barra" id="barra">
     <p>PetGuardian App</p>
-    <img src="/assets/menuIcons/userOff.svg" alt="User profile" (click)="togglePopup()">
+    <div>
+        <img src="/assets/menuIcons/cat.png" alt="User profile" (click)="togglePopup()">
+        <img src="/assets/menuIcons/espana.png" alt="User profile" (click)="togglePopup()">
+        <img src="/assets/menuIcons/reino-unido.png" alt="User profile" (click)="togglePopup()">
+        <img id="profileIcon" src="/assets/menuIcons/userOff.svg" alt="User profile" (click)="togglePopup()">
+    </div>
     <div class="popup" *ngIf="showPopup">
-        <a href="#">User profile</a>
-        <a href="#">Logout</a>
+        <a (click)="redirectProfile()">User profile</a>
+        <a (click)="logout()">Logout</a>
     </div>
 </div>

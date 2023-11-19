@@ -42,7 +42,7 @@
                 </span>
               </div>
               <div class="form-floating mb-3">
-                <input type="number" formControlName="phone" class="form-control" placeholder="Phone">
+                <input type="tel" formControlName="phone" class="form-control" placeholder="Phone">
                 <label>Phone number</label>
                 <span *ngIf="registerUser.get('phone')?.hasError('required')  && registerUser.get('phone')?.touched" class="text-danger errorLabel">
                  <strong>Phone number</strong> is required

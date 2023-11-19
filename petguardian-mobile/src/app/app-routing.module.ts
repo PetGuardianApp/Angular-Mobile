@@ -9,6 +9,9 @@ import { AppointmentsComponent } from './components/appointments/appointments.co
 import { HomeComponent } from './components/home/home.component';
 import { PetProfilePageComponent } from './components/pet-profile-page/pet-profile-page.component';
 import { MenuPetAppointmentComponent } from './components/menu-pet-appointment/menu-pet-appointment.component';
+import { QrComponent } from './components/qr/qr.component';
+import { ChatComponent } from './components/chat/chat.component';
+import { UserProfileComponent } from './components/user-profile/user-profile.component';
 const routes: Routes = [
   {path: '', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
@@ -19,6 +22,9 @@ const routes: Routes = [
   {path: 'pet-profile', component: PetProfilePageComponent},
   {path: 'menu-pet-appointment', component: MenuPetAppointmentComponent},
   {path: 'petsList', component: PetsListComponent},
+  {path: 'qr', component: QrComponent},
+  {path: 'chat', component: ChatComponent},
+  {path: 'profile', component: UserProfileComponent},
 ];
 
 @NgModule({

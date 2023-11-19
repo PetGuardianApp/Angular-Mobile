@@ -1,5 +1,5 @@
-<app-top-bar></app-top-bar>
+<app-top-bar *ngIf="isLoggedIn$ | async as isLoggedIn"></app-top-bar>
 <div class="content">
   <router-outlet></router-outlet>
 </div>
-<app-side-nav></app-side-nav>
+<app-side-nav *ngIf="isLoggedIn$ | async as isLoggedIn"></app-side-nav>

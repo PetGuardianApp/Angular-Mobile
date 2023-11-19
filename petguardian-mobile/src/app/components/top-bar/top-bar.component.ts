@@ -13,17 +13,42 @@ export class TopBarComponent {
   prevScrollPos = window.pageYOffset;
   showPopup = false;
 
-  subscription: Subscription;
-  isLoggedIn$: Observable<boolean>;
-
   constructor(private afAuth: AngularFireAuth, private router: Router, private storageService: StorageService) {
-    this.isLoggedIn$ = this.storageService.isLoggedIn;
-    this.subscription = this.storageService.isLoggedIn
-      .subscribe(data => {
-        if (data == false) {
-          this.router.navigate(['/']);
-        }
-      });
+  }
+
+  logout() {
+    this.afAuth.signOut().then(() => {
+      this.storageService.isLoggedNext(false);
+      localStorage.clear();
+      this.router.navigate(['/']);
+      this.togglePopup();
+    })
+  }
+
+  redirectProfile() {
+    this.router.navigate(['profile']);
+    this.togglePopup();
+    this.changeMenuIcons();
+  }
+
+  changeMenuIcons() {
+    // Enable profile icon
+    const profile = document.getElementById("profileIcon") as HTMLImageElement;
+    profile.src = "/assets/menuIcons/userOn.svg";
+
+    // Disable all icons
+    const pets = document.getElementById("petsIcon") as HTMLImageElement;
+    const hopme = document.getElementById("dashboardIcon") as HTMLImageElement;
+    const map = document.getElementById("mapIcon") as HTMLImageElement;
+    const chat = document.getElementById("chatIcon") as HTMLImageElement;
+    const qr = document.getElementById("qrIcon") as HTMLImageElement;
+
+    pets.src = "/assets/menuIcons/dogOff.svg";
+    hopme.src = "/assets/menuIcons/homeOff.svg";
+    map.src = "/assets/menuIcons/mapOff.svg";
+    chat.src = "/assets/menuIcons/chatOff.svg";
+    qr.src = "/assets/menuIcons/qrOff.svg";
+
   }
 
   togglePopup() {

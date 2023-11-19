@@ -1,5 +1,5 @@
 <h1>Interactive Map</h1>
-
+<h2>Find a specific location</h2>
 <input id="searchInput" class="input" type="search" placeholder="Av/ John Doe num 18, Lleida" (keyup.enter)="obtainCoordByStr()">
 <google-map height="500px" width="100%" [zoom]="12" [center]="center">
   <map-marker id="" [options]="markerOptions" [position]="userMarker.getPosition()">

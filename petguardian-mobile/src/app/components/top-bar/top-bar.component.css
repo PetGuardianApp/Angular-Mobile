@@ -15,15 +15,10 @@
   .barra p {
     margin: 0;
   }
-  
-  .perfil {
-    position: relative;
-  }
-  
-  .perfil img {
+
+  img {
     width: 30px;
-    height: auto;
-    cursor: pointer;
+    margin-left: 20px;
   }
   
   .popup {
@@ -50,3 +45,6 @@
     display: block;
   }
   
+  #profileIcon{
+    width: 30px;
+  }

@@ -12,6 +12,8 @@ import { StorageService } from 'src/app/services/storage.service';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
+  contentIsLoading: boolean = true;
+  
   constructor(private router: Router, private apiService: ApiService,
     private storageService: StorageService) {
     this.showData();
@@ -113,6 +115,7 @@ export class HomeComponent implements OnInit {
           petsArray[i].profile_image = '/assets/img/logo_default.svg';
         }
       }
+      this.contentIsLoading = false;
       console.log(petsArray)
     });
 

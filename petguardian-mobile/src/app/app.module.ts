@@ -33,6 +33,11 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatInputModule } from '@angular/material/input'; 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DatePipe } from '@angular/common';
+import { ChatComponent } from './components/chat/chat.component';
+import { QrComponent } from './components/qr/qr.component';
+import { UserProfileComponent } from './components/user-profile/user-profile.component';
+import { LoadingSpinnerComponent } from './components/loading-spinner/loading-spinner.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [
@@ -48,6 +53,10 @@ import { DatePipe } from '@angular/common';
     AppointmentsComponent,
     PetProfilePageComponent,
     MenuPetAppointmentComponent,
+    ChatComponent,
+    QrComponent,
+    UserProfileComponent,
+    LoadingSpinnerComponent,
   ],
   imports: [
     AngularFireModule.initializeApp(environment.firebase),
@@ -73,6 +82,7 @@ import { DatePipe } from '@angular/common';
     MatDatepickerModule,
     MatInputModule,
     MatNativeDateModule,
+    MatProgressSpinnerModule
   ],
   providers: [
     DatePipe,

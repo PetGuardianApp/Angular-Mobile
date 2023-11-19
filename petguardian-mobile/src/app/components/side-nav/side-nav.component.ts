@@ -1,14 +1,4 @@
 import { Component } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { Router } from '@angular/router';
-import { Subscription, Observable } from 'rxjs';
-import { StorageService } from 'src/app/services/storage.service';
-/*
-import { StorageService } from '../services/storage.service';
-import { Observable, Subscription } from 'rxjs';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { Router } from '@angular/router';
-*/
 
 @Component({
   selector: 'app-side-nav',
@@ -18,6 +8,10 @@ import { Router } from '@angular/router';
 export class SideNavComponent {
 
   changeIcon(iconToAct: string) {
+    // Disable profile icon
+    const profile = document.getElementById("profileIcon") as HTMLImageElement;
+    profile.src = "/assets/menuIcons/userOff.svg";
+
     switch (iconToAct) {
       case "dashboardIcon":
         // Enable menu
@@ -81,20 +75,4 @@ export class SideNavComponent {
     const iconElement = document.getElementById(imageId) as HTMLImageElement;
     iconElement.src = "/assets/menuIcons/" + iconName + "Off.svg";
   }
-  
-  subscription: Subscription;
-  isLoggedIn$: Observable<boolean>;
-  
-  constructor(private afAuth: AngularFireAuth, private router: Router, 
-    private storageService: StorageService) {
-    this.isLoggedIn$ = this.storageService.isLoggedIn;
-    this.subscription = this.storageService.isLoggedIn
-      .subscribe(data => {
-        if (data == false) {
-          this.router.navigate(['/']);
-        }
-      });
-  }
-
-  
 }

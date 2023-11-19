@@ -5,6 +5,7 @@
 <h1>
     Visites per avui!
 </h1>
+
 <ng-container *ngIf="isTodayVisits.length > 0; then thenBlock else elseBlock">
 </ng-container>
 <ng-template #thenBlock>
@@ -38,6 +39,9 @@
 <h1>
     Les teves mascotes
 </h1>
+<div *ngIf="contentIsLoading" class="spinnerDiv">
+    <mat-spinner></mat-spinner>
+</div>
 <div *ngFor="let pet of petsArray" class="module" style="text-align: center;">
     <div class="image-container" (click)="redirectPetPage(pet.id || '')" id="{{pet.id}}">
         <img width="50px" src="{{pet.profile_image}}" alt="Pet">

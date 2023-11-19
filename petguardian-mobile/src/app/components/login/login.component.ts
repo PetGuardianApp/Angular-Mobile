@@ -5,7 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { FirebaseErrorService } from '../../services/firebase-error.service';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { StorageService } from '../../services/storage.service';
-import { Subscription, async, asyncScheduler } from 'rxjs';
+import { Subscription, async, asyncScheduler, from } from 'rxjs';
 import { ApiService } from '../../services/api.service';
 import { GoogleAuthProvider } from 'firebase/auth';
 import firebase from 'firebase/compat';
@@ -45,23 +45,25 @@ export class LoginComponent {
     const email = localStorage.getItem('usrMail') || '';
     const pswd = localStorage.getItem('usrPswd') || '';
 
-    this.login(email, pswd);
+    this.login(email, pswd, true);
   }
 
-  login(localEmail: string, localPassword: string) {
-    var email;
-    var password;
+  login(localEmail: string, localPassword: string, fromCookies: boolean) {
+    var email = this.loginUser.value.email;
+    var password = this.loginUser.value.password;
 
-    if (localEmail == "" || localPassword == "") {
-      email = this.loginUser.value.email;
-      password = this.loginUser.value.password;
-
-      localStorage.setItem('usrMail', email);
-      localStorage.setItem('usrPswd', password);
-    } else {
-      email = localEmail;
-      password = localPassword;
+    if (fromCookies) {
+      if (localEmail == "" || localPassword == "") {
+        return;
+      } else {
+        email = localEmail;
+        password = localPassword;
+      }
     }
+
+    // Set localstorage info
+    localStorage.setItem('usrMail', email);
+    localStorage.setItem('usrPswd', password);
 
     console.log("Email: " + email + " Password: " + password);
 
