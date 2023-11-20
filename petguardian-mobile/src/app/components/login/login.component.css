@@ -2,7 +2,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 100vh;   
 }
 .logo{
     height: 130px;
@@ -12,7 +11,37 @@
 .body{
     width: 100%;
     max-width: 330px;
-    margin: auto;
-    padding: 30px;
     text-align: center;
+}
+
+.btn-google{
+    background-color:white;
+    color : #444;
+    width: 100%;
+    font-weight: 500;
+}
+
+.btn-google img{
+    width: 20px;
+    margin-bottom: 4px;
+    margin-right: 14px;
+}
+
+.btn-reg{
+    background-color: #9d9d9d;
+    color: white;
+    width: 100%;
+    font-weight: 500;
+}
+
+.btn-google img{
+    width: 20px;
+    margin-bottom: 4px;
+    margin-right: 14px;
+}
+
+.btn-reg{
+    background-color: #9d9d9d;
+    color: white;
+    width: 100%;
 }

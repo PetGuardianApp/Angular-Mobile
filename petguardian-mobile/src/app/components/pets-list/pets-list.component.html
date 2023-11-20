@@ -1,0 +1,35 @@
+<button class="open-button" (click)="openForm()">+</button>
+
+<div class="form-popup" id="myForm">
+    <form (ngSubmit)="registerPet()" [formGroup]="registerPetForm" class="form-container">
+        <h1>Register a new pet</h1>
+
+        <input type="text" placeholder="Enter Pet name" formControlName="name" required>
+
+        <input type="text" placeholder="Enter pet type" formControlName="type" required>
+
+        <input type="text" placeholder="Enter Pet breed" formControlName="breed" required>
+
+        <mat-form-field>
+            <mat-label>Enter pet birth</mat-label>
+            <input formControlName="birth" type="date" matInput [matDatepicker]="picker" (click)="picker.open()" (dateInput)="onDateInput($event)" readonly required>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+
+        <button type="submit" class="btn" [disabled]="registerPetForm.invalid">Register</button>
+        <button type="button" class="btn cancel" (click)="closeForm()">Close</button>
+    </form>
+
+</div>
+<h1>
+    Your pets
+</h1>
+<div *ngFor="let pet of apiService.petsArray" class="module" style="text-align: center;">
+    <div class="image-container" (click)="redirectPetPage(pet.id || '')" id="{{pet.id}}">
+        <img width="50px" src="{{pet.profile_image}}" alt="Pet">
+        <div class="overlay">
+            <p>{{pet.name}}</p>
+        </div>
+    </div>
+</div>

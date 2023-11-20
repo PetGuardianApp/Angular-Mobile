@@ -1,0 +1,71 @@
+import { Component, HostListener } from '@angular/core';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { Router } from '@angular/router';
+import { Subscription, Observable } from 'rxjs';
+import { StorageService } from 'src/app/services/storage.service';
+
+@Component({
+  selector: 'app-top-bar',
+  templateUrl: './top-bar.component.html',
+  styleUrls: ['./top-bar.component.css']
+})
+export class TopBarComponent {
+  prevScrollPos = window.pageYOffset;
+  showPopup = false;
+
+  constructor(private afAuth: AngularFireAuth, private router: Router, private storageService: StorageService) {
+  }
+
+  logout() {
+    this.afAuth.signOut().then(() => {
+      this.storageService.isLoggedNext(false);
+      localStorage.clear();
+      this.router.navigate(['/']);
+      this.togglePopup();
+    })
+  }
+
+  redirectProfile() {
+    this.router.navigate(['profile']);
+    this.togglePopup();
+    this.changeMenuIcons();
+  }
+
+  changeMenuIcons() {
+    // Enable profile icon
+    const profile = document.getElementById("profileIcon") as HTMLImageElement;
+    profile.src = "/assets/menuIcons/userOn.svg";
+
+    // Disable all icons
+    const pets = document.getElementById("petsIcon") as HTMLImageElement;
+    const hopme = document.getElementById("dashboardIcon") as HTMLImageElement;
+    const map = document.getElementById("mapIcon") as HTMLImageElement;
+    const chat = document.getElementById("chatIcon") as HTMLImageElement;
+    const qr = document.getElementById("qrIcon") as HTMLImageElement;
+
+    pets.src = "/assets/menuIcons/dogOff.svg";
+    hopme.src = "/assets/menuIcons/homeOff.svg";
+    map.src = "/assets/menuIcons/mapOff.svg";
+    chat.src = "/assets/menuIcons/chatOff.svg";
+    qr.src = "/assets/menuIcons/qrOff.svg";
+
+  }
+
+  togglePopup() {
+    this.showPopup = !this.showPopup;
+  }
+
+  @HostListener('window:scroll', ['$event'])
+  onWindowScroll() {
+    const currentScrollPos = window.pageYOffset;
+
+    if (this.prevScrollPos > currentScrollPos) {
+      document.getElementById('barra')!.style.top = '0';
+    } else {
+      document.getElementById('barra')!.style.top = '-60px';
+      this.showPopup = false; // Oculta el popup al hacer scroll hacia abajo
+    }
+
+    this.prevScrollPos = currentScrollPos;
+  }
+}

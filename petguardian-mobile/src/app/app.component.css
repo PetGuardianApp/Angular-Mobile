@@ -11,5 +11,7 @@
 .content {
     flex-grow: 1;
     padding: 20px;
+    padding-top: 75px;
+    padding-bottom: 85px;
     background-color: rgb(237, 237, 237);
 }
