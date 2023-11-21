@@ -4,12 +4,6 @@
   "newProjectRoot": "projects",
   "projects": {
     "petguardian-mobile": {
-      "i18n": {
-        "sourceLocale": "en-US",
-        "locales": {
-          "es-ES": "src/locale/messages.es.xlf"
-        }
-      },
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -19,9 +13,6 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "localize":[
-              "es-ES"
-            ],
             "outputPath": "dist/petguardian-mobile",
             "index": "src/index.html",
             "main": "src/main.ts",
