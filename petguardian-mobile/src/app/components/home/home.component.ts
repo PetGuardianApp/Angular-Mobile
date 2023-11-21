@@ -5,11 +5,12 @@ import { ClientModel } from 'src/app/models/client.model';
 import { PetModel } from 'src/app/models/pet.model';
 import { ApiService } from 'src/app/services/api.service';
 import { StorageService } from 'src/app/services/storage.service';
+import { TranslocoModule } from '@ngneat/transloco';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit {
   contentIsLoading: boolean = true;

@@ -38,6 +38,7 @@ import { QrComponent } from './components/qr/qr.component';
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
 import { LoadingSpinnerComponent } from './components/loading-spinner/loading-spinner.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { TranslocoRootModule } from './transloco-root.module';
 
 @NgModule({
   declarations: [
@@ -82,7 +83,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     MatDatepickerModule,
     MatInputModule,
     MatNativeDateModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    TranslocoRootModule
   ],
   providers: [
     DatePipe,

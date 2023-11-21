@@ -1,9 +1,9 @@
 <div class="barra" id="barra">
     <p>PetGuardian App</p>
     <div>
-        <img src="/assets/menuIcons/cat.png" alt="User profile" (click)="togglePopup()">
-        <img src="/assets/menuIcons/espana.png" alt="User profile" (click)="togglePopup()">
-        <img src="/assets/menuIcons/reino-unido.png" alt="User profile" (click)="togglePopup()">
+        <img src="/assets/menuIcons/cat.png" alt="User profile" (click)="swapLang('cat')">
+        <img src="/assets/menuIcons/espana.png" alt="User profile" (click)="swapLang('es')">
+        <img src="/assets/menuIcons/reino-unido.png" alt="User profile" (click)="swapLang('en')">
         <img id="profileIcon" src="/assets/menuIcons/userOff.svg" alt="User profile" (click)="togglePopup()">
     </div>
     <div class="popup" *ngIf="showPopup">

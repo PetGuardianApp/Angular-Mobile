@@ -36,8 +36,10 @@
         <p i18n>No tens visites per avui</p>
     </div>
 </ng-template>
-<h1 i18n>
-    Les teves mascotes
+<h1>
+    
+    {{'your_pets' | transloco}}
+    
 </h1>
 <div *ngIf="contentIsLoading" class="spinnerDiv">
     <mat-spinner></mat-spinner>

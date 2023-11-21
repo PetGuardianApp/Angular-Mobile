@@ -3,6 +3,7 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Router } from '@angular/router';
 import { Subscription, Observable } from 'rxjs';
 import { StorageService } from 'src/app/services/storage.service';
+import { TranslocoService } from '@ngneat/transloco';
 
 @Component({
   selector: 'app-top-bar',
@@ -13,7 +14,8 @@ export class TopBarComponent {
   prevScrollPos = window.pageYOffset;
   showPopup = false;
 
-  constructor(private afAuth: AngularFireAuth, private router: Router, private storageService: StorageService) {
+  constructor(private afAuth: AngularFireAuth, private router: Router, private storageService: StorageService,
+    private translocoService:TranslocoService) {
   }
 
   logout() {
@@ -53,6 +55,10 @@ export class TopBarComponent {
 
   togglePopup() {
     this.showPopup = !this.showPopup;
+  }
+
+  public swapLang(lang:string) {
+    this.translocoService.setActiveLang(lang);
   }
 
   @HostListener('window:scroll', ['$event'])
