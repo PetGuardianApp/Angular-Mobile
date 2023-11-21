@@ -1,3 +1,10 @@
 {
-    "your_pets": "Les teves mascotes"
+    "your_pets": "Les teves mascotes",
+    "register_pet": "Registrar una nova mascota",
+    "pet_name": "Introdueix el nom de la mascota",
+    "pet_type": "Introdueix el tipus de mascota",
+    "pet_breed": "Introdueix la raça de la mascota",
+    "pet_birth": "Introdueix la data de naixement de la mascota",
+    "register_button": "Registrar",
+    "close_button": "Tancar"
 }

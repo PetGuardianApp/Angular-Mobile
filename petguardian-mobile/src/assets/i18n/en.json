@@ -1,3 +1,10 @@
 {
-    "your_pets": "Your Pets"
+    "your_pets": "Your Pets",
+    "register_pet": "Register new pet",
+    "pet_name": "Enter pet name",
+    "pet_type": "Enter pet type",
+    "pet_breed": "Enter pet breed",
+    "pet_birth": "Enter pet birth",
+    "register_button": "Register",
+    "close_button": "Close"
 }

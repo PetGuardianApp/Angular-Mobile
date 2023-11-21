@@ -1,3 +1,10 @@
 {
-    "your_pets": "Tus mascotas"
+    "your_pets": "Tus mascotas",
+    "register_pet": "Registrar nueva mascota",
+    "pet_name": "Ingresar nombre de la mascota",
+    "pet_type": "Ingresar tipo de mascota",
+    "pet_breed": "Ingresar raza de la mascota",
+    "pet_birth": "Ingresar fecha de nacimiento de la mascota",
+    "register_button": "Registrar",
+    "close_button": "Cerrar"
 }
