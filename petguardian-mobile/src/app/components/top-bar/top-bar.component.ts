@@ -83,7 +83,7 @@ export class TopBarComponent {
     }
   }
 
-  @HostListener('window:scroll', ['$event'])
+ /* @HostListener('window:scroll', ['$event'])
   onWindowScroll() {
     const currentScrollPos = window.pageYOffset;
 
@@ -95,5 +95,5 @@ export class TopBarComponent {
     }
 
     this.prevScrollPos = currentScrollPos;
-  }
+  }*/
 }

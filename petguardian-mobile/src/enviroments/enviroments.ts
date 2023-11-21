@@ -1,6 +1,6 @@
 export const environment = {
     production: false,
-    baseUrl:'http://localhost:4200',
+    baseUrl:'https://petguardian-mobile.web.app',
     firebase: {
         apiKey: "AIzaSyDZMfeKR9MBcMxMHIf9uJ79ypwh1PdLqnc",
         authDomain: "petguardian-mobile.firebaseapp.com",
