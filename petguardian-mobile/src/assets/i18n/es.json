@@ -6,5 +6,20 @@
     "pet_breed": "Ingresar raza de la mascota",
     "pet_birth": "Ingresar fecha de nacimiento de la mascota",
     "register_button": "Registrar",
-    "close_button": "Cerrar"
+    "close_button": "Cerrar",
+    "welcome":"Bienvenido",
+    "today_visits": "Visitas para hoy!",
+    "pet":"Mascota:",
+    "start":"Empieza:",
+    "end":"Final:",
+    "no_visits":"No tienes visitas para hoy!",
+    "personal_info":"Informacion personal",
+    "pet_profile_name":"Nombre:",
+    "pet_profile_birth":"Aniversario:",
+    "pet_profile_type":"Tipo:",
+    "pet_weight":"Peso:",
+    "pet_height":"Altura:",
+    "pet_vaccines":"Vacunas obligatorias",
+    "pet_resume":"Resumen mascota",
+    "pet_statistics":"Estadisticas"
 }

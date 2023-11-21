@@ -5,7 +5,8 @@ import { ClientModel } from 'src/app/models/client.model';
 import { PetModel } from 'src/app/models/pet.model';
 import { ApiService } from 'src/app/services/api.service';
 import { StorageService } from 'src/app/services/storage.service';
-import { TranslocoModule } from '@ngneat/transloco';
+import { TranslocoService } from '@ngneat/transloco';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-home',
@@ -16,7 +17,7 @@ export class HomeComponent implements OnInit {
   contentIsLoading: boolean = true;
   
   constructor(private router: Router, private apiService: ApiService,
-    private storageService: StorageService) {
+    private storageService: StorageService, private translocoService:TranslocoService) {
     this.showData();
     this.client = new ClientModel;
     this.petsArray = [];
@@ -32,6 +33,7 @@ export class HomeComponent implements OnInit {
   public ifvisit: Boolean;
   public isTodayVisits: string[];
   public VisitPet: PetModel;
+
   ngOnInit() {
   }
 
