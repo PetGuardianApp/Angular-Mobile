@@ -15,7 +15,7 @@ export class TopBarComponent {
   showPopup = false;
 
   constructor(private afAuth: AngularFireAuth, private router: Router, private storageService: StorageService,
-    private translocoService:TranslocoService) {
+    private translocoService: TranslocoService) {
   }
 
   logout() {
@@ -57,8 +57,30 @@ export class TopBarComponent {
     this.showPopup = !this.showPopup;
   }
 
-  public swapLang(lang:string) {
+  public swapLang(lang: string) {
     this.translocoService.setActiveLang(lang);
+
+    const catIcon = document.getElementById("catIcon") as HTMLImageElement;
+    const esIcon = document.getElementById("esIcon") as HTMLImageElement;
+    const enIcon = document.getElementById("enIcon") as HTMLImageElement;
+
+    switch (lang) {
+      case 'cat':
+        catIcon.width = 30;
+        esIcon.width = 18;
+        enIcon.width = 18;
+        break;
+      case 'es':
+        catIcon.width = 18;
+        esIcon.width = 30;
+        enIcon.width = 18;
+        break;
+      case 'en':
+        catIcon.width = 18;
+        esIcon.width = 18;
+        enIcon.width = 30;
+        break;
+    }
   }
 
   @HostListener('window:scroll', ['$event'])

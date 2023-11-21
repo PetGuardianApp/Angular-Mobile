@@ -21,5 +21,19 @@
     "pet_height":"Altura:",
     "pet_vaccines":"Vacunas obligatorias",
     "pet_resume":"Resumen mascota",
-    "pet_statistics":"Estadisticas"
+    "pet_statistics":"Estadisticas",
+    "interactive_maps": "Mapa Interactivo",
+    "find_location": "Buscar Ubicación",
+    "petstore": "Tienda de Mascotas",
+    "park": "Parque",
+    "cafe": "Café Pet Friendly",
+    "hotel": "Hotel para Mascotas",
+    "hairdresser": "Peluquería para Mascotas",
+    "toy": "Tienda de Juguetes",
+    "chat_underdev": "Página de Chat en Desarrollo",
+    "stay_tunned": "¡Mantente atento, muchas características próximamente!",
+    "qr_underdev": "Página QR en Desarrollo",
+    "user_underdev": "Perfil de usuario en Desarrollo",
+    "user_profile_popup": "Perfil de Usuario",
+    "logout_popup": "Cerrar Sesión"
 }

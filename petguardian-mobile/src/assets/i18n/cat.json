@@ -21,5 +21,19 @@
     "pet_breed": "Introdueix la raça de la mascota",
     "pet_birth": "Introdueix la data de naixement de la mascota",
     "register_button": "Registrar",
-    "close_button": "Tancar"
+    "close_button": "Tancar",
+    "interactive_maps": "Mapa Interactiu",
+    "find_location": "Trobar Ubicació",
+    "petstore": "Botiga de Mascotes",
+    "park": "Parc",
+    "cafe": "Cafè Pet Friendly",
+    "hotel": "Hotel per a Mascotes",
+    "hairdresser": "Perruqueria per a Mascotes",
+    "toy": "Botiga de Joguines",
+    "chat_underdev": "Pàgina de Xat en Desenvolupament",
+    "stay_tunned": "Mantingueu-vos a l'aguait, moltes característiques properament!",
+    "qr_underdev": "Pàgina QR en Desenvolupament",
+    "user_underdev": "Perfil d'usuari en Desenvolupament",
+    "user_profile_popup": "Perfil d'Usuari",
+    "logout_popup": "Tancar Sessió"
 }
