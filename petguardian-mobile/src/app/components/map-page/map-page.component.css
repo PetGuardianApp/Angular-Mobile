@@ -1,14 +1,12 @@
-.input {
-    width: 100%;
-    margin: 25px 0px 25px 0px;
-    border-radius: 10px;
-}
-
 .button-container {
     display: flex;
     justify-content: space-between;
     margin: 25px 10px 25px 10px;
     text-align: center;
+}
+
+.button-container > div {
+    flex: 0 0 calc(33.33% - 10px); /* 33.33% para equitatividad y -10px de margen entre elementos */
 }
 
 .button-container img {
