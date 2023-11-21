@@ -205,6 +205,7 @@ export class MapPageComponent implements OnInit {
   }
 
   obtainCoordByStr() {
+    alert("executing...")
     const direccionInput = document.getElementById("searchInput") as HTMLInputElement;
     const direccion = direccionInput.value;
     const dirFormatQuery = encodeURIComponent(direccion);

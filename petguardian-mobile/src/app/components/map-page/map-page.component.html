@@ -1,6 +1,6 @@
 <h1>{{ 'interactive_maps' | transloco }}</h1>
 <h2>{{ 'find_location' | transloco }}</h2>
-<input id="searchInput" class="input" placeholder="Av/ John Doe 1234" (keyup.enter)="obtainCoordByStr()">
+<input id="searchInput" class="input" placeholder="Av/ John Doe 1234" (keydown.enter)="obtainCoordByStr()">
 
 <google-map height="500px" width="100%" [zoom]="12" [center]="center">
   <map-marker id="" [options]="markerOptions" [position]="userMarker.getPosition()">
