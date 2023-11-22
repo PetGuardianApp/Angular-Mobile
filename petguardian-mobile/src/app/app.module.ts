@@ -30,6 +30,7 @@ import { PetProfilePageComponent } from './components/pet-profile-page/pet-profi
 import { MenuPetAppointmentComponent } from './components/menu-pet-appointment/menu-pet-appointment.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input'; 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DatePipe } from '@angular/common';
@@ -84,6 +85,7 @@ import { TranslocoRootModule } from './transloco-root.module';
     MatInputModule,
     MatNativeDateModule,
     MatProgressSpinnerModule,
+    MatSelectModule,
     TranslocoRootModule
   ],
   providers: [
