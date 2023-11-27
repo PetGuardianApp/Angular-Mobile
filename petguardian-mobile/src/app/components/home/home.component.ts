@@ -5,15 +5,19 @@ import { ClientModel } from 'src/app/models/client.model';
 import { PetModel } from 'src/app/models/pet.model';
 import { ApiService } from 'src/app/services/api.service';
 import { StorageService } from 'src/app/services/storage.service';
+import { TranslocoService } from '@ngneat/transloco';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit {
+  contentIsLoading: boolean = true;
+  
   constructor(private router: Router, private apiService: ApiService,
-    private storageService: StorageService) {
+    private storageService: StorageService, private translocoService:TranslocoService) {
     this.showData();
     this.client = new ClientModel;
     this.petsArray = [];
@@ -29,6 +33,7 @@ export class HomeComponent implements OnInit {
   public ifvisit: Boolean;
   public isTodayVisits: string[];
   public VisitPet: PetModel;
+
   ngOnInit() {
   }
 
@@ -94,13 +99,13 @@ export class HomeComponent implements OnInit {
   }
 
   showData() {
-
-    this.apiService.getSingleClient("VPUnbME8Kt27zmF7q7ne").then((client) => {
+    
+    this.apiService.getSingleClient(this.storageService.SessionGetStorage("uid")).then((client) => {
       this.client = client;
       console.log(client)
     });
-
-    this.apiService.getClientPets("VPUnbME8Kt27zmF7q7ne").then((petsArray) => {
+    //VPUnbME8Kt27zmF7q7ne
+    this.apiService.getClientPets(this.storageService.SessionGetStorage("uid")).then((petsArray) => {
       this.petsArray = petsArray;
       for (let i = 0; i < petsArray.length; i++) {
         if (petsArray[i].name == "Toby") {
@@ -109,17 +114,31 @@ export class HomeComponent implements OnInit {
           petsArray[i].profile_image = "/assets/img/dogImage2.jpg";
         } else if (petsArray[i].name == "Darwin") {
           petsArray[i].profile_image = "/assets/img/catImage.avif";
+        } else {
+          petsArray[i].profile_image = '/assets/img/logo_default.svg';
         }
       }
+      this.contentIsLoading = false;
       console.log(petsArray)
     });
 
-    this.apiService.getClientAppointments("VPUnbME8Kt27zmF7q7ne").then((clientAppointments) => {
+    this.apiService.getClientAppointments(this.storageService.SessionGetStorage("uid")).then((clientAppointments) => {
       this.clientAppointments = clientAppointments;
       let today_visit: Boolean = false;
       for (const element of this.clientAppointments) {
         this.apiService.getPet(element.pet_id || '').then((pet) => {
           this.VisitPet = pet;
+          if (this.VisitPet.profile_image == '') {
+            this.VisitPet.profile_image = '/assets/img/logo_default.svg';
+          } else{
+            if (this.VisitPet.name == "Toby") {
+              this.VisitPet.profile_image = "/assets/img/dogImage1.jpg";
+            } else if (this.VisitPet.name == "Dobby") {
+              this.VisitPet.profile_image = "/assets/img/dogImage2.jpg";
+            } else if (this.VisitPet.name == "Darwin") {
+              this.VisitPet.profile_image = "/assets/img/catImage.avif";
+            }           
+          }
         })
         if (today_visit = this.isTodayVisit(element.end_date || '')) {
           this.isTodayVisits.push(element.end_date || '');

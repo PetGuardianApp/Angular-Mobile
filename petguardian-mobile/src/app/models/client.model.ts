@@ -1,6 +1,6 @@
 export class ClientModel {
     id?: string;
-    address?: string;
+    address?: {latitude:string,longitude:string};
     email?: string;
     name?:string;
     phone?:number;

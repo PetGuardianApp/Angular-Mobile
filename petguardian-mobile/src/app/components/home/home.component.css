@@ -27,7 +27,6 @@ img {
 .image-container {
     position: relative;
     display: inline-block;
-    margin-right: 50px;
 }
 
 .overlay {
@@ -52,8 +51,7 @@ img {
 }
 
 .image-container img {
-    width: 278px;
-    height: 178px;
+    width: 100%;
 }
 
 .image-container:hover .overlay {
@@ -68,4 +66,8 @@ img {
 .overlay {
     transform: scale(1);
     transition: transform 0.3s;
+}
+
+.module{
+    padding: 0px 40px 0px 40px;
 }

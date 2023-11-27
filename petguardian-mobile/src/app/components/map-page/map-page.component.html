@@ -1,3 +1,73 @@
-<h1>Interactive Map</h1>
+<h1>{{ 'interactive_maps' | transloco }}</h1>
+<h2>{{ 'find_location' | transloco }}</h2>
+<input id="searchInput" class="input" placeholder="Av/ John Doe 1234" (keydown.enter)="obtainCoordByStr()">
 
-<google-map></google-map>
+<google-map height="500px" width="100%" [zoom]="12" [center]="center">
+  <map-marker id="" [options]="markerOptions" [position]="userMarker.getPosition()">
+  </map-marker>
+  <map-marker id="parkMarker" [options]="parkMarkerOptions" [position]="marker1.getPosition()"
+    [visible]="marker1.getVisible()">
+  </map-marker>
+  <map-marker id="cafeMarker" [options]="cofeeMarkerOptions" [position]="marker2.getPosition()"
+    [visible]="marker2.getVisible()">
+  </map-marker>
+  <map-marker id="hairMarker" [options]="hairMarkerOptions" [position]="marker3.getPosition()"
+    [visible]="marker3.getVisible()">
+  </map-marker>
+  <map-marker id="hotelMarker" [options]="hotelMarkerOptions" [position]="marker4.getPosition()"
+    [visible]="marker4.getVisible()">
+  </map-marker>
+  <map-marker id="storeMarker" [options]="storeMarkerOptions" [position]="marker5.getPosition()"
+    [visible]="marker5.getVisible()">
+  </map-marker>
+  <map-marker id="petstoreMarker" [options]="toystoreMarkerOptions" [position]="marker6.getPosition()"
+    [visible]="marker6.getVisible()">
+  </map-marker>
+</google-map>
+
+<div class="button-container">
+  <div>
+    <button id="storeBtn" class="button-off" (click)="toggleButtonClass('storeBtn', marker5)">
+      <img src="/assets/mapIcons/samp/shop_ico.svg" alt="">
+    </button><br>
+    <label>{{ 'petstore' | transloco }}</label>
+  </div>
+
+  <div>
+    <button id="parkBtn" class="button-off" (click)="toggleButtonClass('parkBtn', marker1)">
+      <img src="/assets/mapIcons/samp/park_ico.svg" alt="">
+    </button><br>
+    <label>{{ 'park' | transloco }}</label>
+  </div>
+
+  <div>
+    <button id="cafeBtn" class="button-off" (click)="toggleButtonClass('cafeBtn', marker2)">
+      <img src="/assets/mapIcons/samp/cafe_ico.svg" alt="">
+    </button> <br>
+    <label>{{ 'cafe' | transloco }}</label>
+  </div>
+</div>
+
+<div class="button-container">
+  <div>
+    <button id="homeBtn" class="button-off" (click)="toggleButtonClass('homeBtn', marker4)">
+      <img src="/assets/mapIcons/samp/hotel_ico.svg" alt="">
+    </button><br>
+    <label>{{ 'hotel' | transloco }}</label>
+  </div>
+
+  <div>
+    <button id="hairBtn" class="button-off" (click)="toggleButtonClass('hairBtn',marker3)">
+      <img src="/assets/mapIcons/samp/hair_ico.svg" alt="">
+    </button><br>
+    <label>{{ 'hairdresser' | transloco }}</label>
+  </div>
+
+  <div>
+    <button id="petstoreBtn" class="button-off" (click)="toggleButtonClass('petstoreBtn', marker6)">
+      <img src="/assets/mapIcons/samp/toystore_ico.svg" alt="">
+    </button><br>
+    <label>{{ 'toy' | transloco }}</label>
+  </div>
+
+</div>
