@@ -40,7 +40,7 @@ export class RegisterComponent {
       .subscribe(data => {
         if(data==true){
           
-          this.router.navigate(['dashboard']);
+          this.router.navigate(['home']);
           
         }
       });
