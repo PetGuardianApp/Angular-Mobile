@@ -13,7 +13,7 @@
         <ng-container *ngIf="isTodayVisit(visit.end_date || ''); then thenBlock ">
         </ng-container>
         <ng-template #thenBlock>
-            <button class="whiteButton" id="{{visit.id}}" (click)="redirectVisitPage(visit.id || '')">
+            <button style="margin-top: 10px;" class="whiteButton" id="{{visit.id}}" (click)="redirectVisitPage(visit.id || '')">
                 <div style="column-count: 2;" *ngFor="let pet of petsArray">
                     <ng-container *ngIf=" pet.id == visit.pet_id then thenBlock "></ng-container>
                     <ng-template #thenBlock>
