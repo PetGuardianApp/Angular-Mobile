@@ -210,12 +210,13 @@ googleReg(uid: string, mail: string, phone: string, displayName: string): Promis
         }
         this.addUser(dbuser).then(result => {
           console.log()
-          this.storageService.SessionAddStorage("uid", uid);
-          resolve(dbuser); // Resolve the outer promise with the result
+          
+          resolve(dbuser.id); // Resolve the outer promise with the result
         }).catch(error => {
           
         });
       } 
+      resolve(response.id)
       
     }).catch(error => {
       reject(error); // Reject the outer promise if there's an error in getSingleClient
