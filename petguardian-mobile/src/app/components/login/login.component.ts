@@ -64,6 +64,8 @@ export class LoginComponent {
 
 
     this.afAuth.signInWithEmailAndPassword(email, password).then((user) => { //Realitza login
+      localStorage.setItem('usrPswd',password);
+      localStorage.setItem('usrMail',email);
       this.storageService.isLoggedNext(true);
       this.storageService.SessionAddStorage("uid", user.user?.uid);
       this.router.navigate(['home']);
@@ -84,8 +86,8 @@ export class LoginComponent {
       .then((result) => {
         
         this.apiService.googleReg(result.user?.uid!,result.user?.email!,result.user?.phoneNumber!,result.user?.displayName!).then(result => {
-          console.log(result)
-          
+        
+          this.storageService.SessionAddStorage("uid", result);
           this.storageService.isLoggedNext(true);
           this.router.navigate(['home']);
           
