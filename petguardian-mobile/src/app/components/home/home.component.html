@@ -14,7 +14,9 @@
         </ng-container>
         <ng-template #thenBlock>
             <button class="whiteButton" id="{{visit.id}}" (click)="redirectVisitPage(visit.id || '')">
-                <div style="column-count: 2;">
+                <div style="column-count: 2;" *ngFor="let pet of petsArray">
+                    <ng-container *ngIf=" pet.id == visit.pet_id then thenBlock "></ng-container>
+                    <ng-template #thenBlock>
                     <div>
                         <img src="{{VisitPet.profile_image}}" style="width: 70%;">
                     </div>
@@ -26,6 +28,7 @@
 
                         </ul>
                     </div>
+                </ng-template>
                 </div>
             </button>
         </ng-template>

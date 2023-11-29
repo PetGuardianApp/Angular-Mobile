@@ -23,6 +23,7 @@ export class HomeComponent implements OnInit {
     this.ifvisit = false;
     this.isTodayVisits = [];
     this.VisitPet = new PetModel;
+    this.todayPetsArray = [];
   }
   currentDate: Date = new Date();
   public client: ClientModel;
@@ -31,6 +32,8 @@ export class HomeComponent implements OnInit {
   public ifvisit: Boolean;
   public isTodayVisits: string[];
   public VisitPet: PetModel;
+  public todayPetsArray: PetModel[];
+
   ngOnInit() {
   }
 
@@ -125,6 +128,7 @@ export class HomeComponent implements OnInit {
       for (const element of this.clientAppointments) {
         this.apiService.getPet(element.pet_id || '').then((pet) => {
           this.VisitPet = pet;
+          this.todayPetsArray.push(pet);
           if (this.VisitPet.profile_image == '') {
             this.VisitPet.profile_image = '/assets/img/logo_default.svg';
           } else{
@@ -141,7 +145,7 @@ export class HomeComponent implements OnInit {
           this.isTodayVisits.push(element.end_date || '');
         }
       }
-    })
+    });
   }
 
 }
