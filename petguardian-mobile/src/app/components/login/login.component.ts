@@ -34,7 +34,7 @@ export class LoginComponent {
     this.subscription = this.storageService.isLoggedIn
       .subscribe(data => {
         if (data == true) {
-          this.router.navigate(['dashboard']);
+          this.router.navigate(['home']);
         }
       });
 
@@ -61,11 +61,7 @@ export class LoginComponent {
       }
     }
 
-    // Set localstorage info
-    localStorage.setItem('usrMail', email);
-    localStorage.setItem('usrPswd', password);
 
-    console.log("Email: " + email + " Password: " + password);
 
     this.afAuth.signInWithEmailAndPassword(email, password).then((user) => { //Realitza login
       this.storageService.isLoggedNext(true);
@@ -86,13 +82,24 @@ export class LoginComponent {
     return this.afAuth
       .signInWithPopup(provider)
       .then((result) => {
-        this.storageService.isLoggedNext(true);
-        this.storageService.SessionAddStorage("uid", result.user?.uid);
-        console.log(result.user?.uid);
-        this.router.navigate(['home']);
+        
+        this.apiService.googleReg(result.user?.uid!,result.user?.email!,result.user?.phoneNumber!,result.user?.displayName!).then(result => {
+          console.log(result)
+          
+          this.storageService.isLoggedNext(true);
+          this.router.navigate(['home']);
+          
+          
+        })
+        
       })
       .catch((error) => {
         console.log(error);
       });
   }
+
+  delay(ms: number) {
+    return new Promise( resolve => setTimeout(resolve, ms) );
+}
+
 }

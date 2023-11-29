@@ -130,26 +130,10 @@ export class AppointmentsComponent {
   public createFlag:boolean = false;
 
   public add_appoint(){
-    let result = this.petService.pet_list.find(element => element.id==this.apponintForm.value.pet)
-    let tempEvent:CalendarEvent = {
-      title: result?.name!,
-      start: startOfDay(this.apponintForm.value.start_date),
-      end: endOfDay(this.apponintForm.value.end_date),
-      color: colors['green'],
-      pet_id: this.selectedValue,
-      matter: this.apponintForm.value.matter,
-    }
-    this.events = [
-      ...this.events,tempEvent, 
-    ];
-
     
 
-    this.appointmentService.addEvent(tempEvent);
-
+    console.log("aaaaa")
     this.triggerCreateFlag();
-
-    console.log(this.displayed_events)
   
   }
 
