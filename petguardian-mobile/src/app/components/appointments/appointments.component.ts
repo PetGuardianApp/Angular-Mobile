@@ -27,12 +27,16 @@ import {
 } from 'angular-calendar';
 import { EventColor } from 'calendar-utils';
 import localeEn from '@angular/common/locales/en';
-import { registerLocaleData } from '@angular/common';
+import { DatePipe, registerLocaleData } from '@angular/common';
 import { StorageService } from 'src/app/services/storage.service';
 import { ApiService } from 'src/app/services/api.service';
 import { AppointmentModel } from 'src/app/models/appointment.model';
 import { AppointmentsService } from 'src/app/services/appointments.service';
 import { Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDatepickerInputEvent } from '@angular/material/datepicker';
+import { PetModel } from 'src/app/models/pet.model';
+import { PetService } from 'src/app/services/pet.service';
 
 registerLocaleData(localeEn);
 
@@ -95,10 +99,60 @@ export class AppointmentsComponent {
 
   activeDayIsOpen: boolean = true;
 
+  apponintForm: FormGroup;
+
+  pets:PetModel[] = []
+
   constructor(private modal: NgbModal,private storageService:StorageService, private apiService:ApiService, 
-    private appointmentService:AppointmentsService, private router:Router) {
+    private appointmentService:AppointmentsService, private router:Router, private fb:FormBuilder,private datePipe: DatePipe,
+    private petService:PetService) {
       var uid = this.storageService.SessionGetStorage("uid");
+
+      this.apiService.getClientPets(uid).then(data => {
+        this.pets = data;
+      })
       
+      this.apponintForm = this.fb.group({
+        pet: ['',[Validators.required]],
+        start_date: ['',Validators.required],
+        end_date: ['',[Validators.required]],
+        matter: ['',Validators.required],
+      })
+
+  }
+
+  public selectedValue:string =""
+
+  handleSelectChange(event: any): void {
+    this.selectedValue = event.value; // Actualiza selectedValue con el valor seleccionado
+  }
+
+  public createFlag:boolean = false;
+
+  public add_appoint(){
+    
+
+    console.log("aaaaa")
+    this.triggerCreateFlag();
+  
+  }
+
+  onDateInputStart(event: MatDatepickerInputEvent<Date>): void {
+    // Customize the date format as per your requirement
+    this.apponintForm.value.start_date = event.value;
+  }
+
+  onDateInputEnd(event: MatDatepickerInputEvent<Date>): void {
+    // Customize the date format as per your requirement
+    this.apponintForm.value.end_date = event.value;
+  }
+
+  public triggerCreateFlag(){
+    if(this.createFlag){
+      this.createFlag = false
+    }else{
+      this.createFlag = true;
+    }
 
   }
 

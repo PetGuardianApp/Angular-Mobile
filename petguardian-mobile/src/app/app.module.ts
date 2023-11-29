@@ -30,6 +30,7 @@ import { PetProfilePageComponent } from './components/pet-profile-page/pet-profi
 import { MenuPetAppointmentComponent } from './components/menu-pet-appointment/menu-pet-appointment.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input'; 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DatePipe } from '@angular/common';
@@ -38,6 +39,7 @@ import { QrComponent } from './components/qr/qr.component';
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
 import { LoadingSpinnerComponent } from './components/loading-spinner/loading-spinner.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { TranslocoRootModule } from './transloco-root.module';
 
 @NgModule({
   declarations: [
@@ -82,7 +84,9 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     MatDatepickerModule,
     MatInputModule,
     MatNativeDateModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatSelectModule,
+    TranslocoRootModule
   ],
   providers: [
     DatePipe,

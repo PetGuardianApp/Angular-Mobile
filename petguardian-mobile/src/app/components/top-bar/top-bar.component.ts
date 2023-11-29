@@ -3,6 +3,7 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Router } from '@angular/router';
 import { Subscription, Observable } from 'rxjs';
 import { StorageService } from 'src/app/services/storage.service';
+import { TranslocoService } from '@ngneat/transloco';
 
 @Component({
   selector: 'app-top-bar',
@@ -13,7 +14,8 @@ export class TopBarComponent {
   prevScrollPos = window.pageYOffset;
   showPopup = false;
 
-  constructor(private afAuth: AngularFireAuth, private router: Router, private storageService: StorageService) {
+  constructor(private afAuth: AngularFireAuth, private router: Router, private storageService: StorageService,
+    private translocoService: TranslocoService) {
   }
 
   logout() {
@@ -55,7 +57,33 @@ export class TopBarComponent {
     this.showPopup = !this.showPopup;
   }
 
-  @HostListener('window:scroll', ['$event'])
+  public swapLang(lang: string) {
+    this.translocoService.setActiveLang(lang);
+
+    const catIcon = document.getElementById("catIcon") as HTMLImageElement;
+    const esIcon = document.getElementById("esIcon") as HTMLImageElement;
+    const enIcon = document.getElementById("enIcon") as HTMLImageElement;
+
+    switch (lang) {
+      case 'cat':
+        catIcon.width = 30;
+        esIcon.width = 18;
+        enIcon.width = 18;
+        break;
+      case 'es':
+        catIcon.width = 18;
+        esIcon.width = 30;
+        enIcon.width = 18;
+        break;
+      case 'en':
+        catIcon.width = 18;
+        esIcon.width = 18;
+        enIcon.width = 30;
+        break;
+    }
+  }
+
+ /* @HostListener('window:scroll', ['$event'])
   onWindowScroll() {
     const currentScrollPos = window.pageYOffset;
 
@@ -67,5 +95,5 @@ export class TopBarComponent {
     }
 
     this.prevScrollPos = currentScrollPos;
-  }
+  }*/
 }

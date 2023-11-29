@@ -1,9 +1,9 @@
-<h1 i18n>
-    Benvingut {{client.name}}
+<h1>
+    {{ 'welcome' | transloco}} {{client.name}}
 </h1>
 <h2> {{ currentDate | date: 'EEEE' }}, {{ currentDate | date: 'd' }} {{ currentDate | date: 'MMMM' }}</h2>
-<h1 i18n>
-    Visites per avui!
+<h1 >
+    {{ 'today_visits' | transloco }}
 </h1>
 
 <ng-container *ngIf="isTodayVisits.length > 0; then thenBlock else elseBlock">
@@ -22,9 +22,9 @@
                     </div>
                     <div style="text-align: left;">
                         <ul>
-                            <li><b i18n>Mascota: </b> {{VisitPet.name}}</li>
-                            <li><b i18n>Començament:</b> {{formatStartDate(visit.start_date || '')}}</li>
-                            <li><b i18n>Finalitza:</b> {{formatStartDate(visit.end_date || '')}}</li>
+                            <li><b> {{ 'pet_profile_birth' | transloco }} </b> {{VisitPet.name}}</li>
+                            <li><b> {{ 'start' | transloco }}</b> {{formatStartDate(visit.start_date || '')}}</li>
+                            <li><b> {{ 'end' | transloco }}</b> {{formatStartDate(visit.end_date || '')}}</li>
 
                         </ul>
                     </div>
@@ -36,11 +36,11 @@
 </ng-template>
 <ng-template #elseBlock>
     <div>
-        <p i18n>No tens visites per avui</p>
+        <p> {{ 'no_visits' | transloco}}</p>
     </div>
 </ng-template>
-<h1 i18n>
-    Les teves mascotes
+<h1>
+    {{'your_pets' | transloco}}
 </h1>
 <div *ngIf="contentIsLoading" class="spinnerDiv">
     <mat-spinner></mat-spinner>

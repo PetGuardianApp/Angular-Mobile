@@ -9,30 +9,30 @@
 </div>
 
 <div class="module" style="column-count: 2;">
-    <h1 i18n>Informació personal</h1>
+    <h1> {{ 'personal_info' | transloco }}</h1>
     <div class="info-container">
         <div>
             <div>
-                <label><b i18n>Nom:</b></label>
+                <label><b>{{ 'pet_profile_name' | transloco }}</b></label>
                 <span> {{petInfo.name}}</span><br>
 
-                <label><b i18n>Aniversari:</b></label>
+                <label><b> {{ 'pet_profile_birth' | transloco  }}</b></label>
                 <span> {{getBirth(petInfo.birth)}}</span><br>
 
-                <label for="petTypeBreed"><b i18n>Tipus:</b></label>
+                <label for="petTypeBreed"><b>{{ 'pet_profile_type' | transloco }}</b></label>
                 <span id="petTypeBreed"> {{petInfo.type}}, {{petInfo.breed}}</span><br>
             </div>
             <div>
-                <label for="petWeight"><b i18n>Pes:</b></label>
+                <label for="petWeight"><b> {{ 'pet_weight' | transloco }}</b></label>
                 <span id="petWeight"> {{getLatestWeight()}}g</span><br>
 
-                <label for="petHeight"><b i18n>Altura:</b></label>
+                <label for="petHeight"><b> {{ 'pet_height' | transloco }}</b></label>
                 <span id="petHeight"> {{petInfo.height}}cm</span><br>
             </div>
         </div>
 
         <div class="module" style="padding-right: 5px;">
-            <h1 i18n>Vacunes obligatories</h1>
+            <h1>{{ 'pet_vaccines' | transloco }}</h1>
             <ul *ngFor="let vaccine of petInfo.health_info?.vaccines">
                 <li>{{vaccine}} ✓</li>
             </ul>
@@ -41,12 +41,12 @@
 
 </div>
 <div class="module info-container" style="padding-right: 5px;">
-    <h1 i18n>Resum mascota</h1>
+    <h1>{{ 'pet_resume' | transloco }}</h1>
     <p style="text-align: justify;">{{petInfo.health_info?.observations}}
     </p>
 </div>
 <div class="module">
-    <h1 i18n>Estadistiques</h1>
+    <h1>{{ 'pet_statistics' | transloco }}</h1>
     <div class="image-container">
     </div>
     <div id="chart_div">
