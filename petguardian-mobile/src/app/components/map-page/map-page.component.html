@@ -5,9 +5,11 @@
 <google-map height="500px" width="100%" [zoom]="12" [center]="center">
   <map-marker id="" [options]="markerOptions" [position]="userMarker.getPosition()">
   </map-marker>
-  <map-marker id="parkMarker" [options]="parkMarkerOptions" [position]="marker1.getPosition()"
+  <map-marker *ngFor="let marker of parkMarkers" id="parkMarker" [options]="parkMarkerOptions" [position]="marker.getPosition()"
     [visible]="marker1.getVisible()">
   </map-marker>
+
+  <!--
   <map-marker id="cafeMarker" [options]="cofeeMarkerOptions" [position]="marker2.getPosition()"
     [visible]="marker2.getVisible()">
   </map-marker>
@@ -23,6 +25,7 @@
   <map-marker id="petstoreMarker" [options]="toystoreMarkerOptions" [position]="marker6.getPosition()"
     [visible]="marker6.getVisible()">
   </map-marker>
+  -->
 </google-map>
 
 <div class="button-container">

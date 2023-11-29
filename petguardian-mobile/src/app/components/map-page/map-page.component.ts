@@ -75,6 +75,8 @@ export class MapPageComponent implements OnInit {
   };
 
   markers: google.maps.Marker[] = [];
+  parkMarkers: google.maps.Marker[] = [];
+
   userMarker: google.maps.Marker = new google.maps.Marker;
   marker1: google.maps.Marker = new google.maps.Marker;
   marker2: google.maps.Marker = new google.maps.Marker;
@@ -96,23 +98,21 @@ export class MapPageComponent implements OnInit {
         // Put a marker in user location
         //this.markers.push(marker);
 
-        /*
         // Get near sites of interest
         this.getNearbyRestaurants(this.center).then(restaurants => {
-          restaurants.forEach(restaurant => {
-            // Create markers for sites of interest
-            const marker: google.maps.Marker = new google.maps.Marker({
-              position: {
-                lat: restaurant.geometry.location.lat(),
-                lng: restaurant.geometry.location.lng()
-              },
-              title: restaurant.name
-            });
-    
-            this.markers.push(marker);
-          });
+          // restaurants.forEach(restaurant => {
+          //   // Create markers for sites of interest
+          //   const marker: google.maps.Marker = new google.maps.Marker({
+          //     position: {
+          //       lat: restaurant.geometry.location.lat(),
+          //       lng: restaurant.geometry.location.lng()
+          //     },
+          //     title: restaurant.name
+          //   });
+
+          //   this.markers.push(marker);
+          // });
         });
-        */
       }
     });
 
@@ -151,21 +151,36 @@ export class MapPageComponent implements OnInit {
     this.marker4.setPosition(position4);
     this.marker5.setPosition(position5);
     this.marker6.setPosition(position6);
-    this.marker1.setIcon()
+    this.marker1.setIcon();
 
+    this.parkMarkers.push(this.marker1);
+    this.parkMarkers.push(this.marker2);
+    this.parkMarkers.push(this.marker3);
+    this.parkMarkers.push(this.marker4);
+    this.parkMarkers.push(this.marker5);
+    this.parkMarkers.push(this.marker6);
   }
 
   getNearbyRestaurants(position: google.maps.LatLngLiteral): Promise<any[]> {
     const radius = 500;
-    const url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${position.lat},${position.lng}&radius=${radius}&type=restaurant&key=${this.apiKey}`;
+    console.log(position);
+    const url = `https://maps.googleapis.com/maps/api/place/nearbysearch/
+    json?location=${position.lat},${position.lng}
+    &radius=${radius}
+    &type=restaurant
+    &key=${this.apiKey}`;
 
-    return fetch(url)
-      .then(response => response.json())
-      .then(data => data.results)
-      .catch(error => {
-        console.error('Error al obtener restaurantes cercanos:', error);
-        return [];
-      });
+    this.httpClient.get<any>(url);
+    return new Promise((resolve, reject) => {
+      this.httpClient.get<any>(url).subscribe(
+        (response: any) => {
+          resolve(response.results);
+        },
+        (error) => {
+          reject(error);
+        }
+      );
+    });
   }
 
   getPosition(): Promise<google.maps.LatLngLiteral | null> {
