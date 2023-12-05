@@ -136,23 +136,17 @@ export class PetProfilePageComponent {
   public petImage: String;
   constructor(private apiService: ApiService) {
     const urlParams = new URLSearchParams(window.location.search);
-    this.showPetData(urlParams.get('petId'));
     this.petInfo = new PetModel;
     this.petImage = new String;
+    this.showPetData(urlParams.get('petId'));
   }
 
   showPetData(petId: string | null) {
     if (petId != null) {
       this.apiService.getPet(petId).then((petData) => {
         this.petInfo = petData;
-        if (petData.name == "Toby") {
-          petData.profile_image = "/assets/img/dogImage1.jpg";
-        } else if (petData.name == "Dobby") {
-          petData.profile_image = "/assets/img/dogImage2.jpg";
-        } else if (petData.name == "Darwin") {
-          petData.profile_image = "/assets/img/catImage.avif";
-        } else {
-          petData.profile_image = '/assets/img/logo_default.svg';
+        if (this.petInfo.profile_image == '') {
+          this.petInfo.profile_image = '/assets/img/logo_default.svg';
         }
       });
     }
