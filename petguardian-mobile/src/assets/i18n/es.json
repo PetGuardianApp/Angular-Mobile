@@ -35,5 +35,7 @@
     "qr_underdev": "Página QR en Desarrollo",
     "user_underdev": "Perfil de usuario en Desarrollo",
     "user_profile_popup": "Perfil de Usuario",
-    "logout_popup": "Cerrar Sesión"
+    "logout_popup": "Cerrar Sesión",
+    "choose_pet_image": "Selecciona la imagen de la mascota"
+
 }
