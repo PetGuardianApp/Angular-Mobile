@@ -35,5 +35,6 @@
     "qr_underdev": "Pàgina QR en Desenvolupament",
     "user_underdev": "Perfil d'usuari en Desenvolupament",
     "user_profile_popup": "Perfil d'Usuari",
-    "logout_popup": "Tancar Sessió"
+    "logout_popup": "Tancar Sessió",
+    "accept_button": "Acceptar"
 }

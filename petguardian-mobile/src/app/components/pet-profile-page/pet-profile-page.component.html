@@ -1,6 +1,6 @@
 <div>
     <h1 style="text-align: center;">{{petInfo.name}}
-        <img id="petsIcon" src="/assets/menuIcons/edit.svg" alt="pets">
+        <img id="petsIcon" src="/assets/imgs/pet_edit_icon.svg" alt="pets">
         <img id="petsIcon" src="/assets/menuIcons/delete.svg" alt="pets">
     </h1>
 </div>
@@ -9,14 +9,39 @@
 </div>
 
 <div class="module" style="column-count: 2;">
-    <h1> {{ 'personal_info' | transloco }}</h1>
+    <h1> {{ 'personal_info' | transloco }}<img id="petsIcon" src="/assets/imgs/pet_edit_icon.svg" alt="pets"
+            (click)="openPersonalPetInfoForm()"></h1>
+    <div class="popup-background" [ngClass]="{ 'active': isPersonalInfoFormVisible }">
+        <div class="popup-form" id="personalInfoForm" (click)="stopPropagation($event)">
+            <form (ngSubmit)="updatePetPersonalInfo()" [formGroup]="updatePersonalPetInfoForm" class="form-container">
+                <h1>{{'personal_info' | transloco}}</h1>
+                <input type="text" [placeholder]="'pet_name' | transloco" formControlName="name">
+                <input type="text" [placeholder]="'pet_type' | transloco" formControlName="type">
+                <input type="text" [placeholder]="'pet_breed' | transloco" formControlName="breed">
+                <input type="text" [placeholder]="'pet_weight' | transloco" formControlName="weight">
+                <input type="text" [placeholder]="'pet_height' | transloco" formControlName="height">
+                <mat-form-field>
+                    <mat-label>{{'pet_birth' | transloco}}</mat-label>
+                    <input formControlName="birth" matInput [matDatepicker]="picker" (click)="picker.open()"
+                        (dateInput)="onDateInput($event)" readonly>
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+
+                <button type="submit" class="btn" [disabled]="updatePersonalPetInfoForm.invalid">{{'accept_button' |
+                    transloco}}</button>
+                <button type="button" class="btn cancel" (click)="closePersonalPetInfoForm()">{{'close_button' |
+                    transloco}}</button>
+            </form>
+        </div>
+    </div>
     <div class="info-container">
         <div>
             <div>
                 <label><b>{{ 'pet_profile_name' | transloco }}</b></label>
                 <span> {{petInfo.name}}</span><br>
 
-                <label><b> {{ 'pet_profile_birth' | transloco  }}</b></label>
+                <label><b> {{ 'pet_profile_birth' | transloco }}</b></label>
                 <span> {{getBirth(petInfo.birth)}}</span><br>
 
                 <label for="petTypeBreed"><b>{{ 'pet_profile_type' | transloco }}</b></label>
@@ -32,25 +57,77 @@
         </div>
 
         <div class="module" style="padding-right: 5px;">
-            <h1>{{ 'pet_vaccines' | transloco }}</h1>
+            <h1>{{ 'pet_vaccines' | transloco }}<img id="petsIcon" src="/assets/imgs/pet_edit_icon.svg"
+                    (click)="openMandatoryVaccinesForm()" alt="pets">
+            </h1>
+            <div class="popup-background" [ngClass]="{ 'active': isMandatoryVaccinesVisible }">
+                <div class="popup-form" id="MandatoryVaccinesForm" (click)="stopPropagation($event)">
+                    <form (ngSubmit)="updatePetMandatoryVaccines()" [formGroup]="updateMandatoryVaccinesForm"
+                        class="form-container">
+                        <h1>{{'pet_vaccines' | transloco}}</h1>
+                        <input type="text" [placeholder]="'pet_vaccines' | transloco" formControlName="vaccines">
+
+                        <button type="submit" class="btn"
+                            [disabled]="updateMandatoryVaccinesForm.invalid">{{'accept_button' |
+                            transloco}}</button>
+                        <button type="button" class="btn cancel" (click)="closeMandatoryVaccinesForm()">{{'close_button'
+                            |
+                            transloco}}</button>
+                    </form>
+                </div>
+            </div>
             <ul *ngFor="let vaccine of petInfo.health_info?.vaccines">
                 <li>{{vaccine}} ✓</li>
             </ul>
         </div>
     </div>
-
 </div>
 <div class="module info-container" style="padding-right: 5px;">
-    <h1>{{ 'pet_resume' | transloco }}</h1>
+    <h1>{{ 'pet_resume' | transloco }}<img id="petsIcon" src="/assets/imgs/pet_edit_icon.svg"
+            (click)="openPetResumeForm()" alt="pets"></h1>
+    <div class="popup-background" [ngClass]="{ 'active': isPetResumeVisible }">
+        <div class="popup-form" id="PetResumeForm" (click)="stopPropagation($event)">
+            <form (ngSubmit)="updatePetResume()" [formGroup]="updatePetResumeForm" class="form-container">
+                <h1>{{'pet_resume' | transloco}}</h1>
+                <input type="text" [placeholder]="'pet_resume' | transloco" formControlName="resume">
+                <button type="submit" class="btn" [disabled]="updatePetResumeForm.invalid">{{'accept_button' |
+                    transloco}}</button>
+                <button type="button" class="btn cancel" (click)="closePetResumeForm()">{{'close_button'
+                    |
+                    transloco}}</button>
+            </form>
+        </div>
+    </div>
     <p style="text-align: justify;">{{petInfo.health_info?.observations}}
     </p>
 </div>
 <div class="module">
-    <h1>{{ 'pet_statistics' | transloco }}</h1>
-    <div class="image-container">
+    <h1>{{ 'pet_statistics' | transloco }}<img id="petsIcon" (click)="openPetStatisticsForm"
+            src="/assets/imgs/pet_edit_icon.svg" alt="pets"></h1>
+    <div class="popup-background" [ngClass]="{ 'active': isPetResumeVisible }">
+        <div class="popup-form" id="PetStatisticsForm" (click)="stopPropagation($event)">
+            <form (ngSubmit)="updatePetResume()" [formGroup]="updatePetStatisticsForm" class="form-container">
+                <h1>{{'pet_statistics' | transloco}}</h1>
+
+                <input type="text" [placeholder]="'pet_steps' | transloco" formControlName="resume">
+
+                <button type="submit" class="btn" [disabled]="updatePetStatisticsForm.invalid">{{'accept_button' |
+                    transloco}}</button>
+                <button type="button" class="btn cancel" (click)="closePetStatisticsForm()">{{'close_button'
+                    |
+                    transloco}}</button>
+            </form>
+        </div>
     </div>
-    <div id="chart_div">
-        <apx-chart [series]="chartOptions.series" [chart]="chartOptions.chart"></apx-chart>
-        <apx-chart [series]="chartOptions2.series" [chart]="chartOptions2.chart"></apx-chart>
-    </div>
+    <p style="text-align: justify;">{{petInfo.health_info?.observations}}
+    </p>
+</div>
+
+
+<div class="image-container">
+</div>
+<div id="chart_div">
+    <apx-chart [series]="chartOptions.series" [chart]="chartOptions.chart"></apx-chart>
+    <apx-chart [series]="chartOptions2.series" [chart]="chartOptions2.chart"></apx-chart>
+</div>
 </div>

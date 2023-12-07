@@ -7,6 +7,10 @@ import {
   ApexResponsive,
   ApexChart
 } from "ng-apexcharts";
+import { Form, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDatepickerInputEvent } from '@angular/material/datepicker';
+import { StorageService } from 'src/app/services/storage.service';
+import { DatePipe } from '@angular/common';
 
 export type ChartOptions = {
   series: ApexAxisChartSeries;
@@ -24,7 +28,6 @@ export type ChartOptions = {
   styleUrls: ['./pet-profile-page.component.css']
 })
 export class PetProfilePageComponent {
-
   @ViewChild("chart_div") chart: ChartComponent | undefined;
 
   public chartOptions: ChartOptions = {
@@ -134,11 +137,120 @@ export class PetProfilePageComponent {
   };
   public petInfo: PetModel;
   public petImage: String;
-  constructor(private apiService: ApiService) {
+  updatePersonalPetInfoForm: FormGroup;
+  updateMandatoryVaccinesForm: FormGroup;
+  updatePetResumeForm: FormGroup;
+  updatePetStatisticsForm: FormGroup;
+  isPersonalInfoFormVisible: boolean = false;
+  isMandatoryVaccinesVisible: boolean = false;
+  isPetResumeVisible: boolean = false;
+  isPetStatisticsVisible: boolean = false;
+  constructor(private apiService: ApiService, private fb: FormBuilder, private storageService: StorageService, private datePipe: DatePipe) {
     const urlParams = new URLSearchParams(window.location.search);
     this.showPetData(urlParams.get('petId'));
     this.petInfo = new PetModel;
     this.petImage = new String;
+    this.updatePersonalPetInfoForm = this.fb.group({
+      name: [''],
+      type: [''],
+      breed: [''],
+      weight: [''],
+      birth: [''],
+      height: [''],
+    })
+    this.updateMandatoryVaccinesForm = this.fb.group({
+      vaccines: ['']
+    })
+    this.updatePetResumeForm = this.fb.group({
+      observations: ['']
+    })
+    this.updatePetStatisticsForm = this.fb.group({
+      cardiac_freq: [''],
+      steps: ['']
+    })
+  }
+
+  updatePetPersonalInfo(): void {
+    const urlParams = new URLSearchParams(window.location.search);
+
+    var pet: PetModel = {
+      id: urlParams.get('petId') || '',
+      name: this.updatePersonalPetInfoForm.value.name,
+      type: this.updatePersonalPetInfoForm.value.type,
+      breed: this.updatePersonalPetInfoForm.value.breed,
+      birth: this.updatePersonalPetInfoForm.value.birth,
+      weight: this.updatePersonalPetInfoForm.value.weight,
+      height: this.updatePersonalPetInfoForm.value.height,
+    };
+    this.apiService.updatePetPersonalInfo(pet);
+    this.closePersonalPetInfoForm();
+  }
+
+  openPersonalPetInfoForm(): void {
+    this.isPersonalInfoFormVisible = true;
+  }
+
+  closePersonalPetInfoForm(): void {
+    this.isPersonalInfoFormVisible = false;
+
+  }
+
+  updatePetResume(): void {
+    var pet: PetModel['health_info'] = {
+      observations: this.updatePetResumeForm.value.observations
+    };
+    //this.apiService.updatePet(pet);
+    this.closePetResumeForm();
+  }
+  openPetResumeForm(): void {
+    this.isPetResumeVisible = true;
+  }
+
+  closePetResumeForm(): void {
+    this.isPetResumeVisible = false;
+
+  }
+
+  updatePetMandatoryVaccines(): void {
+    var pet: PetModel['health_info'] = {
+      observations: this.updateMandatoryVaccinesForm.value.observations
+    };
+    //this.apiService.updatePet(pet);
+    this.closePetResumeForm();
+  }
+
+  openMandatoryVaccinesForm(): void {
+    this.isMandatoryVaccinesVisible = true;
+  }
+
+  closeMandatoryVaccinesForm(): void {
+    this.isMandatoryVaccinesVisible = false;
+
+  }
+
+  updatePetStatistics(): void {
+    var pet: PetModel['health_info'] = {
+      steps: this.updatePetStatisticsForm.value.steps,
+      cardiac_freq: this.updatePetStatisticsForm.value.cardiac_freq
+    };
+    //this.apiService.updatePet(pet);
+    this.closePetResumeForm();
+  }
+  openPetStatisticsForm(): void {
+    this.isPetStatisticsVisible = true;
+  }
+
+  closePetStatisticsForm(): void {
+    this.isPetStatisticsVisible = false;
+
+  }
+  stopPropagation(event: Event) {
+    event.stopPropagation(); // Prevent closing the popup when clicking inside the form
+  }
+
+  onDateInput(event: MatDatepickerInputEvent<Date>): void {
+    // Customize the date format as per your requirement
+    this.updatePersonalPetInfoForm.value.birth = this.datePipe.transform(event.value, 'ddMMyyyy') + '_00:00';
   }
 
   showPetData(petId: string | null) {

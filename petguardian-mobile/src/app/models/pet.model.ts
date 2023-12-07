@@ -3,10 +3,10 @@ export class PetModel {
     breed?: string;
     weight?: { [key: string]: string };
     health_info?: {
-        cardiac_freq: { [key: string]: string };
-        vaccines: string[];
-        observations: string;
-        steps: { [key: string]: string };
+        cardiac_freq?: { [key: string]: string };
+        vaccines?: string[];
+        observations?: string;
+        steps?: { [key: string]: string };
     };
     height?: number;
     name?: string;
