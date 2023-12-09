@@ -25,7 +25,7 @@
 <h1>
     {{'your_pets' | transloco}}
 </h1>
-<div *ngFor="let pet of apiService.petsArray" class="module" style="text-align: center;">
+<div *ngFor="let pet of petService.petsArray" class="module" style="text-align: center;">
     <div class="image-container" (click)="redirectPetPage(pet.id || '')" id="{{pet.id}}">
         <img width="50px" src="{{pet.profile_image}}" alt="Pet">
         <div class="overlay">

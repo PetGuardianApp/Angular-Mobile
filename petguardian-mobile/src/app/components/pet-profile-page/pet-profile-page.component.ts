@@ -1,6 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
 import { PetModel } from 'src/app/models/pet.model';
-import { ApiService } from 'src/app/services/api.service';
 import { ApexAxisChartSeries, ApexDataLabels, ApexFill, ApexLegend, ApexPlotOptions, ApexStroke, ApexTooltip, ApexXAxis, ApexYAxis, ChartComponent } from "ng-apexcharts";
 import {
   ApexNonAxisChartSeries,
@@ -11,6 +10,7 @@ import { Form, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { StorageService } from 'src/app/services/storage.service';
 import { DatePipe } from '@angular/common';
+import { PetService } from 'src/app/services/pet.service';
 
 export type ChartOptions = {
   series: ApexAxisChartSeries;
@@ -145,7 +145,8 @@ export class PetProfilePageComponent {
   isMandatoryVaccinesVisible: boolean = false;
   isPetResumeVisible: boolean = false;
   isPetStatisticsVisible: boolean = false;
-  constructor(private apiService: ApiService, private fb: FormBuilder, private storageService: StorageService, private datePipe: DatePipe) {
+
+  constructor(private petService: PetService, private fb: FormBuilder, private storageService: StorageService, private datePipe: DatePipe) {
     const urlParams = new URLSearchParams(window.location.search);
     this.showPetData(urlParams.get('petId'));
     this.petInfo = new PetModel;
@@ -170,9 +171,9 @@ export class PetProfilePageComponent {
     })
   }
 
+
   updatePetPersonalInfo(): void {
     const urlParams = new URLSearchParams(window.location.search);
-
     var pet: PetModel = {
       id: urlParams.get('petId') || '',
       name: this.updatePersonalPetInfoForm.value.name,
@@ -182,7 +183,7 @@ export class PetProfilePageComponent {
       weight: this.updatePersonalPetInfoForm.value.weight,
       height: this.updatePersonalPetInfoForm.value.height,
     };
-    this.apiService.updatePetPersonalInfo(pet);
+    this.petService.updatePet(pet);
     this.closePersonalPetInfoForm();
   }
 
@@ -255,7 +256,7 @@ export class PetProfilePageComponent {
 
   showPetData(petId: string | null) {
     if (petId != null) {
-      this.apiService.getPet(petId).then((petData) => {
+      this.petService.getPet(petId).then((petData) => {
         this.petInfo = petData;
         if (petData.name == "Toby") {
           petData.profile_image = "/assets/img/dogImage1.jpg";
@@ -278,6 +279,13 @@ export class PetProfilePageComponent {
     }
     return null;
   }
+
+  deletePet(pet_id: string) {
+    this.petService.deletePet(pet_id);
+
+  }
+
+
 
   getBirth(birth: string | undefined) {
     // Return birth in format 1 of July, 2023

@@ -6,6 +6,7 @@ import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { DatePipe } from '@angular/common';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { StorageService } from 'src/app/services/storage.service';
+import { PetService } from 'src/app/services/pet.service';
 
 @Component({
   selector: 'app-pets-list',
@@ -16,7 +17,7 @@ export class PetsListComponent {
   registerPetForm: FormGroup;
   savedPets: any[] = [];
   constructor(public apiService: ApiService, private router: Router, private datePipe: DatePipe,
-    private fb:FormBuilder, private storageService:StorageService) { 
+    private fb:FormBuilder, private storageService:StorageService,public petService:PetService) { 
       this.registerPetForm = this.fb.group({
         name: ['',[Validators.required]],
         type: ['',Validators.required],
@@ -57,15 +58,15 @@ export class PetsListComponent {
     };
     console.log(pet);
     
-    this.apiService.postClientPets(pet);
+    this.petService.postClientPets(pet);
     // Close the form
     this.closeForm();
   }
 
   showData(): void {
-    this.apiService.getClientPets(this.storageService.SessionGetStorage("uid")).then((petsArray) => {
-      this.apiService.petsArray = petsArray;
-      for (const pet of this.apiService.petsArray) {
+    this.petService.getClientPets(this.storageService.SessionGetStorage("uid")).then((petsArray) => {
+      this.petService.petsArray = petsArray;
+      for (const pet of this.petService.petsArray) {
         if (pet.profile_image == '') {
           if (pet.name == "Toby") {
             pet.profile_image = "/assets/img/dogImage1.jpg";

@@ -37,5 +37,6 @@
     "register_button": "Register",
     "close_button": "Close",
     "accept_button": "Accept",
-    "pet_steps": "Steps"
+    "pet_steps": "Steps",
+    "cardiac_freq": "Cardiac frequency"
 }

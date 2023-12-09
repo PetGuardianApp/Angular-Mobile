@@ -1,7 +1,7 @@
 <div>
     <h1 style="text-align: center;">{{petInfo.name}}
         <img id="petsIcon" src="/assets/imgs/pet_edit_icon.svg" alt="pets">
-        <img id="petsIcon" src="/assets/menuIcons/delete.svg" alt="pets">
+        <img id="petsIcon" src="/assets/imgs/delete_pet_icon.svg" (click)="deletePet(petInfo.id || '')" alt="pets">
     </h1>
 </div>
 <div style="text-align: center;">
@@ -27,7 +27,6 @@
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
                 </mat-form-field>
-
                 <button type="submit" class="btn" [disabled]="updatePersonalPetInfoForm.invalid">{{'accept_button' |
                     transloco}}</button>
                 <button type="button" class="btn cancel" (click)="closePersonalPetInfoForm()">{{'close_button' |
@@ -82,7 +81,7 @@
         </div>
     </div>
 </div>
-<div class="module info-container" style="padding-right: 5px;">
+<div class="module" style="padding-right: 5px;">
     <h1>{{ 'pet_resume' | transloco }}<img id="petsIcon" src="/assets/imgs/pet_edit_icon.svg"
             (click)="openPetResumeForm()" alt="pets"></h1>
     <div class="popup-background" [ngClass]="{ 'active': isPetResumeVisible }">
@@ -90,6 +89,7 @@
             <form (ngSubmit)="updatePetResume()" [formGroup]="updatePetResumeForm" class="form-container">
                 <h1>{{'pet_resume' | transloco}}</h1>
                 <input type="text" [placeholder]="'pet_resume' | transloco" formControlName="resume">
+                <br>
                 <button type="submit" class="btn" [disabled]="updatePetResumeForm.invalid">{{'accept_button' |
                     transloco}}</button>
                 <button type="button" class="btn cancel" (click)="closePetResumeForm()">{{'close_button'
@@ -101,16 +101,16 @@
     <p style="text-align: justify;">{{petInfo.health_info?.observations}}
     </p>
 </div>
-<div class="module">
-    <h1>{{ 'pet_statistics' | transloco }}<img id="petsIcon" (click)="openPetStatisticsForm"
+<div class="module" style="padding-right: 5px;">
+    <h1>{{ 'pet_statistics' | transloco }}<img id="petsIcon" (click)="openPetStatisticsForm()"
             src="/assets/imgs/pet_edit_icon.svg" alt="pets"></h1>
-    <div class="popup-background" [ngClass]="{ 'active': isPetResumeVisible }">
+    <div class="popup-background" [ngClass]="{ 'active': isPetStatisticsVisible }">
         <div class="popup-form" id="PetStatisticsForm" (click)="stopPropagation($event)">
-            <form (ngSubmit)="updatePetResume()" [formGroup]="updatePetStatisticsForm" class="form-container">
+            <form (ngSubmit)="updatePetStatistics()" [formGroup]="updatePetStatisticsForm" class="form-container">
                 <h1>{{'pet_statistics' | transloco}}</h1>
-
                 <input type="text" [placeholder]="'pet_steps' | transloco" formControlName="resume">
-
+                <input type="text" [placeholder]="'cardiac_freq' | transloco" formControlName="resume">
+                <br>
                 <button type="submit" class="btn" [disabled]="updatePetStatisticsForm.invalid">{{'accept_button' |
                     transloco}}</button>
                 <button type="button" class="btn cancel" (click)="closePetStatisticsForm()">{{'close_button'
@@ -122,12 +122,9 @@
     <p style="text-align: justify;">{{petInfo.health_info?.observations}}
     </p>
 </div>
-
-
 <div class="image-container">
 </div>
 <div id="chart_div">
     <apx-chart [series]="chartOptions.series" [chart]="chartOptions.chart"></apx-chart>
     <apx-chart [series]="chartOptions2.series" [chart]="chartOptions2.chart"></apx-chart>
-</div>
 </div>

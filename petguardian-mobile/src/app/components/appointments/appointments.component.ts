@@ -108,7 +108,7 @@ export class AppointmentsComponent {
     private petService:PetService) {
       var uid = this.storageService.SessionGetStorage("uid");
 
-      this.apiService.getClientPets(uid).then(data => {
+      this.petService.getClientPets(uid).then(data => {
         this.pets = data;
       })
       
