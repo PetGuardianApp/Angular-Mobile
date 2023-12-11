@@ -197,10 +197,12 @@ export class PetProfilePageComponent {
   }
 
   updatePetResume(): void {
-    var pet: PetModel['health_info'] = {
-      observations: this.updatePetResumeForm.value.observations
+    var pet: PetModel = {
+      health_info: {
+        observations: this.updatePetResumeForm.value.observations
+      }
     };
-    //this.apiService.updatePet(pet);
+    this.petService.updatePet(pet);
     this.closePetResumeForm();
   }
   openPetResumeForm(): void {
@@ -213,10 +215,12 @@ export class PetProfilePageComponent {
   }
 
   updatePetMandatoryVaccines(): void {
-    var pet: PetModel['health_info'] = {
-      observations: this.updateMandatoryVaccinesForm.value.observations
+    var pet: PetModel = {
+      health_info: {
+        observations: this.updateMandatoryVaccinesForm.value.observations
+      }
     };
-    //this.apiService.updatePet(pet);
+    this.petService.updatePet(pet);
     this.closePetResumeForm();
   }
 
@@ -230,11 +234,13 @@ export class PetProfilePageComponent {
   }
 
   updatePetStatistics(): void {
-    var pet: PetModel['health_info'] = {
-      steps: this.updatePetStatisticsForm.value.steps,
-      cardiac_freq: this.updatePetStatisticsForm.value.cardiac_freq
+    var pet: PetModel = {
+      health_info: {
+        steps: this.updatePetStatisticsForm.value.steps,
+        cardiac_freq: this.updatePetStatisticsForm.value.cardiac_freq
+      }
     };
-    //this.apiService.updatePet(pet);
+    this.petService.updatePet(pet);
     this.closePetResumeForm();
   }
   openPetStatisticsForm(): void {
@@ -246,11 +252,10 @@ export class PetProfilePageComponent {
 
   }
   stopPropagation(event: Event) {
-    event.stopPropagation(); // Prevent closing the popup when clicking inside the form
+    event.stopPropagation(); 
   }
 
   onDateInput(event: MatDatepickerInputEvent<Date>): void {
-    // Customize the date format as per your requirement
     this.updatePersonalPetInfoForm.value.birth = this.datePipe.transform(event.value, 'ddMMyyyy') + '_00:00';
   }
 
@@ -282,13 +287,10 @@ export class PetProfilePageComponent {
 
   deletePet(pet_id: string) {
     this.petService.deletePet(pet_id);
-
   }
 
 
-
   getBirth(birth: string | undefined) {
-    // Return birth in format 1 of July, 2023
     if (birth != undefined) {
       const months = [
         'January', 'February', 'March', 'April', 'May', 'June',
