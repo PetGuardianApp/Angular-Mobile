@@ -3,6 +3,7 @@ import {
   ChangeDetectionStrategy,
   ViewChild,
   TemplateRef,
+  Inject,
 } from '@angular/core';
 import {
   startOfDay,
@@ -33,10 +34,14 @@ import { ApiService } from 'src/app/services/api.service';
 import { AppointmentModel } from 'src/app/models/appointment.model';
 import { AppointmentsService } from 'src/app/services/appointments.service';
 import { Router } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, Validators } from '@angular/forms';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { PetModel } from 'src/app/models/pet.model';
 import { PetService } from 'src/app/services/pet.service';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialog, MatDialogTitle, MatDialogContent, MatDialogActions, MatDialogClose, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 registerLocaleData(localeEn);
 
@@ -103,14 +108,15 @@ export class AppointmentsComponent {
 
   pets:PetModel[] = []
 
+  eventToEdit:CalendarEvent | undefined;
+
   constructor(private modal: NgbModal,private storageService:StorageService, private apiService:ApiService, 
     private appointmentService:AppointmentsService, private router:Router, private fb:FormBuilder,private datePipe: DatePipe,
-    private petService:PetService) {
+    private petService:PetService,public dialog: MatDialog) {
       var uid = this.storageService.SessionGetStorage("uid");
 
-      this.apiService.getClientPets(uid).then(data => {
-        this.pets = data;
-      })
+      this.pets = this.storageService.SessionGetStorage("pets");
+      
       
       this.apponintForm = this.fb.group({
         pet: ['',[Validators.required]],
@@ -128,12 +134,88 @@ export class AppointmentsComponent {
   }
 
   public createFlag:boolean = false;
+  public editFlag:boolean = false;
 
   public add_appoint(){
-    
 
-    console.log("aaaaa")
-    this.triggerCreateFlag();
+    
+    if(this.editFlag){
+      //patch
+      this.events.find(result =>{
+        this.petService.findPet(this.apponintForm.get('pet')!.value).then(pet => this.eventToEdit!.title = pet?.name!)
+        this.eventToEdit!.start = this.apponintForm.get('start_date')!.value
+        this.eventToEdit!.end = this.apponintForm.get('end_date')!.value
+        this.eventToEdit!.pet_id = this.apponintForm.get('pet')!.value
+        this.eventToEdit!.matter = this.apponintForm.get('matter')!.value
+        result = this.eventToEdit!;
+      },this.eventToEdit)
+      this.displayed_events.find(result =>{
+        this.petService.findPet(this.apponintForm.get('pet')!.value).then(pet => this.eventToEdit!.title = pet?.name!)
+        this.eventToEdit!.start = this.apponintForm.get('start_date')!.value
+        this.eventToEdit!.end = this.apponintForm.get('end_date')!.value
+        this.eventToEdit!.pet_id = this.apponintForm.get('pet')!.value
+        this.eventToEdit!.matter = this.apponintForm.get('matter')!.value
+        result = this.eventToEdit!;
+      },this.eventToEdit)
+      
+      this.triggerEditFlag()
+    }else{
+      //create
+      var newEvent: CalendarEvent = {
+        title:"",
+        start: this.apponintForm.get('start_date')!.value,
+        end: this.apponintForm.get('end_date')!.value,
+        pet_id:this.apponintForm.get('pet')!.value,
+        matter:this.apponintForm.get('matter')!.value
+       
+      };
+
+      this.petService.findPet(this.apponintForm.get('pet')!.value).then(pet => {
+        newEvent!.title = pet?.name!
+        this.events.push(newEvent);
+        this.displayed_events.push(newEvent);
+        this.refresh.next()
+      })
+
+     
+    }
+    this.triggerCreateFlag()
+  }
+
+
+  
+
+  triggerEditFlag(){
+    if(this.editFlag){
+      this.editFlag = false
+    }else{
+      this.editFlag = true
+    }
+  }
+
+  public triggerCreateFlag(){
+    if(this.createFlag){
+      this.createFlag = false
+      this.apponintForm.controls['pet'].setValue('');
+      this.apponintForm.controls['start_date'].setValue('');
+      this.apponintForm.controls['end_date'].setValue('');
+      this.apponintForm.controls['matter'].setValue('');
+      
+    }else{
+      this.createFlag = true;
+    }
+
+  }
+
+
+  public edit_appoint(appoint:CalendarEvent){
+    this.triggerCreateFlag()
+    this.triggerEditFlag()
+    this.apponintForm.controls['pet'].setValue(appoint.pet_id);
+    this.apponintForm.controls['start_date'].setValue(appoint.start);
+    this.apponintForm.controls['end_date'].setValue(appoint.end);
+    this.apponintForm.controls['matter'].setValue(appoint.matter);
+    this.eventToEdit = appoint;
   
   }
 
@@ -147,31 +229,26 @@ export class AppointmentsComponent {
     this.apponintForm.value.end_date = event.value;
   }
 
-  public triggerCreateFlag(){
-    if(this.createFlag){
-      this.createFlag = false
-    }else{
-      this.createFlag = true;
-    }
-
-  }
 
   ngOnInit() {
-   
-
-    
-    // Suscríbete al Observable después de inicializar eventList
     this.appointmentService.EventList.subscribe((events) => {
-      this.events = events; // Actualiza la propiedad local con la lista de eventos
+      this.events = events;
       
-      var today:Date = new Date();
+      var today: Date = new Date();
       this.events.forEach(element => {
-        if(element.start>today){
+        if (element.start > today && !this.displayed_events.some(displayedEvent => displayedEvent.id === element.id)) {
+          this.pets.find(pet => {
+            if (pet.id === element.pet_id) {
+              element.title = pet.name!;
+              element.vet = "Ramon"
+            }
+          });
           this.displayed_events.push(element);
         }
-      })
+      });
     });
   }
+  
 
   
   
@@ -197,6 +274,9 @@ export class AppointmentsComponent {
       this.viewDate = date;
     }
   }
+
+
+
 
 
   beforeMonthViewRender(renderEvent: CalendarMonthViewBeforeRenderEvent): void {
@@ -266,3 +346,5 @@ export class AppointmentsComponent {
     this.activeDayIsOpen = false;
   }
 }
+
+

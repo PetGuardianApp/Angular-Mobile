@@ -108,7 +108,7 @@
         <div *ngIf="createFlag">
           <form (ngSubmit)="add_appoint()" [formGroup]="apponintForm">
           <mat-form-field>
-            <mat-select formControlName="pet" [(value)]="pets[0].name" (selectionChange)="handleSelectChange($event)" >
+            <mat-select formControlName="pet" (selectionChange)="handleSelectChange($event)" >
               <mat-option
                 *ngFor="let pet of pets"
                 [value]="pet.id">
@@ -153,7 +153,7 @@
                   <p style="word-wrap: break-word; margin: 0;">Vet: Ramon</p>
                   <p style="word-wrap: break-word; margin: 0;">Matter: {{ event.matter }}</p>
               </div>
-              <img class="editIcons" src="../../../assets/imgs/edit_icon.svg" >
+              <img class="editIcons" src="../../../assets/imgs/edit_icon.svg" (click)="edit_appoint(event)" >
               <img class="editIcons" src="../../../assets/imgs/delete_icon.svg" (click)="delete_event(event)">
           </div>
         </div>

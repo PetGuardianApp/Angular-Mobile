@@ -119,7 +119,7 @@ export class HomeComponent implements OnInit {
         }
       }
       this.contentIsLoading = false;
-      console.log(petsArray)
+      this.storageService.SessionAddStorage("pets",petsArray)
     });
 
     this.apiService.getClientAppointments(this.storageService.SessionGetStorage("uid")).then((clientAppointments) => {
