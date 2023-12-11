@@ -83,33 +83,25 @@ export class PetService {
     });
   }
 
-  updatePet(pet: PetModel): Promise<any> {
-    const headers = {
-      'content-type': 'application/json',
-      'responseType': 'json'
-    }
-    const requestBody: PetModel = {
-      birth: '',
-      breed: '',
-      weight: {},
-      health_info: {
-        cardiac_freq: {},
-        vaccines: [],
-        observations: '',
-        steps: {}
-      },
-      height: 0,
-      name: '',
-      type: '',
-      vet_id: '',
-      client_id: '',
-      profile_image: '',
-      id: '',
-      ...pet
-    };
-
+  updatePetHealthInfo(pet: any, pet_id: string): Promise<any> {
     return new Promise((resolve, reject) => {
-      this.http.put(this.apiUrl + 'pet/update/' + pet.id, requestBody, { headers })
+      this.http.put(this.apiUrl + 'pet/add/' + pet_id + '/health_info', pet, { responseType: 'text' })
+        .subscribe({
+          next: data => {
+            this.toastr.success("Update completed", "Congratulations!");
+            resolve(data)
+          },
+          error: error => {
+            this.toastr.error("Error updating health info", "Error");
+            reject(error)
+          }
+        });
+    });
+  }
+
+  updatePet(pet: PetModel): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this.http.patch(this.apiUrl + 'pet/update/' + pet.id, pet, { responseType: 'text' })
         .subscribe({
           next: data => {
             this.toastr.success("Update completed", "Congratulations!");

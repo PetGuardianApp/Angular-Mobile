@@ -88,10 +88,6 @@ export class PetProfilePageComponent {
       {
         name: "Weight",
         data: [90, 91, 90, 93, 94, 90, 95, 98, 100, 98, 97]
-      },
-      {
-        name: "Height",
-        data: [100, 100, 100, 105, 105, 105, 105, 105, 110, 110, 110]
       }
     ],
     chart: {
@@ -145,7 +141,8 @@ export class PetProfilePageComponent {
   isMandatoryVaccinesVisible: boolean = false;
   isPetResumeVisible: boolean = false;
   isPetStatisticsVisible: boolean = false;
-
+  currentDate: Date = new Date();
+  formattedDate: any;
   constructor(private petService: PetService, private fb: FormBuilder, private storageService: StorageService, private datePipe: DatePipe) {
     const urlParams = new URLSearchParams(window.location.search);
     this.showPetData(urlParams.get('petId'));
@@ -169,21 +166,29 @@ export class PetProfilePageComponent {
       cardiac_freq: [''],
       steps: ['']
     })
+    const day = this.currentDate.getDate().toString().padStart(2, '0'); // Ensure a leading zero if needed
+    const month = (this.currentDate.getMonth() + 1).toString().padStart(2, '0'); // Months are zero-based
+    const year = this.currentDate.getFullYear().toString();
+    this.formattedDate = `${day}${month}${year}`;
   }
 
-
   updatePetPersonalInfo(): void {
-    const urlParams = new URLSearchParams(window.location.search);
-    var pet: PetModel = {
-      id: urlParams.get('petId') || '',
-      name: this.updatePersonalPetInfoForm.value.name,
-      type: this.updatePersonalPetInfoForm.value.type,
-      breed: this.updatePersonalPetInfoForm.value.breed,
-      birth: this.updatePersonalPetInfoForm.value.birth,
-      weight: this.updatePersonalPetInfoForm.value.weight,
-      height: this.updatePersonalPetInfoForm.value.height,
-    };
-    this.petService.updatePet(pet);
+    if (this.updatePersonalPetInfoForm.value.name != null && this.updatePersonalPetInfoForm.value.name != '') {
+      this.petInfo.name = this.updatePersonalPetInfoForm.value.name
+    }
+    if (this.updatePersonalPetInfoForm.value.type != null && this.updatePersonalPetInfoForm.value.type != '') {
+      this.petInfo.type = this.updatePersonalPetInfoForm.value.type
+    }
+    if (this.updatePersonalPetInfoForm.value.breed != null && this.updatePersonalPetInfoForm.value.breed != '') {
+      this.petInfo.breed = this.updatePersonalPetInfoForm.value.breed
+    }
+    if (this.updatePersonalPetInfoForm.value.birth != null && this.updatePersonalPetInfoForm.value.birth != '') {
+      this.petInfo.birth = this.updatePersonalPetInfoForm.value.birth
+    }
+    if (this.updatePersonalPetInfoForm.value.height != null) {
+      this.petInfo.height = this.updatePersonalPetInfoForm.value.height
+    }
+    this.petService.updatePet(this.petInfo);
     this.closePersonalPetInfoForm();
   }
 
@@ -193,16 +198,15 @@ export class PetProfilePageComponent {
 
   closePersonalPetInfoForm(): void {
     this.isPersonalInfoFormVisible = false;
-
   }
 
   updatePetResume(): void {
-    var pet: PetModel = {
+    var pet: any = {
       health_info: {
         observations: this.updatePetResumeForm.value.observations
       }
     };
-    this.petService.updatePet(pet);
+    this.petService.updatePetHealthInfo(pet, this.petInfo.id || '');
     this.closePetResumeForm();
   }
   openPetResumeForm(): void {
@@ -215,13 +219,13 @@ export class PetProfilePageComponent {
   }
 
   updatePetMandatoryVaccines(): void {
-    var pet: PetModel = {
+    var pet: any = {
       health_info: {
-        observations: this.updateMandatoryVaccinesForm.value.observations
+        vaccines: [this.updateMandatoryVaccinesForm.value.vaccines]
       }
     };
-    this.petService.updatePet(pet);
-    this.closePetResumeForm();
+    this.petService.updatePetHealthInfo(pet, this.petInfo.id || '');
+    this.closeMandatoryVaccinesForm();
   }
 
   openMandatoryVaccinesForm(): void {
@@ -234,14 +238,19 @@ export class PetProfilePageComponent {
   }
 
   updatePetStatistics(): void {
-    var pet: PetModel = {
+    console.log(this.updatePetStatisticsForm.value)
+    var pet: any = {
       health_info: {
-        steps: this.updatePetStatisticsForm.value.steps,
-        cardiac_freq: this.updatePetStatisticsForm.value.cardiac_freq
+        steps: {
+          "": this.updatePetStatisticsForm.value.steps
+        },
+        cardiac_freq:{
+          "": this.updatePetStatisticsForm.value.cardiac_freq
+        } 
       }
     };
-    this.petService.updatePet(pet);
-    this.closePetResumeForm();
+    this.petService.updatePetHealthInfo(pet, this.petInfo.id || '')
+    this.closePetStatisticsForm();
   }
   openPetStatisticsForm(): void {
     this.isPetStatisticsVisible = true;
@@ -252,7 +261,7 @@ export class PetProfilePageComponent {
 
   }
   stopPropagation(event: Event) {
-    event.stopPropagation(); 
+    event.stopPropagation();
   }
 
   onDateInput(event: MatDatepickerInputEvent<Date>): void {
