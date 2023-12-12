@@ -55,7 +55,7 @@
         </div>
 
         <div class="module" style="padding-right: 5px;">
-            <h1>{{ 'pet_vaccines' | transloco }}<img id="petsIcon" src="/assets/imgs/pet_edit_icon.svg"
+            <h1>{{ 'pet_vaccines' | transloco }}<img id="petsIcon" src="/assets/imgs/add_icon.svg"
                     (click)="openMandatoryVaccinesForm()" alt="pets">
             </h1>
             <div class="popup-background" [ngClass]="{ 'active': isMandatoryVaccinesVisible }">
@@ -86,7 +86,7 @@
         <div class="popup-form" id="PetResumeForm" (click)="stopPropagation($event)">
             <form (ngSubmit)="updatePetResume()" [formGroup]="updatePetResumeForm" class="form-container">
                 <h1>{{'pet_resume' | transloco}}</h1>
-                <input type="text" [placeholder]="'pet_resume' | transloco" formControlName="resume">
+                <input type="text" [placeholder]="'pet_resume' | transloco" formControlName="observations">
                 <br>
                 <button type="submit" class="btn" [disabled]="updatePetResumeForm.invalid">{{'accept_button' |
                     transloco}}</button>
@@ -101,13 +101,13 @@
 </div>
 <div class="module" style="padding-right: 5px;">
     <h1>{{ 'pet_statistics' | transloco }}<img id="petsIcon" (click)="openPetStatisticsForm()"
-            src="/assets/imgs/pet_edit_icon.svg" alt="pets"></h1>
+            src="/assets/imgs/add_icon.svg" alt="pets"></h1>
     <div class="popup-background" [ngClass]="{ 'active': isPetStatisticsVisible }">
         <div class="popup-form" id="PetStatisticsForm" (click)="stopPropagation($event)">
             <form (ngSubmit)="updatePetStatistics()" [formGroup]="updatePetStatisticsForm" class="form-container">
                 <h1>{{'pet_statistics' | transloco}}</h1>
-                <input type="text" [placeholder]="'pet_steps' | transloco" formControlName="resume">
-                <input type="text" [placeholder]="'cardiac_freq' | transloco" formControlName="resume">
+                <input type="text" [placeholder]="'pet_steps' | transloco" formControlName="steps">
+                <input type="text" [placeholder]="'cardiac_freq' | transloco" formControlName="cardiac_freq">
                 <br>
                 <button type="submit" class="btn" [disabled]="updatePetStatisticsForm.invalid">{{'accept_button' |
                     transloco}}</button>

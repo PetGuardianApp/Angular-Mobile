@@ -21,6 +21,7 @@ export type ChartOptions = {
   fill: ApexFill;
   tooltip: ApexTooltip;
   stroke: ApexStroke;
+
 };
 @Component({
   selector: 'app-pet-profile-page',
@@ -29,16 +30,17 @@ export type ChartOptions = {
 })
 export class PetProfilePageComponent {
   @ViewChild("chart_div") chart: ChartComponent | undefined;
-
+  stepsArray: number[] = [];
+  c_freqArray: number[] = [];
   public chartOptions: ChartOptions = {
     series: [
       {
         name: "Cardiac Frequency",
-        data: [70, 75, 80, 74, 84, 90, 75, 70, 80, 91, 92, 93, 64, 75, 86, 77, 98, 109, 60]
+        data: this.c_freqArray
       },
       {
         name: "Steps",
-        data: [300, 200, 100, 290, 500, 400, 211, 314, 194, 211, 112, 323, 414, 125, 376, 517, 238, 419, 310]
+        data: this.stepsArray
       }
     ],
     chart: {
@@ -166,10 +168,12 @@ export class PetProfilePageComponent {
       cardiac_freq: [''],
       steps: ['']
     })
-    const day = this.currentDate.getDate().toString().padStart(2, '0'); // Ensure a leading zero if needed
-    const month = (this.currentDate.getMonth() + 1).toString().padStart(2, '0'); // Months are zero-based
+    const day = this.currentDate.getDate().toString().padStart(2, '0');
+    const month = (this.currentDate.getMonth() + 1).toString().padStart(2, '0');
     const year = this.currentDate.getFullYear().toString();
-    this.formattedDate = `${day}${month}${year}`;
+    const hours = this.currentDate.getHours().toString().padStart(2, '0');
+    const minutes = this.currentDate.getMinutes().toString().padStart(2, '0');
+    this.formattedDate = `${day}/${month}/${year}_${hours}:${minutes}`;
   }
 
   updatePetPersonalInfo(): void {
@@ -238,15 +242,14 @@ export class PetProfilePageComponent {
   }
 
   updatePetStatistics(): void {
-    console.log(this.updatePetStatisticsForm.value)
     var pet: any = {
       health_info: {
         steps: {
-          "": this.updatePetStatisticsForm.value.steps
+          [this.formattedDate]: this.updatePetStatisticsForm.value.steps
         },
-        cardiac_freq:{
-          "": this.updatePetStatisticsForm.value.cardiac_freq
-        } 
+        cardiac_freq: {
+          [this.formattedDate]: this.updatePetStatisticsForm.value.cardiac_freq
+        }
       }
     };
     this.petService.updatePetHealthInfo(pet, this.petInfo.id || '')
@@ -272,6 +275,22 @@ export class PetProfilePageComponent {
     if (petId != null) {
       this.petService.getPet(petId).then((petData) => {
         this.petInfo = petData;
+        for (let step in petData.health_info?.steps) {
+          if (petData.health_info?.steps.hasOwnProperty(step)) {
+            const value = petData.health_info?.steps[step];
+            this.stepsArray.push(Number(value))
+          }
+        }
+        for (let freq in petData.health_info?.steps) {
+          if (petData.health_info?.cardiac_freq)
+            if (petData.health_info?.cardiac_freq.hasOwnProperty(freq)) {
+              const value = petData.health_info?.cardiac_freq[freq];
+              this.c_freqArray.push(Number(value))
+            }
+        }
+        console.log(this.c_freqArray)
+        console.log(this.stepsArray)
+
         if (petData.name == "Toby") {
           petData.profile_image = "/assets/img/dogImage1.jpg";
         } else if (petData.name == "Dobby") {

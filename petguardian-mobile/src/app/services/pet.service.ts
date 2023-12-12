@@ -84,6 +84,7 @@ export class PetService {
   }
 
   updatePetHealthInfo(pet: any, pet_id: string): Promise<any> {
+    console.log(pet)
     return new Promise((resolve, reject) => {
       this.http.put(this.apiUrl + 'pet/add/' + pet_id + '/health_info', pet, { responseType: 'text' })
         .subscribe({
