@@ -196,6 +196,25 @@ addUser(client: ClientModel): Promise<any> {
   });
 }
 
+editUser(user: ClientModel): Promise<any> {
+  const headers = {
+    'content-type': 'application/json',
+    'responseType': 'json'
+  };
+
+  return new Promise((resolve, reject) => {
+    this.http.patch(this.apiUrl + 'client/update/' + user.id, user, { headers: headers })
+      .subscribe(
+        (response) => {
+          resolve(response);
+        },
+        (error) => {
+          reject(error);
+        }
+      );
+  });
+}
+
 googleReg(uid: string, mail: string, phone: string, displayName: string): Promise<any> {
   return new Promise((resolve, reject) => {
     this.getSingleClient(uid).then(response => {

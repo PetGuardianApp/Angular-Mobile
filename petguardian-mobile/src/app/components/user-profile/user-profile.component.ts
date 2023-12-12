@@ -35,7 +35,13 @@ export class UserProfileComponent {
     })
   }
 
-  public edit(){}
+  public edit(){
+    this.client.name = this.registerUser.get('name')!.value
+    this.client.email = this.registerUser.get('email')!.value
+    this.client.surnames = this.registerUser.get('surnames')!.value
+    this.client.phone = this.registerUser.get('phone')!.value
+    this.apiService.editUser(this.client)
+  }
 
   public enable(field:string){
     
