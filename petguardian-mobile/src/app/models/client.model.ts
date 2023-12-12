@@ -7,4 +7,5 @@ export class ClientModel {
     surnames?:string;
     photoSrc?:string;
     resume?:string;
+    notifications?:string[];
   }

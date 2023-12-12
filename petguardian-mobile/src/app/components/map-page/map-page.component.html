@@ -2,30 +2,32 @@
 <h2>{{ 'find_location' | transloco }}</h2>
 <input id="searchInput" class="input" placeholder="Av/ John Doe 1234" (keydown.enter)="obtainCoordByStr()">
 
-<google-map height="500px" width="100%" [zoom]="12" [center]="center">
-  <map-marker id="" [options]="markerOptions" [position]="userMarker.getPosition()">
-  </map-marker>
-  <map-marker *ngFor="let marker of parkMarkers" id="parkMarker" [options]="parkMarkerOptions" [position]="marker.getPosition()"
-    [visible]="marker1.getVisible()">
+<google-map #dynamicMap height="500px" width="100%" [zoom]="zoom" [center]="center">
+  <map-marker id="" [options]="markerOptions" [position]="userMarker.getPosition()"></map-marker>
+
+  <map-marker *ngFor="let marker of parkMarkers" id="parkMarker" [options]="parkMarkerOptions"
+    [position]="marker.getPosition()" [visible]="marker1.getVisible()" (mapClick)="openInfo(marker)">
   </map-marker>
 
-  <!--
-  <map-marker id="cafeMarker" [options]="cofeeMarkerOptions" [position]="marker2.getPosition()"
-    [visible]="marker2.getVisible()">
+  <map-marker *ngFor="let marker of petStoreMarkers" id="parkMarker" [options]="storeMarkerOptions"
+    [position]="marker.getPosition()" [visible]="marker5.getVisible()">
   </map-marker>
-  <map-marker id="hairMarker" [options]="hairMarkerOptions" [position]="marker3.getPosition()"
-    [visible]="marker3.getVisible()">
+
+  <map-marker *ngFor="let marker of hotelMarkers" id="parkMarker" [options]="hotelMarkerOptions"
+    [position]="marker.getPosition()" [visible]="marker4.getVisible()">
   </map-marker>
-  <map-marker id="hotelMarker" [options]="hotelMarkerOptions" [position]="marker4.getPosition()"
-    [visible]="marker4.getVisible()">
+
+  <map-marker *ngFor="let marker of hairDMarkers" id="parkMarker" [options]="hairMarkerOptions"
+    [position]="marker.getPosition()" [visible]="marker3.getVisible()">
   </map-marker>
-  <map-marker id="storeMarker" [options]="storeMarkerOptions" [position]="marker5.getPosition()"
-    [visible]="marker5.getVisible()">
+
+  <map-marker *ngFor="let marker of toyMarkers" id="parkMarker" [options]="toystoreMarkerOptions"
+    [position]="marker.getPosition()" [visible]="marker6.getVisible()">
   </map-marker>
-  <map-marker id="petstoreMarker" [options]="toystoreMarkerOptions" [position]="marker6.getPosition()"
-    [visible]="marker6.getVisible()">
+
+  <map-marker *ngFor="let marker of cafeMarkers" id="parkMarker" [options]="cafeMarkerOptions"
+    [position]="marker.getPosition()" [visible]="marker2.getVisible()">
   </map-marker>
-  -->
 </google-map>
 
 <div class="button-container">
