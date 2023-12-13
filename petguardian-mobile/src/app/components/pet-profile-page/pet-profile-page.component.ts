@@ -291,6 +291,19 @@ export class PetProfilePageComponent {
 
   }
 
+  onFileSelected(event: any) {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      this.base64Output = reader.result as string;
+    };
+    if (file){
+      reader.readAsDataURL(file);
+      this.selectedFileName = file.name;
+    } else {
+      this.selectedFileName = '...';
+    }
+  }
 
   onDateInput(event: MatDatepickerInputEvent<Date>): void {
     this.updatePersonalPetInfoForm.value.birth = this.datePipe.transform(event.value, 'ddMMyyyy') + '_00:00';
