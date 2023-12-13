@@ -147,6 +147,8 @@ export class PetProfilePageComponent {
   isUpdateImageFormVisible: boolean = false;
   currentDate: Date = new Date();
   formattedDate: any;
+  base64Output: string = '';
+  selectedFileName: string = '...';
   constructor(private petService: PetService, private fb: FormBuilder, private storageService: StorageService, private datePipe: DatePipe, private router: Router) {
     const urlParams = new URLSearchParams(window.location.search);
     this.showPetData(urlParams.get('petId'));
@@ -273,13 +275,7 @@ export class PetProfilePageComponent {
   }
 
   updatePetImage(): void {
-    var pet: any = {
-      health_info: {
-        vaccines: [this.updateMandatoryVaccinesForm.value.vaccines]
-      }
-    };
-    this.petService.updatePetHealthInfo(pet, this.petInfo.id || '');
-    this.closeMandatoryVaccinesForm();
+    
   }
 
   openUpdateImageForm(): void {
