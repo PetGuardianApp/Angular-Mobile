@@ -11,6 +11,7 @@ import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { StorageService } from 'src/app/services/storage.service';
 import { DatePipe } from '@angular/common';
 import { PetService } from 'src/app/services/pet.service';
+import { Router } from '@angular/router';
 
 export type ChartOptions = {
   series: ApexAxisChartSeries;
@@ -21,7 +22,6 @@ export type ChartOptions = {
   fill: ApexFill;
   tooltip: ApexTooltip;
   stroke: ApexStroke;
-
 };
 @Component({
   selector: 'app-pet-profile-page',
@@ -145,7 +145,7 @@ export class PetProfilePageComponent {
   isPetStatisticsVisible: boolean = false;
   currentDate: Date = new Date();
   formattedDate: any;
-  constructor(private petService: PetService, private fb: FormBuilder, private storageService: StorageService, private datePipe: DatePipe) {
+  constructor(private petService: PetService, private fb: FormBuilder, private storageService: StorageService, private datePipe: DatePipe, private router: Router) {
     const urlParams = new URLSearchParams(window.location.search);
     this.showPetData(urlParams.get('petId'));
     this.petInfo = new PetModel;
@@ -288,8 +288,6 @@ export class PetProfilePageComponent {
               this.c_freqArray.push(Number(value))
             }
         }
-        console.log(this.c_freqArray)
-        console.log(this.stepsArray)
 
         if (petData.name == "Toby") {
           petData.profile_image = "/assets/img/dogImage1.jpg";
@@ -314,7 +312,9 @@ export class PetProfilePageComponent {
   }
 
   deletePet(pet_id: string) {
+    console.log(pet_id)
     this.petService.deletePet(pet_id);
+    this.router.navigate(['home'])
   }
 
 
