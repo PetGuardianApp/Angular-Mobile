@@ -289,13 +289,15 @@ export class AppointmentsComponent {
       
       var today: Date = new Date();
       this.events.forEach(element => {
-        if (element.start > today && !this.displayed_events.some(displayedEvent => displayedEvent.id === element.id)) {
-          this.pets.find(pet => {
-            if (pet.id === element.pet_id) {
-              element.title = pet.name!;
-              element.vet = "Ramon"
-            }
-          });
+        this.pets.find(pet => {
+          if (pet.id == element.pet_id) {
+            element.title = pet.name!;
+            element.vet = "Ramon"
+          }
+        });
+        if (element.start > today && !this.displayed_events.find(displayedEvent => displayedEvent == element )) {
+          console.log(element)
+          
           this.displayed_events.push(element);
         }
       });
