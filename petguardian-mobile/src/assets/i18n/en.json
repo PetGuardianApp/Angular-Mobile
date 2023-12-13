@@ -35,5 +35,6 @@
     "pet_breed": "Enter pet breed",
     "pet_birth": "Enter pet birth",
     "register_button": "Register",
-    "close_button": "Close"
+    "close_button": "Close",
+    "choose_pet_image": "Choose pet image"
 }

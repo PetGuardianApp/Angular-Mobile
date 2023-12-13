@@ -6,6 +6,7 @@ import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { DatePipe } from '@angular/common';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { StorageService } from 'src/app/services/storage.service';
+import { Observable, ReplaySubject } from 'rxjs';
 
 @Component({
   selector: 'app-pets-list',
@@ -15,14 +16,17 @@ import { StorageService } from 'src/app/services/storage.service';
 export class PetsListComponent {
   registerPetForm: FormGroup;
   savedPets: any[] = [];
+  base64Output: string = '';
+  selectedFileName: string = '...';
+
   constructor(public apiService: ApiService, private router: Router, private datePipe: DatePipe,
-    private fb:FormBuilder, private storageService:StorageService) { 
-      this.registerPetForm = this.fb.group({
-        name: ['',[Validators.required]],
-        type: ['',Validators.required],
-        breed: ['',[Validators.required]],
-        birth: ['',Validators.required],
-      })
+    private fb: FormBuilder, private storageService: StorageService) {
+    this.registerPetForm = this.fb.group({
+      name: ['', [Validators.required]],
+      type: ['', Validators.required],
+      breed: ['', [Validators.required]],
+      birth: ['', Validators.required],
+    })
     this.showData();
   }
 
@@ -55,8 +59,10 @@ export class PetsListComponent {
       breed: this.registerPetForm.value.breed,
       birth: this.registerPetForm.value.birth
     };
-    console.log(pet);
-    
+    if (this.base64Output != ''){
+      pet.profile_image = this.base64Output;
+    }
+
     this.apiService.postClientPets(pet);
     // Close the form
     this.closeForm();
@@ -67,23 +73,7 @@ export class PetsListComponent {
       this.apiService.petsArray = petsArray;
       for (const pet of this.apiService.petsArray) {
         if (pet.profile_image == '') {
-          if (pet.name == "Toby") {
-            pet.profile_image = "/assets/img/dogImage1.jpg";
-          } else if (pet.name == "Dobby") {
-            pet.profile_image = "/assets/img/dogImage2.jpg";
-          } else if (pet.name == "Darwin") {
-            pet.profile_image = "/assets/img/catImage.avif";
-          } else  {
-            pet.profile_image = '/assets/img/logo_default.svg';
-          }
-        } else{
-          if (pet.name == "Toby") {
-            pet.profile_image = "/assets/img/dogImage1.jpg";
-          } else if (pet.name == "Dobby") {
-            pet.profile_image = "/assets/img/dogImage2.jpg";
-          } else if (pet.name == "Darwin") {
-            pet.profile_image = "/assets/img/catImage.avif";
-          }          
+          pet.profile_image = '/assets/img/logo_default.svg';
         }
       }
       console.log(petsArray);
@@ -93,5 +83,19 @@ export class PetsListComponent {
   onDateInput(event: MatDatepickerInputEvent<Date>): void {
     // Customize the date format as per your requirement
     this.registerPetForm.value.birth = this.datePipe.transform(event.value, 'ddMMyyyy') + '_00:00';
+  }
+
+  onFileSelected(event: any) {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      this.base64Output = reader.result as string;
+    };
+    if (file){
+      reader.readAsDataURL(file);
+      this.selectedFileName = file.name;
+    } else {
+      this.selectedFileName = '...';
+    }
   }
 }
