@@ -1,19 +1,29 @@
 <div class="barra" id="barra">
     <p>PetGuardian App</p>
     <div>
-        <img id="catIcon" src="/assets/menuIcons/cat.png" alt="User profile" (click)="swapLang('cat')"
-            width="18px;">
+        <img id="catIcon" src="/assets/menuIcons/cat.png" alt="Catalan" (click)="swapLang('cat')" width="18px;">
 
-        <img id="esIcon" src="/assets/menuIcons/espana.png" alt="User profile" (click)="swapLang('es')"
-            width="18px;">
+        <img id="esIcon" src="/assets/menuIcons/espana.png" alt="Spanish" (click)="swapLang('es')" width="18px;">
 
-        <img id="enIcon" src="/assets/menuIcons/reino-unido.png" alt="User profile" (click)="swapLang('en')"
-            width="30px;">
+        <img id="enIcon" src="/assets/menuIcons/reino-unido.png" alt="English" (click)="swapLang('en')" width="30px;">
+
+        <img id="notiIcon" src="/assets/menuIcons/notiOff.svg" alt="Nofitifacion" (click)="toggleNotisPopup()" width="28px;">
 
         <img id="profileIcon" src="/assets/menuIcons/userOff.svg" alt="User profile" (click)="togglePopup()">
     </div>
     <div class="popup" *ngIf="showPopup">
         <a (click)="redirectProfile()">{{ 'user_profile_popup' | transloco }}</a>
         <a (click)="logout()">{{ 'logout_popup' | transloco }}</a>
+    </div>
+
+    <div class="popup" *ngIf="showNotis">
+        <div class="contenedor" *ngFor="let noti of notifications">
+            <div class="columna izquierda">
+                <span>{{ noti }}</span>
+            </div>
+            <div class="columna derecha">
+                <img src="/assets/menuIcons/closeIco.svg" alt="Close" (click)="removeNotification(noti)">
+            </div>
+        </div>
     </div>
 </div>

@@ -1,5 +1,7 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { GoogleMap, MapInfoWindow } from '@angular/google-maps';
+import { ApiService } from 'src/app/services/api.service';
 
 @Component({
   selector: 'app-map-page',
@@ -7,6 +9,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./map-page.component.css']
 })
 export class MapPageComponent implements OnInit {
+  siteType = "";
+  siteName = "Camp+Nou";
+  showPopup = false;
   zoom = 15;
   center!: google.maps.LatLngLiteral;
   options: google.maps.MapOptions = {
@@ -34,7 +39,7 @@ export class MapPageComponent implements OnInit {
     }
   };
 
-  cofeeMarkerOptions: google.maps.MarkerOptions = {
+  cafeMarkerOptions: google.maps.MarkerOptions = {
     draggable: false,
     icon: {
       url: "../assets/mapIcons/map_cofee.svg",
@@ -74,10 +79,15 @@ export class MapPageComponent implements OnInit {
     }
   };
 
-  markers: google.maps.Marker[] = [];
-  parkMarkers: google.maps.Marker[] = [];
-
   userMarker: google.maps.Marker = new google.maps.Marker;
+
+  parkMarkers: google.maps.Marker[] = [];
+  petStoreMarkers: google.maps.Marker[] = [];
+  cafeMarkers: google.maps.Marker[] = [];
+  hotelMarkers: google.maps.Marker[] = [];
+  hairDMarkers: google.maps.Marker[] = [];
+  toyMarkers: google.maps.Marker[] = [];
+
   marker1: google.maps.Marker = new google.maps.Marker;
   marker2: google.maps.Marker = new google.maps.Marker;
   marker3: google.maps.Marker = new google.maps.Marker;
@@ -87,7 +97,7 @@ export class MapPageComponent implements OnInit {
 
   apiKey = 'AIzaSyAouWao_x1bulJ9RkrfYpYP49u2a9RzSXw';
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient, private api: ApiService) { }
 
   ngOnInit() {
     this.getPosition().then(position => {
@@ -95,91 +105,14 @@ export class MapPageComponent implements OnInit {
         this.center = position;
         this.userMarker.setPosition(position);
 
-        // Put a marker in user location
-        //this.markers.push(marker);
-
-        // Get near sites of interest
-        this.getNearbyRestaurants(this.center).then(restaurants => {
-          // restaurants.forEach(restaurant => {
-          //   // Create markers for sites of interest
-          //   const marker: google.maps.Marker = new google.maps.Marker({
-          //     position: {
-          //       lat: restaurant.geometry.location.lat(),
-          //       lng: restaurant.geometry.location.lng()
-          //     },
-          //     title: restaurant.name
-          //   });
-
-          //   this.markers.push(marker);
-          // });
-        });
+        // Display markers
+        this.displayPetStoreMarkers();
+        this.displayParkMarkers();
+        this.displayPetFriendlyCafeMarkers();
+        this.displayPetHotelMarkers();
+        this.displayPetHairdresserMarkers();
+        this.displayPetToyStoreMarkers();
       }
-    });
-
-    this.generateMockMarkers();
-  }
-
-  generateMockMarkers() {
-    var position1 = {
-      lat: 41.616858,
-      lng: 0.644994
-    }
-    var position2 = {
-      lat: 41.602403,
-      lng: 0.646611
-    }
-    var position3 = {
-      lat: 41.593508,
-      lng: 0.629787
-    }
-    var position4 = {
-      lat: 41.639440,
-      lng: 0.627794
-    }
-    var position5 = {
-      lat: 41.627029,
-      lng: 0.617831
-    }
-    var position6 = {
-      lat: 41.623057,
-      lng: 0.601558
-    }
-
-    this.marker1.setPosition(position1);
-    this.marker2.setPosition(position2);
-    this.marker3.setPosition(position3);
-    this.marker4.setPosition(position4);
-    this.marker5.setPosition(position5);
-    this.marker6.setPosition(position6);
-    this.marker1.setIcon();
-
-    this.parkMarkers.push(this.marker1);
-    this.parkMarkers.push(this.marker2);
-    this.parkMarkers.push(this.marker3);
-    this.parkMarkers.push(this.marker4);
-    this.parkMarkers.push(this.marker5);
-    this.parkMarkers.push(this.marker6);
-  }
-
-  getNearbyRestaurants(position: google.maps.LatLngLiteral): Promise<any[]> {
-    const radius = 500;
-    console.log(position);
-    const url = `https://maps.googleapis.com/maps/api/place/nearbysearch/
-    json?location=${position.lat},${position.lng}
-    &radius=${radius}
-    &type=restaurant
-    &key=${this.apiKey}`;
-
-    this.httpClient.get<any>(url);
-    return new Promise((resolve, reject) => {
-      this.httpClient.get<any>(url).subscribe(
-        (response: any) => {
-          resolve(response.results);
-        },
-        (error) => {
-          reject(error);
-        }
-      );
     });
   }
 
@@ -220,7 +153,6 @@ export class MapPageComponent implements OnInit {
   }
 
   obtainCoordByStr() {
-    alert("executing...")
     const direccionInput = document.getElementById("searchInput") as HTMLInputElement;
     const direccion = direccionInput.value;
     const dirFormatQuery = encodeURIComponent(direccion);
@@ -232,7 +164,140 @@ export class MapPageComponent implements OnInit {
         console.log(direccion, location)
         this.center = location;
         this.userMarker.setPosition(location);
+
+        // Clean up markers
+        this.parkMarkers = [];
+        this.petStoreMarkers = [];
+        this.cafeMarkers = [];
+        this.hotelMarkers = [];
+        this.hairDMarkers = [];
+        this.toyMarkers = [];
+
+        // Display markers
+        this.displayPetStoreMarkers();
+        this.displayParkMarkers();
+        this.displayPetFriendlyCafeMarkers();
+        this.displayPetHotelMarkers();
+        this.displayPetHairdresserMarkers();
+        this.displayPetToyStoreMarkers();
       }
     });
+  }
+
+  displayParkMarkers() {
+    const centerStr = `${this.center.lat}%2C${this.center.lng}`;
+
+    this.api.getNearbySearch(centerStr, "1500", "park", "park").then((data: any) => {
+      for (let i = 0; i < data.results.length; i++) {
+        const park = data.results[i];
+        const marker: google.maps.Marker = new google.maps.Marker({
+          position: {
+            lat: park.geometry.location.lat,
+            lng: park.geometry.location.lng
+          },
+          title: park.name
+        });
+        this.parkMarkers.push(marker);
+      }
+    });
+  }
+
+  displayPetStoreMarkers() {
+    const centerStr = `${this.center.lat}%2C${this.center.lng}`;
+    this.api.getNearbySearch(centerStr, "1500", "pet_store", "pet_store").then((data: any) => {
+      for (let i = 0; i < data.results.length; i++) {
+        const petStore = data.results[i];
+        const marker: google.maps.Marker = new google.maps.Marker({
+          position: {
+            lat: petStore.geometry.location.lat,
+            lng: petStore.geometry.location.lng
+          },
+          title: petStore.name
+        });
+        this.petStoreMarkers.push(marker);
+      }
+    });
+  }
+
+  displayPetFriendlyCafeMarkers() {
+    const centerStr = `${this.center.lat}%2C${this.center.lng}`;
+
+    this.api.getNearbySearch(centerStr, "1500", "pet-friendly", "cafe|restaurant").then((data: any) => {
+      for (let i = 0; i < data.results.length; i++) {
+        const cafe = data.results[i];
+        const marker: google.maps.Marker = new google.maps.Marker({
+          position: {
+            lat: cafe.geometry.location.lat,
+            lng: cafe.geometry.location.lng
+          },
+          title: cafe.name
+        });
+        this.cafeMarkers.push(marker);
+      }
+    });
+  }
+
+  displayPetHotelMarkers() {
+    const centerStr = `${this.center.lat}%2C${this.center.lng}`;
+
+    this.api.getNearbySearch(centerStr, "1500", "pet-friendly", "hotel").then((data: any) => {
+      for (let i = 0; i < data.results.length; i++) {
+        const hotel = data.results[i];
+        const marker: google.maps.Marker = new google.maps.Marker({
+          position: {
+            lat: hotel.geometry.location.lat,
+            lng: hotel.geometry.location.lng
+          },
+          title: hotel.name
+        });
+        this.hotelMarkers.push(marker);
+      }
+    });
+  }
+
+  displayPetHairdresserMarkers() {
+    const centerStr = `${this.center.lat}%2C${this.center.lng}`;
+
+    this.api.getNearbySearch(centerStr, "1500", "pet_grooming", "pet_grooming").then((data: any) => {
+      for (let i = 0; i < data.results.length; i++) {
+        const hairdresser = data.results[i];
+        const marker: google.maps.Marker = new google.maps.Marker({
+          position: {
+            lat: hairdresser.geometry.location.lat,
+            lng: hairdresser.geometry.location.lng
+          },
+          title: hairdresser.name
+        });
+        this.hairDMarkers.push(marker);
+      }
+    });
+  }
+
+  displayPetToyStoreMarkers() {
+    const centerStr = `${this.center.lat}%2C${this.center.lng}`;
+
+    this.api.getNearbySearch(centerStr, "1500", "veterinary", "veterinary_care").then((data: any) => {
+      for (let i = 0; i < data.results.length; i++) {
+        const toyStore = data.results[i];
+        const marker: google.maps.Marker = new google.maps.Marker({
+          position: {
+            lat: toyStore.geometry.location.lat,
+            lng: toyStore.geometry.location.lng
+          },
+          title: toyStore.name
+        });
+        this.toyMarkers.push(marker);
+      }
+    });
+  }
+
+  openInfoWindow(marker: google.maps.Marker, windowIndex: string) {
+    this.showPopup = true;
+    this.siteName = marker.getTitle()?.replace(/ /g, "+") ?? "";
+    this.siteType = windowIndex;
+  }
+
+  closePopup() {
+    this.showPopup = false;
   }
 }

@@ -61,13 +61,11 @@ export class LoginComponent {
       }
     }
 
-
-
     this.afAuth.signInWithEmailAndPassword(email, password).then((user) => { //Realitza login
       localStorage.setItem('usrPswd',password);
       localStorage.setItem('usrMail',email);
-      this.storageService.isLoggedNext(true);
       this.storageService.SessionAddStorage("uid", user.user?.uid);
+      this.storageService.isLoggedNext(true);
       this.router.navigate(['home']);
     }).catch((error) => {
 
