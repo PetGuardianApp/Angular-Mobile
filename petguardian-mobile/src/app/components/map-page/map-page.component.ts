@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { GoogleMap, MapInfoWindow } from '@angular/google-maps';
 import { ApiService } from 'src/app/services/api.service';
 
 @Component({
@@ -8,6 +9,9 @@ import { ApiService } from 'src/app/services/api.service';
   styleUrls: ['./map-page.component.css']
 })
 export class MapPageComponent implements OnInit {
+  siteType = "";
+  siteName = "Camp+Nou";
+  showPopup = false;
   zoom = 15;
   center!: google.maps.LatLngLiteral;
   options: google.maps.MapOptions = {
@@ -25,10 +29,6 @@ export class MapPageComponent implements OnInit {
       url: "../assets/mapIcons/user_position.svg",
       scaledSize: new google.maps.Size(50, 50)
     }
-  };
-
-  infoWindowOptions: google.maps.InfoWindowOptions = {
-    // Opciones personalizadas aquí
   };
 
   parkMarkerOptions: google.maps.MarkerOptions = {
@@ -291,7 +291,13 @@ export class MapPageComponent implements OnInit {
     });
   }
 
-  openInfo(marker: google.maps.Marker) {
+  openInfoWindow(marker: google.maps.Marker, windowIndex: string) {
+    this.showPopup = true;
+    this.siteName = marker.getTitle()?.replace(/ /g, "+") ?? "";
+    this.siteType = windowIndex;
+  }
 
+  closePopup() {
+    this.showPopup = false;
   }
 }
