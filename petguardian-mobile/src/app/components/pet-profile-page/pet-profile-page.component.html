@@ -4,9 +4,25 @@
     </h1>
 </div>
 <div style="text-align: center;">
-    <img src="{{petInfo.profile_image}}" style="width: 300px;">
+    <img src="{{petInfo.profile_image}}" style="width: 300px;" (click)="openUpdateImageForm()">
 </div>
-
+<div class="popup-background" [ngClass]="{ 'active': isUpdateImageFormVisible }">
+    <div class="popup-form" id="updateImageForm" (click)="stopPropagation($event)">
+        <form (ngSubmit)="updatePetImage()" [formGroup]="updateImageForm" class="form-container">
+            <div class="file-upload">
+                <div class="file-select">
+                    <div class="file-select-button" id="fileName">{{'choose_pet_image' | transloco}}</div>
+                    <div class="file-select-name" id="noFile">{{ selectedFileName }}</div>
+                    <input type="file" #fileInput (change)="onFileSelected($event)" />
+                </div>
+            </div>
+            <button type="submit" class="btn" [disabled]="updatePersonalPetInfoForm.invalid">{{'accept_button' |
+                transloco}}</button>
+            <button type="button" class="btn cancel" (click)="closeUpdateImageForm()">{{'close_button' |
+                transloco}}</button>
+        </form>
+    </div>
+</div>
 <div class="module" style="column-count: 2;">
     <h1> {{ 'personal_info' | transloco }}<img id="petsIcon" src="/assets/imgs/pet_edit_icon.svg" alt="pets"
             (click)="openPersonalPetInfoForm()"></h1>

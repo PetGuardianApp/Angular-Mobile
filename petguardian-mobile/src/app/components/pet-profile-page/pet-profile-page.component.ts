@@ -139,10 +139,12 @@ export class PetProfilePageComponent {
   updateMandatoryVaccinesForm: FormGroup;
   updatePetResumeForm: FormGroup;
   updatePetStatisticsForm: FormGroup;
+  updateImageForm: FormGroup;
   isPersonalInfoFormVisible: boolean = false;
   isMandatoryVaccinesVisible: boolean = false;
   isPetResumeVisible: boolean = false;
   isPetStatisticsVisible: boolean = false;
+  isUpdateImageFormVisible: boolean = false;
   currentDate: Date = new Date();
   formattedDate: any;
   constructor(private petService: PetService, private fb: FormBuilder, private storageService: StorageService, private datePipe: DatePipe, private router: Router) {
@@ -167,6 +169,9 @@ export class PetProfilePageComponent {
     this.updatePetStatisticsForm = this.fb.group({
       cardiac_freq: [''],
       steps: ['']
+    })
+    this.updateImageForm = this.fb.group({
+      selectedFileName: ['']
     })
     const day = this.currentDate.getDate().toString().padStart(2, '0');
     const month = (this.currentDate.getMonth() + 1).toString().padStart(2, '0');
@@ -266,6 +271,26 @@ export class PetProfilePageComponent {
   stopPropagation(event: Event) {
     event.stopPropagation();
   }
+
+  updatePetImage(): void {
+    var pet: any = {
+      health_info: {
+        vaccines: [this.updateMandatoryVaccinesForm.value.vaccines]
+      }
+    };
+    this.petService.updatePetHealthInfo(pet, this.petInfo.id || '');
+    this.closeMandatoryVaccinesForm();
+  }
+
+  openUpdateImageForm(): void {
+    this.isUpdateImageFormVisible = true;
+  }
+
+  closeUpdateImageForm(): void {
+    this.isUpdateImageFormVisible = false;
+
+  }
+
 
   onDateInput(event: MatDatepickerInputEvent<Date>): void {
     this.updatePersonalPetInfoForm.value.birth = this.datePipe.transform(event.value, 'ddMMyyyy') + '_00:00';
