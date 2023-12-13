@@ -64,6 +64,7 @@ export class AppointmentsService {
           }
         })
         this.addEvent({
+          id:element.id,
           start: this.parseDateFromString(element.start_date!)!,
           end: this.parseDateFromString(element.end_date!)!,
           title: name,
@@ -82,6 +83,44 @@ export class AppointmentsService {
     
     return pet_list.find(x => x.id ==  pet_id)?.vet_id!
    }
+
+   public async getAppoints(): Promise<CalendarEvent[]> {
+    const calendarEvent: CalendarEvent[] = [];
+    const uid = this.storageService.SessionGetStorage("uid");
+  
+    try {
+      const data = await this.apiservice.getAppointments(uid);
+      
+      for (const element of data) {
+        let color = '';
+        let name = '';
+        
+        if (this.parseDateFromString(element.start_date!)! < new Date()) {
+          color = 'black';
+        } else {
+          color = 'green';
+        }
+        
+        name = this.petService.pet_list.find(pet => pet.id === element.pet_id)?.name || 'Bobby';
+        
+        calendarEvent.push({
+          id: element.id,
+          start: this.parseDateFromString(element.start_date!)!,
+          end: this.parseDateFromString(element.end_date!)!,
+          title: name,
+          pet_id: element.pet_id,
+          matter: element.matter,
+          color: { ...colors[color] },
+        });
+      }
+  
+      return calendarEvent;
+    } catch (error) {
+      // Handle errors appropriately
+      console.error('Error fetching appointments:', error);
+      return []; // Or handle error state differently
+    }
+  }
 
 
    parseDateFromString(input: string): Date | null {

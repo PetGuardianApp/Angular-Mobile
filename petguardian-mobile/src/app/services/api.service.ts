@@ -158,6 +158,27 @@ export class ApiService {
     });
   }
 
+  deleteAppoint(id:string){
+
+    const headers = {
+      'content-type': 'application/json',
+      'responseType': 'json'
+    };
+    console.log(id)
+    return new Promise((resolve, reject) => {
+      this.http.delete(this.apiUrl + 'appointment/delete/'+id, { headers: headers })
+        .subscribe(
+          (response) => {
+            resolve(response);
+          },
+          (error) => {
+            reject(error);
+          }
+        );
+    });
+
+  }
+
   public publishAppoint(appoint:AppointmentModel){
 
     const headers = { 

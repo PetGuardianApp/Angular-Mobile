@@ -15,7 +15,7 @@ import {
   isSameMonth,
   addHours,
 } from 'date-fns';
-import { Subject, buffer } from 'rxjs';
+import { Subject, Subscription, buffer } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import {
   CalendarDayViewBeforeRenderEvent,
@@ -196,7 +196,11 @@ export class AppointmentsComponent {
         start_date:this.formatDate(this.apponintForm.get('start_date')!.value)
        
       };
-      this.apiService.publishAppoint(newAppoint)
+      this.apiService.publishAppoint(newAppoint).then(result => {
+        this.router.navigateByUrl('home', { skipLocationChange: true }).then(() => {
+          this.router.navigate(['appointments']);
+      }); 
+      })
 
      
     }
@@ -283,24 +287,31 @@ export class AppointmentsComponent {
     return `${day}${month}${year}_${hours}:${minutes}`;
   }
 
+  ngOnDestroy() {
+    if (this.eventListSubscription) {
+      this.eventListSubscription.unsubscribe();
+    }
+  }
+
+  private eventListSubscription: Subscription | undefined;
+
   ngOnInit() {
-    this.appointmentService.EventList.subscribe((events) => {
+    this.appointmentService = new AppointmentsService(this.storageService,this.apiService,this.petService)
+    console.log(this.eventListSubscription)
+    this. eventListSubscription = this.appointmentService.EventList.subscribe((events) => {
       this.events = events;
-      
       var today: Date = new Date();
-      this.events.forEach(element => {
-        this.pets.find(pet => {
-          if (pet.id == element.pet_id) {
+  
+      this.displayed_events = this.events
+        .filter(element => {
+          const pet = this.pets.find(p => p.id == element.pet_id);
+          if (pet) {
             element.title = pet.name!;
-            element.vet = "Ramon"
+            element.vet = "Ramon";
           }
-        });
-        if (element.start > today && !this.displayed_events.find(displayedEvent => displayedEvent == element )) {
-          console.log(element)
-          
-          this.displayed_events.push(element);
-        }
-      });
+          return element.start > today;
+        })
+        
     });
   }
   
@@ -388,6 +399,7 @@ export class AppointmentsComponent {
     this.displayed_events.splice(this.displayed_events.indexOf(event),1);
     this.events.splice(this.events.indexOf(event),1);
     this.appointmentService.deleteEvent(event);
+    this.apiService.deleteAppoint(event.id?.toString()!)
 
   }
 
