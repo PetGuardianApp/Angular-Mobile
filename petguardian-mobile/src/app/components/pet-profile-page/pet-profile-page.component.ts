@@ -275,7 +275,6 @@ export class PetProfilePageComponent {
   }
 
   updatePetImage(): void {
-    
   }
 
   openUpdateImageForm(): void {
