@@ -275,6 +275,10 @@ export class PetProfilePageComponent {
   }
 
   updatePetImage(): void {
+    if (this.base64Output != ''){
+      this.petInfo.profile_image = this.base64Output;
+      this.petService.updatePet(this.petInfo);
+    }
   }
 
   openUpdateImageForm(): void {
