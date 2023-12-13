@@ -137,16 +137,24 @@ export class AppointmentsComponent {
   public editFlag:boolean = false;
 
   public add_appoint(){
+    let color =''
+      if(this.apponintForm.get('start_date')!.value! < new Date()){
+        color='black'
+      }else{
+        color='green'
+      }
 
     
     if(this.editFlag){
       //patch
+      
       this.events.find(result =>{
         this.petService.findPet(this.apponintForm.get('pet')!.value).then(pet => this.eventToEdit!.title = pet?.name!)
         this.eventToEdit!.start = this.apponintForm.get('start_date')!.value
         this.eventToEdit!.end = this.apponintForm.get('end_date')!.value
         this.eventToEdit!.pet_id = this.apponintForm.get('pet')!.value
         this.eventToEdit!.matter = this.apponintForm.get('matter')!.value
+        this.eventToEdit!.color = { ...colors[color] }
         result = this.eventToEdit!;
       },this.eventToEdit)
       this.displayed_events.find(result =>{
@@ -155,6 +163,7 @@ export class AppointmentsComponent {
         this.eventToEdit!.end = this.apponintForm.get('end_date')!.value
         this.eventToEdit!.pet_id = this.apponintForm.get('pet')!.value
         this.eventToEdit!.matter = this.apponintForm.get('matter')!.value
+        this.eventToEdit!.color = { ...colors[color] }
         result = this.eventToEdit!;
       },this.eventToEdit)
       
@@ -166,9 +175,12 @@ export class AppointmentsComponent {
         start: this.apponintForm.get('start_date')!.value,
         end: this.apponintForm.get('end_date')!.value,
         pet_id:this.apponintForm.get('pet')!.value,
-        matter:this.apponintForm.get('matter')!.value
+        matter:this.apponintForm.get('matter')!.value,
+        color: { ...colors[color] },
        
       };
+
+      
 
       this.petService.findPet(this.apponintForm.get('pet')!.value).then(pet => {
         newEvent!.title = pet?.name!
@@ -177,11 +189,43 @@ export class AppointmentsComponent {
         this.refresh.next()
       })
 
+      var newAppoint: AppointmentModel = {
+        end_date: this.formatDate(this.apponintForm.get('end_date')!.value),
+        matter: this.apponintForm.get('matter')!.value,
+        pet_id:this.apponintForm.get('pet')!.value,
+        start_date:this.formatDate(this.apponintForm.get('start_date')!.value)
+       
+      };
+      this.apiService.publishAppoint(newAppoint)
+
      
     }
     this.triggerCreateFlag()
   }
 
+  parseDateFromString(input: string): Date | null {
+    // Utiliza expresiones regulares para extraer las partes de la cadena
+    const dateRegex = /^(\d{2})(\d{2})(\d{4})_(\d{2}):(\d{2})$/;
+    const match = input.match(dateRegex);
+  
+    if (match) {
+      const day = parseInt(match[1]);
+      const month = parseInt(match[2]) - 1; // Restamos 1 para que enero sea 0, febrero 1, etc.
+      const year = parseInt(match[3]);
+      const hour = parseInt(match[4]);
+      const minute = parseInt(match[5]);
+  
+      // Crea un objeto Date con las partes extraídas
+      const parsedDate = new Date(year, month, day, hour, minute);
+  
+      if (!isNaN(parsedDate.getTime())) {
+        return parsedDate;
+      }
+    }
+  
+    // Si no se pudo analizar la fecha, retorna null
+    return null;
+  }
 
   
 
@@ -229,6 +273,15 @@ export class AppointmentsComponent {
     this.apponintForm.value.end_date = event.value;
   }
 
+   formatDate(date:Date) {
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Month starts from 0
+    const year = date.getFullYear();
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+  
+    return `${day}${month}${year}_${hours}:${minutes}`;
+  }
 
   ngOnInit() {
     this.appointmentService.EventList.subscribe((events) => {

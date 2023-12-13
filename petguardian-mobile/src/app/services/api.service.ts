@@ -158,6 +158,29 @@ export class ApiService {
     });
   }
 
+  public publishAppoint(appoint:AppointmentModel){
+
+    const headers = { 
+      'content-type': 'application/json',
+      'responseType': 'json'
+    }
+  
+    return new Promise((resolve, reject) => {
+      this.http.post(this.apiUrl + 'appointment/create', appoint, { headers: headers })
+        .subscribe(
+          (response) => {
+            resolve(response);
+          },
+          (error) => {
+            if(error.status == 200){
+              resolve(appoint)
+            }
+            reject(error);
+          }
+        );
+    });
+    
+  }
   
 addUser(client: ClientModel): Promise<any> {
 

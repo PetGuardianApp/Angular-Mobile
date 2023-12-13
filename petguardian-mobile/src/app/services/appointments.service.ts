@@ -6,6 +6,7 @@ import { CalendarEvent } from 'angular-calendar';
 import { EventColor } from 'calendar-utils';
 import { PetService } from './pet.service';
 import { PetModel } from '../models/pet.model';
+import { AppointmentModel } from '../models/appointment.model';
 
 const colors: Record<string, EventColor> = {
   red: {
@@ -45,12 +46,9 @@ export class AppointmentsService {
 
   constructor(private storageService:StorageService,private apiservice:ApiService, private petService:PetService) {
     var uid = storageService.SessionGetStorage("uid");
-    console.log(uid)
     this.apiservice.getAppointments(uid).then (data => {
       
       data.forEach(element =>{
-        console.log("a")
-        console.log(element)
         var color = ''
         var name = ""
         if(this.parseDateFromString(element.start_date!)! < new Date()){
@@ -58,15 +56,11 @@ export class AppointmentsService {
         }else{
           color='green'
         }
-        console.log("asdasd"+petService.pet_list)
         petService.pet_list.forEach(pet => {
-          if("CL7E6IRjyJgOzaLxCV8O" == element.pet_id){
-            name = "Tobby"
-          }else if("HtvrlxCnJsSXVkUcgkFG" == element.pet_id){
-            name = "Dobby"
+          if(pet.id == element.pet_id){
+            name = pet.name!
           }else{
             name = "Bobby"
-            console.log("")
           }
         })
         this.addEvent({
@@ -119,6 +113,8 @@ export class AppointmentsService {
     this.eventList.push(event);
     this.eventListSubject.next(this.eventList);
   }
+
+
 
   public deleteEvent(event: CalendarEvent) {
     this.eventList = this.eventList.filter((events) => events !== event);
