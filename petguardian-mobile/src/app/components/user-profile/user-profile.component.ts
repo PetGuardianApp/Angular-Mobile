@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Route, Router } from '@angular/router';
 import { ClientModel } from 'src/app/models/client.model';
 import { ApiService } from 'src/app/services/api.service';
 import { StorageService } from 'src/app/services/storage.service';
@@ -13,8 +14,12 @@ export class UserProfileComponent {
 
   public client: ClientModel = new ClientModel;
   public registerUser: FormGroup;
+  base64Output!: string;
+  selectedFileName: any;
+  public flag:boolean = false;
 
-  constructor(private apiService:ApiService, private storageService:StorageService,private fb:FormBuilder){
+  constructor(private apiService:ApiService, private storageService:StorageService,private fb:FormBuilder,
+    private router:Router){
     
     this.apiService.getSingleClient(this.storageService.SessionGetStorage("uid")).then((result) => {
       this.client = result;
@@ -35,12 +40,32 @@ export class UserProfileComponent {
     })
   }
 
+  onFileSelected(event: any) {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      this.base64Output = reader.result as string;
+      this.client.profile_image = this.base64Output
+      this.flag = true
+    };
+    if (file){
+      reader.readAsDataURL(file);
+      this.selectedFileName = file.name;
+      
+    } else {
+      this.selectedFileName = '...';
+    }
+  }
+
   public edit(){
     this.client.name = this.registerUser.get('name')!.value
     this.client.email = this.registerUser.get('email')!.value
     this.client.surnames = this.registerUser.get('surnames')!.value
     this.client.phone = this.registerUser.get('phone')!.value
     this.apiService.editUser(this.client)
+    this.router.navigateByUrl('home', { skipLocationChange: true }).then(() => {
+      this.router.navigate(['profile']);
+    })
   }
 
   public enable(field:string){

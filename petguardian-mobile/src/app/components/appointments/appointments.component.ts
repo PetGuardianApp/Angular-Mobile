@@ -144,28 +144,36 @@ export class AppointmentsComponent {
         color='green'
       }
 
+      var newAppoint: AppointmentModel = {
+        end_date: this.formatDate(this.apponintForm.get('end_date')!.value),
+        matter: this.apponintForm.get('matter')!.value,
+        pet_id:this.apponintForm.get('pet')!.value,
+        start_date:this.formatDate(this.apponintForm.get('start_date')!.value)
+       
+      };
+
     
     if(this.editFlag){
       //patch
-      
+
+      this.petService.findPet(this.apponintForm.get('pet')!.value).then(pet => this.eventToEdit!.title = pet?.name!)
+      this.eventToEdit!.start = this.apponintForm.get('start_date')!.value
+      this.eventToEdit!.end = this.apponintForm.get('end_date')!.value
+      this.eventToEdit!.pet_id = this.apponintForm.get('pet')!.value
+      this.eventToEdit!.matter = this.apponintForm.get('matter')!.value
+      this.eventToEdit!.color = { ...colors[color] }
+      newAppoint.id = this.eventToEdit?.id?.toString()
+      this.apiService.editAppoint(newAppoint).then(result => {
+        this.router.navigateByUrl('home', { skipLocationChange: true }).then(() => {
+          this.router.navigate(['appointments']);
+        })
+      })
       this.events.find(result =>{
-        this.petService.findPet(this.apponintForm.get('pet')!.value).then(pet => this.eventToEdit!.title = pet?.name!)
-        this.eventToEdit!.start = this.apponintForm.get('start_date')!.value
-        this.eventToEdit!.end = this.apponintForm.get('end_date')!.value
-        this.eventToEdit!.pet_id = this.apponintForm.get('pet')!.value
-        this.eventToEdit!.matter = this.apponintForm.get('matter')!.value
-        this.eventToEdit!.color = { ...colors[color] }
         result = this.eventToEdit!;
-      },this.eventToEdit)
+      },this.eventToEdit?.id)
       this.displayed_events.find(result =>{
-        this.petService.findPet(this.apponintForm.get('pet')!.value).then(pet => this.eventToEdit!.title = pet?.name!)
-        this.eventToEdit!.start = this.apponintForm.get('start_date')!.value
-        this.eventToEdit!.end = this.apponintForm.get('end_date')!.value
-        this.eventToEdit!.pet_id = this.apponintForm.get('pet')!.value
-        this.eventToEdit!.matter = this.apponintForm.get('matter')!.value
-        this.eventToEdit!.color = { ...colors[color] }
         result = this.eventToEdit!;
-      },this.eventToEdit)
+      },this.eventToEdit?.id)
       
       this.triggerEditFlag()
     }else{
@@ -189,13 +197,7 @@ export class AppointmentsComponent {
         this.refresh.next()
       })
 
-      var newAppoint: AppointmentModel = {
-        end_date: this.formatDate(this.apponintForm.get('end_date')!.value),
-        matter: this.apponintForm.get('matter')!.value,
-        pet_id:this.apponintForm.get('pet')!.value,
-        start_date:this.formatDate(this.apponintForm.get('start_date')!.value)
-       
-      };
+      
       this.apiService.publishAppoint(newAppoint).then(result => {
         this.router.navigateByUrl('home', { skipLocationChange: true }).then(() => {
           this.router.navigate(['appointments']);

@@ -1,3 +1,11 @@
+<img width="400px" src="{{client.profile_image}}" alt="Client">
+<div class="file-upload">
+  <div class="file-select">
+      <div class="file-select-button" id="fileName">Change profile image</div>
+      <div class="file-select-name" id="noFile">{{ selectedFileName }}</div>
+      <input type="file" #fileInput (change)="onFileSelected($event)" />
+  </div>
+</div>
 <form (ngSubmit)="edit()" [formGroup]="registerUser" style="align-items: center;" >
     <div class="form-floating mb-3" style="display: flex; align-items: center;">
         <input 
@@ -54,7 +62,8 @@
         *ngIf=" registerUser.controls['phone'].enabled 
               || registerUser.controls['surnames'].enabled 
               || registerUser.controls['name'].enabled 
-              || registerUser.controls['email'].enabled"
+              || registerUser.controls['email'].enabled
+              || flag"
         >Save</button>
         
       </div>

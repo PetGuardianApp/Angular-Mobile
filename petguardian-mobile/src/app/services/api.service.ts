@@ -202,6 +202,25 @@ export class ApiService {
     });
     
   }
+
+  public editAppoint(appoint: AppointmentModel): Promise<any> {
+    const headers = {
+      'content-type': 'application/json',
+      'responseType': 'json',
+    };
+
+    return new Promise((resolve, reject) => {
+      this.http.put(this.apiUrl+'appointment/update/'+appoint.id, appoint, { headers: headers }).subscribe(
+        (response) => {
+          resolve(response);
+        },
+        (error) => {
+          reject(error);
+        }
+      );
+    });
+  }
+
   editUser(user: ClientModel): Promise<any> {
     const headers = {
       'content-type': 'application/json',
