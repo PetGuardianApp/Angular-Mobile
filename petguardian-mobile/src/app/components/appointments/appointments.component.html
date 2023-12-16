@@ -97,12 +97,10 @@
         <h3 style="width: 100%; align-self: center;">Upcommig Appointments</h3>
         
         
-        <div style="justify-content: center; height: 80px;" *ngIf="!createFlag" >
+        <div style="justify-content: center; height: 80px; " *ngIf="!createFlag" >
             <div class="appointment-container" style="display: flex; text-align:center;" (click)="triggerCreateFlag()">
                 <img src="../../../assets/imgs/Add.svg" style="height: 70%; padding-left: 5%; padding-top: 5%;">
-                <div style="align-items: center; text-align: center;">
                 <p >Add new Appointment</p>
-                </div>
             </div>
         </div>
         <div *ngIf="createFlag">
