@@ -1,3 +1,4 @@
+<div style="align-items: center; align-self: center; width: 80%; text-align:center;">
 <img width="400px" src="{{client.profile_image}}" alt="Client">
 <div class="file-upload">
   <div class="file-select">
@@ -6,7 +7,7 @@
       <input type="file" #fileInput (change)="onFileSelected($event)" />
   </div>
 </div>
-<form (ngSubmit)="edit()" [formGroup]="registerUser" style="align-items: center;" >
+<form (ngSubmit)="edit()" [formGroup]="registerUser" style="align-items: center; margin:auto;" >
     <div class="form-floating mb-3" style="display: flex; align-items: center;">
         <input 
           type="email" 
@@ -69,3 +70,4 @@
       </div>
       
 </form>
+</div>

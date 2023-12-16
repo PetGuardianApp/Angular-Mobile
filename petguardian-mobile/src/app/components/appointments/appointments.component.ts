@@ -324,7 +324,7 @@ export class AppointmentsComponent {
   
 
   eventClicked({ event }: { event: CalendarEvent }): void {
-    this.router.navigate(['clients/pet'], {
+    this.router.navigate(['pet-profile'], {
       queryParams: { petId:event.pet_id }
     });
   }
