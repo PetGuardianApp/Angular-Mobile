@@ -97,15 +97,15 @@
         <h3 style="width: 100%; align-self: center;">Upcommig Appointments</h3>
         
         
-        <div style="justify-content: center; height: 80px; " *ngIf="!createFlag" >
+        <div style="justify-content: center; height: 80px;" *ngIf="!createFlag" >
             <div class="appointment-container" style="display: flex; text-align:center;" (click)="triggerCreateFlag()">
                 <img src="../../../assets/imgs/Add.svg" style="height: 70%; padding-left: 5%; padding-top: 5%;">
-                <p >Add new Appointment</p>
+                <p>Add new Appointment</p>
             </div>
         </div>
         <div *ngIf="createFlag">
           <form (ngSubmit)="add_appoint()" [formGroup]="apponintForm">
-          <mat-form-field>
+          <mat-form-field style="width: 100%;">
             <mat-select formControlName="pet" (selectionChange)="handleSelectChange($event)" >
               <mat-option
                 *ngFor="let pet of pets"
@@ -115,7 +115,7 @@
             </mat-select>
           </mat-form-field>
               <div class="form-floating mb-3">
-                <mat-form-field>
+                <mat-form-field style="width: 100%;">
                   <mat-label>Start Date</mat-label>
                   <input formControlName="start_date" matInput [matDatepicker]="picker" (click)="picker.open()" (dateInput)="onDateInputStart($event)" readonly required>
                   <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
@@ -123,7 +123,7 @@
               </mat-form-field>
               </div>
               <div class="form-floating mb-3">
-                <mat-form-field>
+                <mat-form-field style="width: 100%;">
                   <mat-label>End Date</mat-label>
                   <input formControlName="end_date" matInput [matDatepicker]="picker2" (click)="picker2.open()" (dateInput)="onDateInputEnd($event)" readonly required>
                   <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
