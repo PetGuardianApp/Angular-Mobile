@@ -6,6 +6,7 @@ import { CalendarEvent } from 'angular-calendar';
 import { EventColor } from 'calendar-utils';
 import { PetService } from './pet.service';
 import { PetModel } from '../models/pet.model';
+import { AppointmentModel } from '../models/appointment.model';
 
 const colors: Record<string, EventColor> = {
   red: {
@@ -45,12 +46,9 @@ export class AppointmentsService {
 
   constructor(private storageService:StorageService,private apiservice:ApiService, private petService:PetService) {
     var uid = storageService.SessionGetStorage("uid");
-    console.log(uid)
     this.apiservice.getAppointments(uid).then (data => {
       
       data.forEach(element =>{
-        console.log("a")
-        console.log(element)
         var color = ''
         var name = ""
         if(this.parseDateFromString(element.start_date!)! < new Date()){
@@ -58,18 +56,15 @@ export class AppointmentsService {
         }else{
           color='green'
         }
-        console.log("asdasd"+petService.pet_list)
         petService.pet_list.forEach(pet => {
-          if("CL7E6IRjyJgOzaLxCV8O" == element.pet_id){
-            name = "Tobby"
-          }else if("HtvrlxCnJsSXVkUcgkFG" == element.pet_id){
-            name = "Dobby"
+          if(pet.id == element.pet_id){
+            name = pet.name!
           }else{
             name = "Bobby"
-            console.log("")
           }
         })
         this.addEvent({
+          id:element.id,
           start: this.parseDateFromString(element.start_date!)!,
           end: this.parseDateFromString(element.end_date!)!,
           title: name,
@@ -88,6 +83,44 @@ export class AppointmentsService {
     
     return pet_list.find(x => x.id ==  pet_id)?.vet_id!
    }
+
+   public async getAppoints(): Promise<CalendarEvent[]> {
+    const calendarEvent: CalendarEvent[] = [];
+    const uid = this.storageService.SessionGetStorage("uid");
+  
+    try {
+      const data = await this.apiservice.getAppointments(uid);
+      
+      for (const element of data) {
+        let color = '';
+        let name = '';
+        
+        if (this.parseDateFromString(element.start_date!)! < new Date()) {
+          color = 'black';
+        } else {
+          color = 'green';
+        }
+        
+        name = this.petService.pet_list.find(pet => pet.id === element.pet_id)?.name || 'Bobby';
+        
+        calendarEvent.push({
+          id: element.id,
+          start: this.parseDateFromString(element.start_date!)!,
+          end: this.parseDateFromString(element.end_date!)!,
+          title: name,
+          pet_id: element.pet_id,
+          matter: element.matter,
+          color: { ...colors[color] },
+        });
+      }
+  
+      return calendarEvent;
+    } catch (error) {
+      // Handle errors appropriately
+      console.error('Error fetching appointments:', error);
+      return []; // Or handle error state differently
+    }
+  }
 
 
    parseDateFromString(input: string): Date | null {
@@ -119,6 +152,8 @@ export class AppointmentsService {
     this.eventList.push(event);
     this.eventListSubject.next(this.eventList);
   }
+
+
 
   public deleteEvent(event: CalendarEvent) {
     this.eventList = this.eventList.filter((events) => events !== event);

@@ -151,7 +151,6 @@ export class PetProfilePageComponent {
   selectedFileName: string = '...';
   constructor(private petService: PetService, private fb: FormBuilder, private storageService: StorageService, private datePipe: DatePipe, private router: Router) {
     const urlParams = new URLSearchParams(window.location.search);
-    this.showPetData(urlParams.get('petId'));
     this.petInfo = new PetModel;
     this.petImage = new String;
     this.updatePersonalPetInfoForm = this.fb.group({
@@ -326,14 +325,8 @@ export class PetProfilePageComponent {
             }
         }
 
-        if (petData.name == "Toby") {
-          petData.profile_image = "/assets/img/dogImage1.jpg";
-        } else if (petData.name == "Dobby") {
-          petData.profile_image = "/assets/img/dogImage2.jpg";
-        } else if (petData.name == "Darwin") {
-          petData.profile_image = "/assets/img/catImage.avif";
-        } else {
-          petData.profile_image = '/assets/img/logo_default.svg';
+        if (this.petInfo.profile_image == '') {
+          this.petInfo.profile_image = '/assets/img/logo_default.svg';
         }
       });
     }

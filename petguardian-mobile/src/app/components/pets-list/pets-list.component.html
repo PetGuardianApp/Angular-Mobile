@@ -3,21 +3,29 @@
 <div class="form-popup" id="myForm">
     <form (ngSubmit)="registerPet()" [formGroup]="registerPetForm" class="form-container">
         <h1>{{'register_pet' | transloco}}</h1>
-        
-        <input type="text" [placeholder]="'pet_name' | transloco" formControlName="name" required>
+        <div class="file-upload">
+            <div class="file-select">
+                <div class="file-select-button" id="fileName">{{'choose_pet_image' | transloco}}</div>
+                <div class="file-select-name" id="noFile">{{ selectedFileName }}</div>
+                <input type="file" #fileInput (change)="onFileSelected($event)" />
+            </div>
+        </div>
+        <input type="text" #fileInput [placeholder]="'pet_name' | transloco" formControlName="name" required>
 
-        <input type="text" [placeholder]="'pet_type' | transloco" formControlName="type" required>
+        <input type="text" #fileInput [placeholder]="'pet_type' | transloco" formControlName="type" required>
 
-        <input type="text" [placeholder]="'pet_breed' | transloco" formControlName="breed" required>
+        <input type="text" #fileInput [placeholder]="'pet_breed' | transloco" formControlName="breed" required>
 
         <mat-form-field>
             <mat-label>{{'pet_birth' | transloco}}</mat-label>
-            <input formControlName="birth" matInput [matDatepicker]="picker" (click)="picker.open()" (dateInput)="onDateInput($event)" readonly required>
+            <input formControlName="birth" matInput [matDatepicker]="picker" (click)="picker.open()"
+                (dateInput)="onDateInput($event)" readonly required>
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
 
-        <button type="submit" class="btn" [disabled]="registerPetForm.invalid">{{'register_button' | transloco}}</button>
+        <button type="submit" class="btn" [disabled]="registerPetForm.invalid">{{'register_button' |
+            transloco}}</button>
         <button type="button" class="btn cancel" (click)="closeForm()">{{'close_button' | transloco}}</button>
     </form>
 

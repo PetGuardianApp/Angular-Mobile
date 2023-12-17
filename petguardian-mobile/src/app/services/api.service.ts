@@ -9,6 +9,7 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { GoogleAuthProvider } from 'firebase/auth';
 import firebase from 'firebase/compat';
 import { ToastrService } from 'ngx-toastr';
+import { VetModel } from '../models/vet.model';
 
 
 @Injectable({
@@ -16,6 +17,8 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class ApiService {
   private apiUrl = 'https://petguardian-api.uc.r.appspot.com/'
+  private localUrl = 'http://localhost:8080/'
+
   private temp!: Observable<ClientModel[]>;
   currentDate: Date = new Date();
 
@@ -78,6 +81,20 @@ export class ApiService {
     });
   }
 
+  getClientVets(uid: string): Promise<VetModel[]> {
+    return new Promise((resolve, reject) => {
+      this.http.get<VetModel[]>(this.apiUrl + 'client/findVets/' + uid)
+        .subscribe(
+          (response: VetModel[]) => {
+            resolve(response);
+          },
+          (error) => {
+            reject(error);
+          }
+        );
+    });
+  }
+
   getSingleClient(uid: string): Promise<ClientModel> {
     return new Promise((resolve, reject) => {
       this.http.get<ClientModel>(this.apiUrl + '/client/find/' + uid)
@@ -94,7 +111,6 @@ export class ApiService {
 
 
   addUser(client: ClientModel): Promise<any> {
-
     const headers = {
       'content-type': 'application/json',
       'responseType': 'json'
@@ -143,6 +159,125 @@ export class ApiService {
     });
   }
 
+  deleteAppoint(id:string){
+
+    const headers = {
+      'content-type': 'application/json',
+      'responseType': 'json'
+    };
+    console.log(id)
+    return new Promise((resolve, reject) => {
+      this.http.delete(this.apiUrl + 'appointment/delete/'+id, { headers: headers })
+        .subscribe(
+          (response) => {
+            resolve(response);
+          },
+          (error) => {
+            reject(error);
+          }
+        );
+    });
+
+  }
+
+  public publishAppoint(appoint:AppointmentModel){
+
+    const headers = { 
+      'content-type': 'application/json',
+      'responseType': 'json'
+    }
+  
+    return new Promise((resolve, reject) => {
+      this.http.post(this.apiUrl + 'appointment/create', appoint, { headers: headers })
+        .subscribe(
+          (response) => {
+            resolve(response);
+          },
+          (error) => {
+            if(error.status == 200){
+              resolve(appoint)
+            }
+            reject(error);
+          }
+        );
+    });
+    
+  }
+
+  public editAppoint(appoint: AppointmentModel): Promise<any> {
+    const headers = {
+      'content-type': 'application/json',
+      'responseType': 'json',
+    };
+
+    return new Promise((resolve, reject) => {
+      this.http.put(this.apiUrl+'appointment/update/'+appoint.id, appoint, { headers: headers }).subscribe(
+        (response) => {
+          resolve(response);
+        },
+        (error) => {
+          reject(error);
+        }
+      );
+    });
+  }
+
+  editUser(user: ClientModel): Promise<any> {
+    const headers = {
+      'content-type': 'application/json',
+      'responseType': 'json'
+    };
+
+    return new Promise((resolve, reject) => {
+      this.http.patch(this.apiUrl + 'client/update/' + user.id, user, { headers: headers })
+        .subscribe(
+          (response) => {
+            resolve(response);
+          },
+          (error) => {
+            reject(error);
+          }
+        );
+    });
+  }
+
+  addUser(client: ClientModel): Promise<any> {
+    const headers = {
+      'content-type': 'application/json',
+      'responseType': 'json'
+    }
+
+    return new Promise((resolve, reject) => {
+      this.http.post(this.apiUrl + 'client/create/' + client.id, client, { headers: headers })
+        .subscribe(
+          (response) => {
+            resolve(response);
+          },
+          (error) => {
+            if (error.status == 200) {
+              resolve(client)
+            }
+            reject(error);
+          }
+        );
+    });
+
+    return new Promise((resolve, reject) => {
+      this.http.post<string>(this.apiUrl + 'client/create/' + client.id, client, { 'headers': headers })
+        .subscribe({
+          next: data => {
+            resolve(data)
+          },
+          error: error => {
+            reject(error)
+          }
+
+
+      });
+  });
+}
+
+
   getAllPets(): Promise<PetModel[]> {
     return new Promise((resolve, reject) => {
       this.http.get<PetModel[]>(this.apiUrl + '/pet/all')
@@ -156,4 +291,29 @@ export class ApiService {
         );
     });
   }
+
+
+  getNearbySearch(location: string, radius: string, keyword: string, type: string): Promise<any> {
+    const headers = {
+      'content-type': 'application/json',
+      'responseType': 'json',
+      'location': location,
+      'radius': radius,
+      'type': type,
+      'keyword': keyword
+    }
+
+    return new Promise((resolve, reject) => {
+      this.http.get(this.apiUrl + 'maps/getNearbySearch', { headers: headers })
+        .subscribe(
+          (response) => {
+            resolve(response);
+          },
+          (error) => {
+            reject(error);
+          }
+        );
+    });
+  }
+
 }

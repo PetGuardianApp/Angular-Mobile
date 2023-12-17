@@ -1,0 +1,65 @@
+body {
+    font-family: 'Montserrat', sans-serif;
+}
+
+head {
+    font-family: 'Montserrat', sans-serif;
+}
+
+h1 {
+    font-size: 21px;
+    font-weight: bold;
+    color: #2D6F28;
+    border-bottom: 2px solid #2D6F28;
+}
+
+h2 {
+    font-size: 18px;
+    color: #2D6F28;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th {
+    width: 50%;
+    text-align: left;
+    vertical-align: top;
+    padding: 10px;
+}
+
+span {
+    font-weight: normal;
+}
+
+.info-container {
+    display: flex;
+}
+
+.info-container>div {
+    flex: 1;
+}
+
+.mapDiv {
+    width: auto;
+    height: 300px;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}
+
+.button{
+    background-color: #2D6F28;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    border-radius: 10px;
+    border: none;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+

@@ -100,15 +100,13 @@
         <div style="justify-content: center; height: 80px;" *ngIf="!createFlag" >
             <div class="appointment-container" style="display: flex; text-align:center;" (click)="triggerCreateFlag()">
                 <img src="../../../assets/imgs/Add.svg" style="height: 70%; padding-left: 5%; padding-top: 5%;">
-                <div style="align-items: center; text-align: center;">
-                <p >Add new Appointment</p>
-                </div>
+                <p>Add new Appointment</p>
             </div>
         </div>
         <div *ngIf="createFlag">
           <form (ngSubmit)="add_appoint()" [formGroup]="apponintForm">
-          <mat-form-field>
-            <mat-select formControlName="pet" [(value)]="pets[0].name" (selectionChange)="handleSelectChange($event)" >
+          <mat-form-field style="width: 100%;">
+            <mat-select formControlName="pet" (selectionChange)="handleSelectChange($event)" >
               <mat-option
                 *ngFor="let pet of pets"
                 [value]="pet.id">
@@ -117,7 +115,7 @@
             </mat-select>
           </mat-form-field>
               <div class="form-floating mb-3">
-                <mat-form-field>
+                <mat-form-field style="width: 100%;">
                   <mat-label>Start Date</mat-label>
                   <input formControlName="start_date" matInput [matDatepicker]="picker" (click)="picker.open()" (dateInput)="onDateInputStart($event)" readonly required>
                   <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
@@ -125,7 +123,7 @@
               </mat-form-field>
               </div>
               <div class="form-floating mb-3">
-                <mat-form-field>
+                <mat-form-field style="width: 100%;">
                   <mat-label>End Date</mat-label>
                   <input formControlName="end_date" matInput [matDatepicker]="picker2" (click)="picker2.open()" (dateInput)="onDateInputEnd($event)" readonly required>
                   <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
@@ -138,7 +136,7 @@
                 </div>
               <div class="d-grid gap-2">
                 <button class="btn btn-primary btn-lg" type="submit" [disabled]="apponintForm.invalid">Add</button>
-                <button (click)="triggerCreateFlag()">Back</button>
+                <button class="btn btn-danger btn-lg" (click)="triggerCreateFlag()">Back</button>
               </div>
         </form>
       </div>
@@ -153,7 +151,7 @@
                   <p style="word-wrap: break-word; margin: 0;">Vet: Ramon</p>
                   <p style="word-wrap: break-word; margin: 0;">Matter: {{ event.matter }}</p>
               </div>
-              <img class="editIcons" src="../../../assets/imgs/edit_icon.svg" >
+              <img class="editIcons" src="../../../assets/imgs/edit_icon.svg" (click)="edit_appoint(event)" >
               <img class="editIcons" src="../../../assets/imgs/delete_icon.svg" (click)="delete_event(event)">
           </div>
         </div>

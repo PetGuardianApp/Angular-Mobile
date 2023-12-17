@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { Subscription, Observable } from 'rxjs';
 import { StorageService } from 'src/app/services/storage.service';
 import { TranslocoService } from '@ngneat/transloco';
+import { ApiService } from 'src/app/services/api.service';
+import { ClientModel } from 'src/app/models/client.model';
 
 @Component({
   selector: 'app-top-bar',
@@ -11,11 +13,35 @@ import { TranslocoService } from '@ngneat/transloco';
   styleUrls: ['./top-bar.component.css']
 })
 export class TopBarComponent {
+  subscription: Subscription;
   prevScrollPos = window.pageYOffset;
   showPopup = false;
+  showNotis = false;
+  notifications: string[] = [];
 
   constructor(private afAuth: AngularFireAuth, private router: Router, private storageService: StorageService,
-    private translocoService: TranslocoService) {
+    private translocoService: TranslocoService, private api: ApiService) {
+    this.subscription = this.storageService.isLoggedIn
+      .subscribe(data => {
+        if (data == true) {
+          const uid = storageService.SessionGetStorage('uid');
+          if (uid) {
+            api.getSingleClient(uid).then((data) => {
+              if (data.notifications != undefined) {
+                this.notifications = data.notifications;
+              }
+
+              if (this.notifications.length != 0) {
+                // Change notis icon
+                const notisIcon = document.getElementById("notiIcon") as HTMLImageElement;
+                notisIcon.src = "/assets/menuIcons/notiOn.svg";
+              } else {
+                this.notifications.push("Any notifications found");
+              }
+            });
+          }
+        }
+      });
   }
 
   logout() {
@@ -53,8 +79,35 @@ export class TopBarComponent {
 
   }
 
+  removeNotification(noti: string) {
+    const index = this.notifications.indexOf(noti);
+    if (index > -1) {
+      this.notifications.splice(index, 1);
+    }
+
+    let u = new ClientModel();
+    u.notifications = this.notifications;
+    u.id = this.storageService.SessionGetStorage('uid');
+
+    // Manage notifications    
+    if (this.notifications.length == 0) {
+      u.notifications = ["any"];
+      this.notifications.push("Any notifications found");
+      const notisIcon = document.getElementById("notiIcon") as HTMLImageElement;
+      notisIcon.src = "/assets/menuIcons/notiOff.svg";
+    }
+
+    // Make patch
+    this.api.editUser(u).then(() => {
+    });
+  }
+
   togglePopup() {
     this.showPopup = !this.showPopup;
+  }
+
+  toggleNotisPopup() {
+    this.showNotis = !this.showNotis;
   }
 
   public swapLang(lang: string) {
@@ -82,18 +135,4 @@ export class TopBarComponent {
         break;
     }
   }
-
- /* @HostListener('window:scroll', ['$event'])
-  onWindowScroll() {
-    const currentScrollPos = window.pageYOffset;
-
-    if (this.prevScrollPos > currentScrollPos) {
-      document.getElementById('barra')!.style.top = '0';
-    } else {
-      document.getElementById('barra')!.style.top = '-60px';
-      this.showPopup = false; // Oculta el popup al hacer scroll hacia abajo
-    }
-
-    this.prevScrollPos = currentScrollPos;
-  }*/
 }

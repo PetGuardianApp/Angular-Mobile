@@ -7,7 +7,7 @@
     "cafe": "Pet friendly cafe",
     "hotel": "Pet hotel",
     "hairdresser": "Pet hairdresser",
-    "toy": "Toy store",
+    "toy": "Vet clinic",
     "chat_underdev": "Chat Page Under development",
     "stay_tunned": "Stay tunned, lots of features coming soon!",
     "qr_underdev": "Qr Page Under development",
@@ -38,5 +38,7 @@
     "close_button": "Close",
     "accept_button": "Accept",
     "pet_steps": "Steps",
-    "cardiac_freq": "Cardiac frequency"
+    "cardiac_freq": "Cardiac frequency",
+    "choose_pet_image": "Choose pet image",
+    "chat_list": "Chat"
 }
