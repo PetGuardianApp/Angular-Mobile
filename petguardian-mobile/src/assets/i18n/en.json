@@ -36,6 +36,9 @@
     "pet_birth": "Enter pet birth",
     "register_button": "Register",
     "close_button": "Close",
+    "accept_button": "Accept",
+    "pet_steps": "Steps",
+    "cardiac_freq": "Cardiac frequency",
     "choose_pet_image": "Choose pet image",
     "chat_list": "Chat"
 }

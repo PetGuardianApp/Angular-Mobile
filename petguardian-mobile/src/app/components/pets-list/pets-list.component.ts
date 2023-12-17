@@ -6,6 +6,7 @@ import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { DatePipe } from '@angular/common';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { StorageService } from 'src/app/services/storage.service';
+import { PetService } from 'src/app/services/pet.service';
 import { Observable, ReplaySubject } from 'rxjs';
 
 @Component({
@@ -20,13 +21,13 @@ export class PetsListComponent {
   selectedFileName: string = '...';
 
   constructor(public apiService: ApiService, private router: Router, private datePipe: DatePipe,
-    private fb: FormBuilder, private storageService: StorageService) {
-    this.registerPetForm = this.fb.group({
-      name: ['', [Validators.required]],
-      type: ['', Validators.required],
-      breed: ['', [Validators.required]],
-      birth: ['', Validators.required],
-    })
+    private fb:FormBuilder, private storageService:StorageService,public petService:PetService) { 
+      this.registerPetForm = this.fb.group({
+        name: ['',[Validators.required]],
+        type: ['',Validators.required],
+        breed: ['',[Validators.required]],
+        birth: ['',Validators.required],
+      })
     this.showData();
   }
 
@@ -59,19 +60,20 @@ export class PetsListComponent {
       breed: this.registerPetForm.value.breed,
       birth: this.registerPetForm.value.birth
     };
+    console.log(pet);
+    
     if (this.base64Output != ''){
       pet.profile_image = this.base64Output;
-    }
-
-    this.apiService.postClientPets(pet);
+    
+    this.petService.postClientPets(pet);
     // Close the form
     this.closeForm();
   }
 
   showData(): void {
-    this.apiService.getClientPets(this.storageService.SessionGetStorage("uid")).then((petsArray) => {
-      this.apiService.petsArray = petsArray;
-      for (const pet of this.apiService.petsArray) {
+    this.petService.getClientPets(this.storageService.SessionGetStorage("uid")).then((petsArray) => {
+      this.petService.petsArray = petsArray;
+      for (const pet of this.petService.petsArray) {
         if (pet.profile_image == '') {
           pet.profile_image = '/assets/img/logo_default.svg';
         }
