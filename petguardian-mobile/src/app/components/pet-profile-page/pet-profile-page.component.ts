@@ -36,11 +36,11 @@ export class PetProfilePageComponent {
     series: [
       {
         name: "Cardiac Frequency",
-        data: this.c_freqArray
+        data: [12, 45]
       },
       {
         name: "Steps",
-        data: this.stepsArray
+        data: [21, 35]
       }
     ],
     chart: {
@@ -152,6 +152,7 @@ export class PetProfilePageComponent {
   constructor(private petService: PetService, private fb: FormBuilder, private storageService: StorageService, private datePipe: DatePipe, private router: Router) {
     const urlParams = new URLSearchParams(window.location.search);
     this.petInfo = new PetModel;
+    this.showPetData(urlParams.get('petId'));
     this.petImage = new String;
     this.updatePersonalPetInfoForm = this.fb.group({
       name: [''],
@@ -180,6 +181,10 @@ export class PetProfilePageComponent {
     const hours = this.currentDate.getHours().toString().padStart(2, '0');
     const minutes = this.currentDate.getMinutes().toString().padStart(2, '0');
     this.formattedDate = `${day}/${month}/${year}_${hours}:${minutes}`;
+    console.log(this.c_freqArray)
+    console.log(this.stepsArray)
+    this.c_freqArray = [23, 45]
+
   }
 
   updatePetPersonalInfo(): void {
@@ -308,20 +313,22 @@ export class PetProfilePageComponent {
   }
 
   showPetData(petId: string | null) {
+    console.log(petId);
     if (petId != null) {
       this.petService.getPet(petId).then((petData) => {
         this.petInfo = petData;
+        console.log(petData.health_info);
         for (let step in petData.health_info?.steps) {
           if (petData.health_info?.steps.hasOwnProperty(step)) {
             const value = petData.health_info?.steps[step];
-            this.stepsArray.push(Number(value))
+            this.stepsArray.push(parseInt(value))
           }
         }
-        for (let freq in petData.health_info?.steps) {
+        for (let freq in petData.health_info?.cardiac_freq) {
           if (petData.health_info?.cardiac_freq)
             if (petData.health_info?.cardiac_freq.hasOwnProperty(freq)) {
               const value = petData.health_info?.cardiac_freq[freq];
-              this.c_freqArray.push(Number(value))
+              this.c_freqArray.push(parseInt(value))
             }
         }
 

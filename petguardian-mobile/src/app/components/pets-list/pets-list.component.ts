@@ -64,14 +64,17 @@ export class PetsListComponent {
 
     if (this.base64Output != '') {
       pet.profile_image = this.base64Output;
-
-      this.petService.postClientPets(pet);
-      // Close the form
-      this.closeForm();
     }
 
+    this.petService.postClientPets(pet);
+    // Close the form
+    this.closeForm();
+    this.router.navigateByUrl('home', { skipLocationChange: true }).then(() => {
+      this.router.navigate(['petsList']);
+    })
+
   }
-  
+
   showData(): void {
     this.petService.getClientPets(this.storageService.SessionGetStorage("uid")).then((petsArray) => {
       this.petService.petsArray = petsArray;
