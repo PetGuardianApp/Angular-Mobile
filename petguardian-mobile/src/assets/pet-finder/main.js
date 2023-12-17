@@ -46,8 +46,11 @@ fetch(getPetUrl)
 
 // ***************** FUNCTIONS *****************
 function getUbiName(petInfo, ownerInfo) {
+  // Example usage
+  const currentTime = getCurrentTime();
+
   if (latitude == 0 && longitude == 0) {
-    patchNotification("Someone scanned your pet " + petInfo.name + " but we couldn't get the location.", ownerInfo.id);
+    patchNotification("Someone scanned your pet " + petInfo.name + " at " + currentTime + " but we couldn't get the location.", ownerInfo.id);
   } else {
     // Call maps API to obtain the name of the ubication
     notificationPayload = "";
@@ -58,9 +61,9 @@ function getUbiName(petInfo, ownerInfo) {
       .then(data => {
         if (data.status === 'OK') {
           const direccion = data.results[0].formatted_address;
-          notificationPayload = "Someone scanned your pet " + petInfo.name + " in " + direccion + ".";
+          notificationPayload = "Someone scanned your pet " + petInfo.name + " in " + direccion + " at " + currentTime;
         } else {
-          notificationPayload = "Someone scanned your pet " + petInfo.name + " but we couldn't get the location.";
+          notificationPayload = "Someone scanned your pet " + petInfo.name + " at " + currentTime + " but we couldn't get the location.";
         }
 
         patchNotification(notificationPayload, ownerInfo.id);
@@ -151,4 +154,19 @@ function initOwnerMap(ownerLatitude, ownerLongitude) {
     map: map,
     title: 'Hello World!'
   });
+}
+
+function getCurrentTime() {
+  const now = new Date();
+  let hours = now.getHours();
+  let minutes = now.getMinutes();
+
+  // Ensure hours and minutes have two digits
+  hours = (hours < 10) ? "0" + hours : hours;
+  minutes = (minutes < 10) ? "0" + minutes : minutes;
+
+  // Format the time in 24-hour format
+  const formattedTime = `${hours}:${minutes}`;
+
+  return formattedTime;
 }
