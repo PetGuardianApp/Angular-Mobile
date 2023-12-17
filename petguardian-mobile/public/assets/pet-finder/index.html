@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pet Info</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="main.js"></script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAouWao_x1bulJ9RkrfYpYP49u2a9RzSXw"></script>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+
+<body>
+
+    <header>
+        <h1>Hi! I'm <label id="petName"></label></h1>
+    </header>
+
+    <div style="text-align: center;">
+        <img id="petImage" src="" style="width: 150px;">
+    </div>
+
+    <table>
+        <tr>
+            <th>
+                <h1>Personal Info</h1>
+                <div class="info-container">
+                    <div>
+                        <label><b>Name</b></label>
+                        <span id="petNameInf"></span><br>
+
+                        <label><b>Birth date</b></label>
+                        <span id="bDate"></span><br>
+                    </div>
+                    <div>
+                        <label for="petTypeBreed"><b>Type</b></label>
+                        <span id="petTypeBreed"></span><br>
+
+                        <label for="petWeight"><b>Weight</b></label>
+                        <span id="petWeight"></span><br>
+
+                        <label for="petHeight"><b>Height</b></label>
+                        <span id="petHeight"></span><br>
+                    </div>
+                </div>
+            </th>
+
+            <th>
+                <h1>Vaccines</h1>
+                <ul>
+                    <li>Vaccine 1 ✓</li>
+                    <li>Vaccine 2 ✓</li>
+                    <li>Vaccine 3 ✓</li>
+                </ul>
+            </th>
+        </tr>
+    </table>
+
+    <h1>My owner is <label id="ownerName"></label></h1>
+    <div style="text-align: center;">
+        <img id="ownerImage" src="" style="width: 100%; border-radius: 20px;">
+    </div>
+    <table style="margin-top: 0px;">
+        <tr>
+            <th>
+                <div class="info-container">
+                    <div>
+                        <label><b>Email: </b></label><span id="ownerMail"></span><br>
+                    </div>
+                    <div>
+                        <label for="petTypeBreed"><b>Phone: </b></label><span id="ownerPhone"></span><br>
+                    </div>
+                </div>
+            </th>
+        </tr>
+    </table>
+    <label style="margin-left: 10px;"><b>Owner location: </b></label><span id="ownerMail"></span><br>
+    <div id="ownerMapDiv" class="mapDiv" style="margin-top: 14px;"></div>
+
+    <div style="width: 100%; text-align: center; padding: 50px 0px 50px 0px;">
+        <button class="button"
+            onclick="window.open('https://wa.me/660322470?text=Hi,%20I%20found%20your%20pet%20in%20the%20streets.%20Be%20aware!')"
+            target="_blank">
+            Notify owner via WhatsApp</button>
+    </div>
+
+</body>
+
+</html>

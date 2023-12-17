@@ -41,6 +41,7 @@ import { LoadingSpinnerComponent } from './components/loading-spinner/loading-sp
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { TranslocoRootModule } from './transloco-root.module';
 import { ChatPageComponent } from './components/chat-page/chat-page.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -61,11 +62,13 @@ import { ChatPageComponent } from './components/chat-page/chat-page.component';
     UserProfileComponent,
     LoadingSpinnerComponent,
     ChatPageComponent
+
   ],
   imports: [
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
     HttpClientModule,
+    MatDialogModule,
     CommonModule,
     ToastrModule.forRoot(),
     FormsModule, 

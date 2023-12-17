@@ -36,6 +36,13 @@ img {
   text-decoration: none;
 }
 
+.popup span {
+  color: black;
+  padding: 10px;
+  display: block;
+  text-decoration: none;
+}
+
 .popup a:hover {
   background-color: #ddd;
 }
@@ -46,4 +53,24 @@ img {
 
 #profileIcon {
   width: 30px;
+}
+
+.contenedor {
+  display: flex;
+}
+
+.columna {
+  box-sizing: border-box;
+}
+
+.izquierda {
+  flex: 1;
+  text-align: left;
+}
+
+.derecha {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 10px;
 }

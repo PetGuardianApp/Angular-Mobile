@@ -2,7 +2,7 @@
     {{ 'welcome' | transloco}} {{client.name}}
 </h1>
 <h2> {{ currentDate | date: 'EEEE' }}, {{ currentDate | date: 'd' }} {{ currentDate | date: 'MMMM' }}</h2>
-<h1 >
+<h1>
     {{ 'today_visits' | transloco }}
 </h1>
 
@@ -16,14 +16,13 @@
             <button class="whiteButton" id="{{visit.id}}" (click)="redirectVisitPage(visit.id || '')">
                 <div style="column-count: 2;">
                     <div>
-                        <img src="{{VisitPet.profile_image}}" style="width: 70%;">
+                        <img src="{{VisitPet.profile_image}}" style="width: 80px;">
                     </div>
-                    <div style="text-align: left;">
+                    <div style="text-align: left; color: black; padding-top: 10px;">
                         <ul>
-                            <li><b> {{ 'pet_profile_birth' | transloco }} </b> {{VisitPet.name}}</li>
+                            <li><b> {{ 'pet_profile_name' | transloco }} </b> {{VisitPet.name}}</li>
                             <li><b> {{ 'start' | transloco }}</b> {{formatStartDate(visit.start_date || '')}}</li>
                             <li><b> {{ 'end' | transloco }}</b> {{formatStartDate(visit.end_date || '')}}</li>
-
                         </ul>
                     </div>
                 </div>
@@ -31,6 +30,7 @@
         </ng-template>
     </div>
 </ng-template>
+
 <ng-template #elseBlock>
     <div>
         <p> {{ 'no_visits' | transloco}}</p>
