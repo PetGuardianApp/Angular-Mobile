@@ -40,7 +40,8 @@ import { UserProfileComponent } from './components/user-profile/user-profile.com
 import { LoadingSpinnerComponent } from './components/loading-spinner/loading-spinner.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { TranslocoRootModule } from './transloco-root.module';
-import {MatDialogModule} from '@angular/material/dialog';
+import { ChatPageComponent } from './components/chat-page/chat-page.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -60,7 +61,8 @@ import {MatDialogModule} from '@angular/material/dialog';
     QrComponent,
     UserProfileComponent,
     LoadingSpinnerComponent,
-    
+    ChatPageComponent
+
   ],
   imports: [
     AngularFireModule.initializeApp(environment.firebase),

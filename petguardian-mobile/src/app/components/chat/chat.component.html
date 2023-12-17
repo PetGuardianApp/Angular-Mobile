@@ -1,5 +1,9 @@
-<h1>{{ 'chat_underdev' | transloco }}</h1>
-<div style="text-align: center;">
-    <img src="/assets/imgs/under-dev.png" alt="unde development" width="100%">
-    <h2>{{ 'stay_tunned' | transloco }}</h2>
+<h1>{{ 'chat_list' | transloco }}</h1>
+<div *ngFor="let vet of vets" class="module" style="text-align: center;">
+    <div class="image-container" (click)="redirectPetPage(vet.id || '')" id="{{vet.id}}" >
+        <img src="/assets/img/logo_default.svg" alt="vets" width="100%">
+        <div class="overlay">
+            <p>{{vet.name}}</p>
+        </div>
+    </div>
 </div>

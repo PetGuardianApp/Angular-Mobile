@@ -10,6 +10,7 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { GoogleAuthProvider } from 'firebase/auth';
 import firebase from 'firebase/compat';
 import { ToastrService } from 'ngx-toastr';
+import { VetModel } from '../models/vet.model';
 
 
 @Injectable({
@@ -17,6 +18,8 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class ApiService {
   private apiUrl = 'https://petguardian-api.uc.r.appspot.com/'
+  private localUrl = 'http://localhost:8080/'
+
   private temp!: Observable<ClientModel[]>;
   public petsArray: PetModel[] = [];
 
@@ -69,6 +72,20 @@ export class ApiService {
       this.http.get<ClientModel[]>(this.apiUrl + 'vet/findClients/' + uid)
         .subscribe(
           (response: ClientModel[]) => {
+            resolve(response);
+          },
+          (error) => {
+            reject(error);
+          }
+        );
+    });
+  }
+
+  getClientVets(uid: string): Promise<VetModel[]> {
+    return new Promise((resolve, reject) => {
+      this.http.get<VetModel[]>(this.apiUrl + 'client/findVets/' + uid)
+        .subscribe(
+          (response: VetModel[]) => {
             resolve(response);
           },
           (error) => {
