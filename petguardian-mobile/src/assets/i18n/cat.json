@@ -36,5 +36,9 @@
     "user_underdev": "Perfil d'usuari en Desenvolupament",
     "user_profile_popup": "Perfil d'Usuari",
     "logout_popup": "Tancar Sessió",
-    "choose_pet_image": "Selecciona la imatge de la mascota"
+    "accept_button": "Acceptar",
+    "cardiac_freq": "Freqüència cardíaca",
+    "choose_pet_image": "Selecciona la imatge de la mascota",
+    "chat_list": "Xat"
+
 }

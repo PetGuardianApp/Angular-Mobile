@@ -116,8 +116,7 @@ export class AppointmentsComponent {
       var uid = this.storageService.SessionGetStorage("uid");
 
       this.pets = this.storageService.SessionGetStorage("pets");
-      
-      
+            
       this.apponintForm = this.fb.group({
         pet: ['',[Validators.required]],
         start_date: ['',Validators.required],

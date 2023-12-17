@@ -1,12 +1,17 @@
 import { Component, ViewChild } from '@angular/core';
 import { PetModel } from 'src/app/models/pet.model';
-import { ApiService } from 'src/app/services/api.service';
 import { ApexAxisChartSeries, ApexDataLabels, ApexFill, ApexLegend, ApexPlotOptions, ApexStroke, ApexTooltip, ApexXAxis, ApexYAxis, ChartComponent } from "ng-apexcharts";
 import {
   ApexNonAxisChartSeries,
   ApexResponsive,
   ApexChart
 } from "ng-apexcharts";
+import { Form, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDatepickerInputEvent } from '@angular/material/datepicker';
+import { StorageService } from 'src/app/services/storage.service';
+import { DatePipe } from '@angular/common';
+import { PetService } from 'src/app/services/pet.service';
+import { Router } from '@angular/router';
 
 export type ChartOptions = {
   series: ApexAxisChartSeries;
@@ -24,18 +29,18 @@ export type ChartOptions = {
   styleUrls: ['./pet-profile-page.component.css']
 })
 export class PetProfilePageComponent {
-
   @ViewChild("chart_div") chart: ChartComponent | undefined;
-
+  stepsArray: number[] = [];
+  c_freqArray: number[] = [];
   public chartOptions: ChartOptions = {
     series: [
       {
         name: "Cardiac Frequency",
-        data: [70, 75, 80, 74, 84, 90, 75, 70, 80, 91, 92, 93, 64, 75, 86, 77, 98, 109, 60]
+        data: this.c_freqArray
       },
       {
         name: "Steps",
-        data: [300, 200, 100, 290, 500, 400, 211, 314, 194, 211, 112, 323, 414, 125, 376, 517, 238, 419, 310]
+        data: this.stepsArray
       }
     ],
     chart: {
@@ -85,10 +90,6 @@ export class PetProfilePageComponent {
       {
         name: "Weight",
         data: [90, 91, 90, 93, 94, 90, 95, 98, 100, 98, 97]
-      },
-      {
-        name: "Height",
-        data: [100, 100, 100, 105, 105, 105, 105, 105, 110, 110, 110]
       }
     ],
     chart: {
@@ -134,17 +135,196 @@ export class PetProfilePageComponent {
   };
   public petInfo: PetModel;
   public petImage: String;
-  constructor(private apiService: ApiService) {
+  updatePersonalPetInfoForm: FormGroup;
+  updateMandatoryVaccinesForm: FormGroup;
+  updatePetResumeForm: FormGroup;
+  updatePetStatisticsForm: FormGroup;
+  updateImageForm: FormGroup;
+  isPersonalInfoFormVisible: boolean = false;
+  isMandatoryVaccinesVisible: boolean = false;
+  isPetResumeVisible: boolean = false;
+  isPetStatisticsVisible: boolean = false;
+  isUpdateImageFormVisible: boolean = false;
+  currentDate: Date = new Date();
+  formattedDate: any;
+  base64Output: string = '';
+  selectedFileName: string = '...';
+  constructor(private petService: PetService, private fb: FormBuilder, private storageService: StorageService, private datePipe: DatePipe, private router: Router) {
     const urlParams = new URLSearchParams(window.location.search);
     this.petInfo = new PetModel;
     this.petImage = new String;
-    this.showPetData(urlParams.get('petId'));
+    this.updatePersonalPetInfoForm = this.fb.group({
+      name: [''],
+      type: [''],
+      breed: [''],
+      weight: [''],
+      birth: [''],
+      height: [''],
+    })
+    this.updateMandatoryVaccinesForm = this.fb.group({
+      vaccines: ['']
+    })
+    this.updatePetResumeForm = this.fb.group({
+      observations: ['']
+    })
+    this.updatePetStatisticsForm = this.fb.group({
+      cardiac_freq: [''],
+      steps: ['']
+    })
+    this.updateImageForm = this.fb.group({
+      selectedFileName: ['']
+    })
+    const day = this.currentDate.getDate().toString().padStart(2, '0');
+    const month = (this.currentDate.getMonth() + 1).toString().padStart(2, '0');
+    const year = this.currentDate.getFullYear().toString();
+    const hours = this.currentDate.getHours().toString().padStart(2, '0');
+    const minutes = this.currentDate.getMinutes().toString().padStart(2, '0');
+    this.formattedDate = `${day}/${month}/${year}_${hours}:${minutes}`;
+  }
+
+  updatePetPersonalInfo(): void {
+    if (this.updatePersonalPetInfoForm.value.name != null && this.updatePersonalPetInfoForm.value.name != '') {
+      this.petInfo.name = this.updatePersonalPetInfoForm.value.name
+    }
+    if (this.updatePersonalPetInfoForm.value.type != null && this.updatePersonalPetInfoForm.value.type != '') {
+      this.petInfo.type = this.updatePersonalPetInfoForm.value.type
+    }
+    if (this.updatePersonalPetInfoForm.value.breed != null && this.updatePersonalPetInfoForm.value.breed != '') {
+      this.petInfo.breed = this.updatePersonalPetInfoForm.value.breed
+    }
+    if (this.updatePersonalPetInfoForm.value.birth != null && this.updatePersonalPetInfoForm.value.birth != '') {
+      this.petInfo.birth = this.updatePersonalPetInfoForm.value.birth
+    }
+    if (this.updatePersonalPetInfoForm.value.height != null) {
+      this.petInfo.height = this.updatePersonalPetInfoForm.value.height
+    }
+    this.petService.updatePet(this.petInfo);
+    this.closePersonalPetInfoForm();
+  }
+
+  openPersonalPetInfoForm(): void {
+    this.isPersonalInfoFormVisible = true;
+  }
+
+  closePersonalPetInfoForm(): void {
+    this.isPersonalInfoFormVisible = false;
+  }
+
+  updatePetResume(): void {
+    var pet: any = {
+      health_info: {
+        observations: this.updatePetResumeForm.value.observations
+      }
+    };
+    this.petService.updatePetHealthInfo(pet, this.petInfo.id || '');
+    this.closePetResumeForm();
+  }
+  openPetResumeForm(): void {
+    this.isPetResumeVisible = true;
+  }
+
+  closePetResumeForm(): void {
+    this.isPetResumeVisible = false;
+
+  }
+
+  updatePetMandatoryVaccines(): void {
+    var pet: any = {
+      health_info: {
+        vaccines: [this.updateMandatoryVaccinesForm.value.vaccines]
+      }
+    };
+    this.petService.updatePetHealthInfo(pet, this.petInfo.id || '');
+    this.closeMandatoryVaccinesForm();
+  }
+
+  openMandatoryVaccinesForm(): void {
+    this.isMandatoryVaccinesVisible = true;
+  }
+
+  closeMandatoryVaccinesForm(): void {
+    this.isMandatoryVaccinesVisible = false;
+
+  }
+
+  updatePetStatistics(): void {
+    var pet: any = {
+      health_info: {
+        steps: {
+          [this.formattedDate]: this.updatePetStatisticsForm.value.steps
+        },
+        cardiac_freq: {
+          [this.formattedDate]: this.updatePetStatisticsForm.value.cardiac_freq
+        }
+      }
+    };
+    this.petService.updatePetHealthInfo(pet, this.petInfo.id || '')
+    this.closePetStatisticsForm();
+  }
+  openPetStatisticsForm(): void {
+    this.isPetStatisticsVisible = true;
+  }
+
+  closePetStatisticsForm(): void {
+    this.isPetStatisticsVisible = false;
+
+  }
+  stopPropagation(event: Event) {
+    event.stopPropagation();
+  }
+
+  updatePetImage(): void {
+    if (this.base64Output != ''){
+      this.petInfo.profile_image = this.base64Output;
+      this.petService.updatePet(this.petInfo);
+    }
+  }
+
+  openUpdateImageForm(): void {
+    this.isUpdateImageFormVisible = true;
+  }
+
+  closeUpdateImageForm(): void {
+    this.isUpdateImageFormVisible = false;
+
+  }
+
+  onFileSelected(event: any) {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      this.base64Output = reader.result as string;
+    };
+    if (file){
+      reader.readAsDataURL(file);
+      this.selectedFileName = file.name;
+    } else {
+      this.selectedFileName = '...';
+    }
+  }
+
+  onDateInput(event: MatDatepickerInputEvent<Date>): void {
+    this.updatePersonalPetInfoForm.value.birth = this.datePipe.transform(event.value, 'ddMMyyyy') + '_00:00';
   }
 
   showPetData(petId: string | null) {
     if (petId != null) {
-      this.apiService.getPet(petId).then((petData) => {
+      this.petService.getPet(petId).then((petData) => {
         this.petInfo = petData;
+        for (let step in petData.health_info?.steps) {
+          if (petData.health_info?.steps.hasOwnProperty(step)) {
+            const value = petData.health_info?.steps[step];
+            this.stepsArray.push(Number(value))
+          }
+        }
+        for (let freq in petData.health_info?.steps) {
+          if (petData.health_info?.cardiac_freq)
+            if (petData.health_info?.cardiac_freq.hasOwnProperty(freq)) {
+              const value = petData.health_info?.cardiac_freq[freq];
+              this.c_freqArray.push(Number(value))
+            }
+        }
+
         if (this.petInfo.profile_image == '') {
           this.petInfo.profile_image = '/assets/img/logo_default.svg';
         }
@@ -161,8 +341,14 @@ export class PetProfilePageComponent {
     return null;
   }
 
+  deletePet(pet_id: string) {
+    console.log(pet_id)
+    this.petService.deletePet(pet_id);
+    this.router.navigate(['home'])
+  }
+
+
   getBirth(birth: string | undefined) {
-    // Return birth in format 1 of July, 2023
     if (birth != undefined) {
       const months = [
         'January', 'February', 'March', 'April', 'May', 'June',

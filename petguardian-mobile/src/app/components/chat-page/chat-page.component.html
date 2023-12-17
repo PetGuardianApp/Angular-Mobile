@@ -1,0 +1,27 @@
+<h1>Chat Messages</h1>
+
+<div>
+
+    <div class="direct-chat-messages">
+
+        <div *ngFor="let message of messages" class="direct-chat-msg">
+            <img class="direct-chat-img" src="https://img.icons8.com/color/36/000000/administrator-male.png"
+              alt="message user image">
+            <div class="direct-chat-text">
+              {{ message }}
+            </div>
+          </div>
+    </div>
+
+</div>
+
+<div class="box-footer">
+    <form (ngSubmit)="sendMessage()" [formGroup]="chatMessage">
+        <div class="input-group">
+            <input type="text" placeholder="Type Message ..." formControlName="message" class="form-control">
+            <span class="input-group-btn">
+                <button type="submit" class="btn btn-warning btn-flat">Send</button>
+            </span>
+        </div>
+    </form>
+</div>
