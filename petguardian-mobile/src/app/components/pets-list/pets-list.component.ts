@@ -21,13 +21,13 @@ export class PetsListComponent {
   selectedFileName: string = '...';
 
   constructor(public apiService: ApiService, private router: Router, private datePipe: DatePipe,
-    private fb:FormBuilder, private storageService:StorageService,public petService:PetService) { 
-      this.registerPetForm = this.fb.group({
-        name: ['',[Validators.required]],
-        type: ['',Validators.required],
-        breed: ['',[Validators.required]],
-        birth: ['',Validators.required],
-      })
+    private fb: FormBuilder, private storageService: StorageService, public petService: PetService) {
+    this.registerPetForm = this.fb.group({
+      name: ['', [Validators.required]],
+      type: ['', Validators.required],
+      breed: ['', [Validators.required]],
+      birth: ['', Validators.required],
+    })
     this.showData();
   }
 
@@ -61,15 +61,17 @@ export class PetsListComponent {
       birth: this.registerPetForm.value.birth
     };
     console.log(pet);
-    
-    if (this.base64Output != ''){
-      pet.profile_image = this.base64Output;
-    
-    this.petService.postClientPets(pet);
-    // Close the form
-    this.closeForm();
-  }
 
+    if (this.base64Output != '') {
+      pet.profile_image = this.base64Output;
+
+      this.petService.postClientPets(pet);
+      // Close the form
+      this.closeForm();
+    }
+
+  }
+  
   showData(): void {
     this.petService.getClientPets(this.storageService.SessionGetStorage("uid")).then((petsArray) => {
       this.petService.petsArray = petsArray;

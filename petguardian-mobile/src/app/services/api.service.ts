@@ -241,43 +241,6 @@ export class ApiService {
     });
   }
 
-  addUser(client: ClientModel): Promise<any> {
-    const headers = {
-      'content-type': 'application/json',
-      'responseType': 'json'
-    }
-
-    return new Promise((resolve, reject) => {
-      this.http.post(this.apiUrl + 'client/create/' + client.id, client, { headers: headers })
-        .subscribe(
-          (response) => {
-            resolve(response);
-          },
-          (error) => {
-            if (error.status == 200) {
-              resolve(client)
-            }
-            reject(error);
-          }
-        );
-    });
-
-    return new Promise((resolve, reject) => {
-      this.http.post<string>(this.apiUrl + 'client/create/' + client.id, client, { 'headers': headers })
-        .subscribe({
-          next: data => {
-            resolve(data)
-          },
-          error: error => {
-            reject(error)
-          }
-
-
-      });
-  });
-}
-
-
   getAllPets(): Promise<PetModel[]> {
     return new Promise((resolve, reject) => {
       this.http.get<PetModel[]>(this.apiUrl + '/pet/all')
