@@ -1,66 +1,37 @@
-<h1>Appointments</h1>
+<h1>{{ 'Appointments' | transloco }}</h1>
 <br>
-      <div class="row text-center">
-          <div class="col-md-4">
-            <div class="btn-group">
-              <div
-                class="btn btn-dark"
-                mwlCalendarPreviousView
-                [view]="view"
-                [(viewDate)]="viewDate"
-                (viewDateChange)="closeOpenMonthViewDay()"
-              >
-                Previous
-              </div>
-              <div
-                class="btn btn-outline-secondary"
-                mwlCalendarToday
-                [(viewDate)]="viewDate"
-              >
-                Today
-              </div>
-              <div
-                class="btn btn-dark"
-                mwlCalendarNextView
-                [view]="view"
-                [(viewDate)]="viewDate"
-                (viewDateChange)="closeOpenMonthViewDay()"
-              >
-                Next
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h3>
-          </div>
-          <div class="col-md-4">
-            <div class="btn-group">
-              <div
-                class="btn btn-dark"
-                (click)="setView(CalendarView.Month)"
-                [class.active]="view === CalendarView.Month"
-               
-              >
-                Month
-              </div>
-              <div
-                class="btn btn-dark"
-                (click)="setView(CalendarView.Week)"
-                [class.active]="view === CalendarView.Week"
-              >
-                Week
-              </div>
-              <div
-                class="btn btn-dark"
-                (click)="setView(CalendarView.Day)"
-                [class.active]="view === CalendarView.Day"
-              >
-                Day
-              </div>
-            </div>
-          </div>
-        </div>
-        <br />
+<div class="row text-center">
+  <div class="col-md-4">
+    <div class="btn-group">
+      <div class="btn btn-dark" mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate" (viewDateChange)="closeOpenMonthViewDay()">
+        {{ 'Previous' | transloco }}
+      </div>
+      <div class="btn btn-outline-secondary" mwlCalendarToday [(viewDate)]="viewDate">
+        {{ 'Today' | transloco }}
+      </div>
+      <div class="btn btn-dark" mwlCalendarNextView [view]="view" [(viewDate)]="viewDate" (viewDateChange)="closeOpenMonthViewDay()">
+        {{ 'Next' | transloco }}
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' | transloco }}</h3>
+  </div>
+  <div class="col-md-4">
+    <div class="btn-group">
+      <div class="btn btn-dark" (click)="setView(CalendarView.Month)" [class.active]="view === CalendarView.Month">
+        {{ 'Month' | transloco }}
+      </div>
+      <div class="btn btn-dark" (click)="setView(CalendarView.Week)" [class.active]="view === CalendarView.Week">
+        {{ 'Week' | transloco }}
+      </div>
+      <div class="btn btn-dark" (click)="setView(CalendarView.Day)" [class.active]="view === CalendarView.Day">
+        {{ 'Day' | transloco }}
+      </div>
+    </div>
+  </div>
+</div>
+<br />
         <div [ngSwitch]="view" class="calendar-size">
           <mwl-calendar-month-view
             [locale]="locale"
@@ -94,13 +65,13 @@
           </mwl-calendar-day-view>
         </div>
         <br>
-        <h3 style="width: 100%; align-self: center;">Upcommig Appointments</h3>
+        <h3 style="width: 100%; align-self: center;">{{ 'Upcommig_Appointments' | transloco }}</h3>
         
         
         <div style="justify-content: center; height: 80px;" *ngIf="!createFlag" >
             <div class="appointment-container" style="display: flex; text-align:center;" (click)="triggerCreateFlag()">
                 <img src="../../../assets/imgs/Add.svg" style="height: 70%; padding-left: 5%; padding-top: 5%;">
-                <p>Add new Appointment</p>
+                <p>{{ 'Add_New_Appointment' | transloco }}</p>
             </div>
         </div>
         <div *ngIf="createFlag">
@@ -116,7 +87,7 @@
           </mat-form-field>
               <div class="form-floating mb-3">
                 <mat-form-field style="width: 100%;">
-                  <mat-label>Start Date</mat-label>
+                  <mat-label>{{ 'start_date' | transloco }}</mat-label>
                   <input formControlName="start_date" matInput [matDatepicker]="picker" (click)="picker.open()" (dateInput)="onDateInputStart($event)" readonly required>
                   <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                   <mat-datepicker #picker></mat-datepicker>
@@ -124,7 +95,7 @@
               </div>
               <div class="form-floating mb-3">
                 <mat-form-field style="width: 100%;">
-                  <mat-label>End Date</mat-label>
+                  <mat-label>{{ 'end_date' | transloco }}</mat-label>
                   <input formControlName="end_date" matInput [matDatepicker]="picker2" (click)="picker2.open()" (dateInput)="onDateInputEnd($event)" readonly required>
                   <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
                   <mat-datepicker #picker2></mat-datepicker>
@@ -132,11 +103,11 @@
                 </div>
                 <div class="form-floating mb-3">
                   <input type="text" formControlName="matter" class="form-control" placeholder="Matter">
-                  <label>Matter</label>
+                  <label>{{ 'matter' | transloco }}</label>
                 </div>
               <div class="d-grid gap-2">
-                <button class="btn btn-primary btn-lg" type="submit" [disabled]="apponintForm.invalid">Add</button>
-                <button class="btn btn-danger btn-lg" (click)="triggerCreateFlag()">Back</button>
+                <button class="btn btn-primary btn-lg" type="submit" [disabled]="apponintForm.invalid">{{ 'Add' | transloco }}</button>
+                <button class="btn btn-danger btn-lg" (click)="triggerCreateFlag()">{{ 'Back' | transloco }}</button>
               </div>
         </form>
       </div>
@@ -147,9 +118,9 @@
               <img src="../../../assets/imgs/vet_img.svg" style="height: 70%; padding-left: 5%; padding-top: 5%;">
               <div style="align-items: center;  text-align: left; max-width: 200px; padding-left: 10px;">
                   <b style="word-wrap: break-word; margin: 0; color: #286024;">{{ event.start | date:"MMM dd 'at' hh:mm a" }}</b>
-                  <p style="word-wrap: break-word; margin: 0;">Pet: {{ event.title }}</p>
+                  <p style="word-wrap: break-word; margin: 0;">{{ 'pet_a' | transloco }}: {{ event.title }}</p>
                   <p style="word-wrap: break-word; margin: 0;">Vet: Ramon</p>
-                  <p style="word-wrap: break-word; margin: 0;">Matter: {{ event.matter }}</p>
+                  <p style="word-wrap: break-word; margin: 0;">{{ 'matter_a' | transloco }}: {{ event.matter }}</p>
               </div>
               <img class="editIcons" src="../../../assets/imgs/edit_icon.svg" (click)="edit_appoint(event)" >
               <img class="editIcons" src="../../../assets/imgs/delete_icon.svg" (click)="delete_event(event)">
