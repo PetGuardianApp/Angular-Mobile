@@ -2,7 +2,7 @@
   <img width="100%" src="{{client.profile_image}}" alt="Client">
   <div class="file-upload">
     <div class="file-select">
-      <div class="file-select-button" id="fileName">Change profile image</div>
+      <div class="file-select-button" id="fileName">{{ 'profile_image' | transloco }}</div>
       <div class="file-select-name" id="noFile">{{ selectedFileName }}</div>
       <input type="file" #fileInput (change)="onFileSelected($event)" />
     </div>
@@ -25,7 +25,7 @@
         [style.border]="registerUser.get('name')?.disabled ? 'none' : '1px solid green'"
         [style.outline]="registerUser.get('name')?.disabled ? 'none' : '1px solid green'"
         style="width: 50%; margin-right: 5px;" />
-      <label for="name" class="form-label" style="margin: 0;"><strong>Name</strong></label>
+      <label for="name" class="form-label" style="margin: 0;"><strong>{{ 'name' | transloco }}</strong></label>
       <img class="editIcons" src="../../../assets/imgs/edit_icon.svg" (click)="enable('name')"
         *ngIf="registerUser.get('name')?.disabled" style="cursor: pointer;">
     </div>
@@ -35,7 +35,7 @@
         [style.border]="registerUser.get('surnames')?.disabled ? 'none' : '1px solid green'"
         [style.outline]="registerUser.get('surnames')?.disabled ? 'none' : '1px solid green'"
         style="width: 50%; margin-right: 5px;">
-      <label for="name" class="form-label" style="margin: 0;"><strong>Surnames</strong></label>
+      <label for="name" class="form-label" style="margin: 0;"><strong>{{ 'surnames' | transloco }}</strong></label>
       <img class="editIcons" src="../../../assets/imgs/edit_icon.svg" (click)="enable('surnames')"
         *ngIf="registerUser.get('surnames')?.disabled" style="cursor: pointer;">
 
@@ -46,7 +46,7 @@
         [style.border]="registerUser.get('phone')?.disabled ? 'none' : '1px solid green'"
         [style.outline]="registerUser.get('phone')?.disabled ? 'none' : '1px solid green'"
         style="width: 50%; margin-right: 5px;">
-      <label for="name" class="form-label" style="margin: 0;"><strong>Phone number</strong></label>
+      <label for="name" class="form-label" style="margin: 0;"><strong>{{ 'phone_number' | transloco }}</strong></label>
       <img class="editIcons" src="../../../assets/imgs/edit_icon.svg" (click)="enable('phone')"
         *ngIf="registerUser.get('phone')?.disabled" style="cursor: pointer;">
     </div>
@@ -55,7 +55,7 @@
               || registerUser.controls['surnames'].enabled 
               || registerUser.controls['name'].enabled 
               || registerUser.controls['email'].enabled
-              || flag">Save</button>
+              || flag">{{ 'save' | transloco }}</button>
 
     </div>
 
