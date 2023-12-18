@@ -8,6 +8,7 @@
   bottom: 0;
 
   background-color: #2D6F28;
+  z-index: 1000000000000000000;
 }
 
 .mainSidenav {
