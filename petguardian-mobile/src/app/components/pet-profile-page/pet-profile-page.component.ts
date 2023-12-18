@@ -30,17 +30,15 @@ export type ChartOptions = {
 })
 export class PetProfilePageComponent {
   @ViewChild("chart_div") chart: ChartComponent | undefined;
-  stepsArray: number[] = [];
-  c_freqArray: number[] = [];
   public chartOptions: ChartOptions = {
     series: [
       {
         name: "Cardiac Frequency",
-        data: [12, 45]
+        data: [90,80,70]
       },
       {
         name: "Steps",
-        data: [21, 35]
+        data: [180,120,100]
       }
     ],
     chart: {
@@ -181,10 +179,6 @@ export class PetProfilePageComponent {
     const hours = this.currentDate.getHours().toString().padStart(2, '0');
     const minutes = this.currentDate.getMinutes().toString().padStart(2, '0');
     this.formattedDate = `${day}/${month}/${year}_${hours}:${minutes}`;
-    console.log(this.c_freqArray)
-    console.log(this.stepsArray)
-    this.c_freqArray = [23, 45]
-
   }
 
   updatePetPersonalInfo(): void {
@@ -279,7 +273,7 @@ export class PetProfilePageComponent {
   }
 
   updatePetImage(): void {
-    if (this.base64Output != ''){
+    if (this.base64Output != '') {
       this.petInfo.profile_image = this.base64Output;
       this.petService.updatePet(this.petInfo);
     }
@@ -300,7 +294,7 @@ export class PetProfilePageComponent {
     reader.onloadend = () => {
       this.base64Output = reader.result as string;
     };
-    if (file){
+    if (file) {
       reader.readAsDataURL(file);
       this.selectedFileName = file.name;
     } else {
@@ -313,29 +307,48 @@ export class PetProfilePageComponent {
   }
 
   showPetData(petId: string | null) {
-    console.log(petId);
     if (petId != null) {
       this.petService.getPet(petId).then((petData) => {
         this.petInfo = petData;
-        console.log(petData.health_info);
-        for (let step in petData.health_info?.steps) {
-          if (petData.health_info?.steps.hasOwnProperty(step)) {
-            const value = petData.health_info?.steps[step];
-            this.stepsArray.push(parseInt(value))
+
+        // Initialize arrays for cardiac frequency and steps data
+        const stepsArray: number[] = [];
+        const c_freqArray: number[] = [];
+
+        // Process steps data
+        for (const value of Object.values(petData.health_info?.steps || {})) {
+          const parsedValue = parseInt(value);
+          if (!isNaN(parsedValue)) {
+            stepsArray.push(parsedValue);
           }
         }
-        for (let freq in petData.health_info?.cardiac_freq) {
-          if (petData.health_info?.cardiac_freq)
-            if (petData.health_info?.cardiac_freq.hasOwnProperty(freq)) {
-              const value = petData.health_info?.cardiac_freq[freq];
-              this.c_freqArray.push(parseInt(value))
-            }
+
+        // Process cardiac frequency data
+        for (const value of Object.values(petData.health_info?.cardiac_freq || {})) {
+          const parsedValue = parseInt(value);
+          if (!isNaN(parsedValue)) {
+            c_freqArray.push(parsedValue);
+          }
         }
 
+        // Update chart data
+        //this.updateChartData(c_freqArray, stepsArray);
+
+        // Set default profile image if empty
         if (this.petInfo.profile_image == '') {
           this.petInfo.profile_image = '/assets/img/logo_default.svg';
         }
       });
+    }
+  }
+
+  updateChartData(cardiacFreqData: number[], stepsData: number[]): void {
+    const chartInstance = this.chart;
+    if (chartInstance && chartInstance.updateSeries) {
+      chartInstance.updateSeries([
+        { data: cardiacFreqData },
+        { data: stepsData }
+      ]);
     }
   }
 
