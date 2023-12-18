@@ -1,9 +1,9 @@
 {
+    "your_pets": "Your Pets",
     "pet": "Pet:",
     "start": "Start:",
     "end": "End:",
     "no_visits": "You have no visits for today!",
-    "Your Pets": "Your Pets",
     "interactive_maps": "Interactive map",
     "find_location": "Find location",
     "petstore": "Pet Store",
@@ -62,6 +62,7 @@
     "name": "Name",
     "surnames": "Surnames",
     "phone_number": "Phone number",
-    "save": "Save"
+    "save": "Save",
+    "yp":"Your pets"
   }
   

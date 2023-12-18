@@ -61,5 +61,6 @@
     "name": "Nombre",
     "surnames": "Apellidos",
     "phone_number": "Numero telefono",
-    "save": "Guardar"
+    "save": "Guardar",
+    "yp":"Tus mascotas"
 }

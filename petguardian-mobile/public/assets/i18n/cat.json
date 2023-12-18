@@ -1,6 +1,6 @@
 {
     "your_pets": "Les teves mascotes",
-    "welcome":"Benvingut",
+    "welcome":"Benvingut/a",
     "today_visits": "Visites per avui!",
     "pet":"Mascota:",
     "start":"Comença:",
@@ -39,6 +39,28 @@
     "accept_button": "Acceptar",
     "cardiac_freq": "Freqüència cardíaca",
     "choose_pet_image": "Selecciona la imatge de la mascota",
-    "chat_list": "Xat"
-
+    "chat_list": "Xat",
+    "Appointments": "Cites",
+    "Previous": "Previ",
+    "Today": "Avui",
+    "Next": "Seguent",
+    "Month": "Mes",
+    "Week": "Setmana",
+    "Day": "Dia",
+    "Upcommig_Appointments": "Properes cites",
+    "Add_New_Appointment": "Afegir noves cites",
+    "start_date": "Comença",
+    "end_date": "Acaba",
+    "matter": "Assumpte",
+    "Add": "Afegir",
+    "Back": "Tornar",
+    "pet_a": "Mascota",
+    "start_a": "Comença",
+    "end_a": "Acaba",
+    "profile_image": "Cambiar imatge de perfil",
+    "name": "Nom",
+    "surnames": "Cognoms",
+    "phone_number": "Numero Telefon",
+    "save": "Guardar",
+    "yp":"Les teves mascotes"
 }

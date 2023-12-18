@@ -31,7 +31,7 @@
 
 </div>
 <h1>
-    {{'your_pets' | transloco}}
+    {{'yp' | transloco}}
 </h1>
 <div *ngFor="let pet of petService.petsArray" class="module" style="text-align: center;">
     <div class="image-container" (click)="redirectPetPage(pet.id || '')" id="{{pet.id}}">
