@@ -13,21 +13,22 @@
         <ng-container *ngIf="isTodayVisit(visit.end_date || ''); then thenBlock ">
         </ng-container>
         <ng-template #thenBlock>
-            <button style="margin-top: 10px;" class="whiteButton" id="{{visit.id}}" (click)="redirectVisitPage(visit.id || '')">
+            <button style="margin-top: 10px;" class="whiteButton" id="{{visit.id}}"
+                (click)="redirectVisitPage(visit.id || '')">
                 <div style="column-count: 2;" *ngFor="let pet of petsArray">
                     <ng-container *ngIf=" pet.id == visit.pet_id then thenBlock "></ng-container>
                     <ng-template #thenBlock>
-                    <div>
-                        <img src="{{VisitPet.profile_image}}" style="width: 80px;">
-                    </div>
-                    <div style="text-align: left; color: black; padding-top: 10px;">
-                        <ul>
-                            <li><b> {{ 'pet_profile_name' | transloco }} </b> {{VisitPet.name}}</li>
-                            <li><b> {{ 'start' | transloco }}</b> {{formatStartDate(visit.start_date || '')}}</li>
-                            <li><b> {{ 'end' | transloco }}</b> {{formatStartDate(visit.end_date || '')}}</li>
-                        </ul>
-                    </div>
-                </ng-template>
+                        <div>
+                            <img src="{{VisitPet.profile_image}}" style="width: 80px;">
+                        </div>
+                        <div style="text-align: left; color: black; padding-top: 10px;">
+                            <ul>
+                                <li><b> {{ 'pet_profile_name' | transloco }} </b> {{VisitPet.name}}</li>
+                                <li><b> {{ 'start' | transloco }}</b> {{formatStartDate(visit.start_date || '')}}</li>
+                                <li><b> {{ 'end' | transloco }}</b> {{formatStartDate(visit.end_date || '')}}</li>
+                            </ul>
+                        </div>
+                    </ng-template>
                 </div>
             </button>
         </ng-template>
@@ -47,7 +48,7 @@
 </div>
 <div *ngFor="let pet of petsArray" class="module" style="text-align: center;">
     <div class="image-container" (click)="redirectPetPage(pet.id || '')" id="{{pet.id}}">
-        <img width="50px" src="{{pet.profile_image}}" alt="Pet">
+        <img class="pet-image" src="{{pet.profile_image}}" alt="Pet">
         <div class="overlay">
             <p>{{pet.name}}</p>
         </div>
