@@ -5,14 +5,20 @@ import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { StorageService } from 'src/app/services/storage.service';
 
+interface ChatMessage {
+  text: string;
+  isMine: boolean;
+}
+
 @Component({
   selector: 'app-chat-page',
   templateUrl: './chat-page.component.html',
   styleUrls: ['./chat-page.component.css']
 })
+
 export class ChatPageComponent implements OnDestroy {
   private messageSubscription: Subscription;
-  public messages: string[] = [];
+  public messages: ChatMessage[] = [];
 
   chatMessage: FormGroup;
 
@@ -22,7 +28,7 @@ export class ChatPageComponent implements OnDestroy {
     console.log(id);
 
     this.messageSubscription = this.chatService.message$.subscribe((message) => {
-      this.messages.push(message);
+      this.messages.push({ text: message, isMine: false });
     });
 
     this.chatMessage = this.fb.group({
@@ -41,10 +47,17 @@ export class ChatPageComponent implements OnDestroy {
     this.messageSubscription.unsubscribe();
   }
 
+  isMyMessage(message: ChatMessage): boolean {
+    // Implement your logic to determine if the message is yours
+    // For example, compare the message sender with the current user
+    // Replace this with your actual logic
+    return message.isMine;
+  }
+
   sendMessage() {
     console.log("sendMessage")
     console.log(this.chatMessage.value.message)
-    this.messages.push(this.chatMessage.value.message)
+    this.messages.push({ text: this.chatMessage.value.message, isMine: true });
     const urlParams = new URLSearchParams(window.location.search);
     const id = urlParams.get('vetId');
     this.chatService.sendMessage(id || '', this.chatMessage.value.message)
