@@ -16,7 +16,7 @@
 
         <input type="text" #fileInput [placeholder]="'pet_breed' | transloco" formControlName="breed" required>
 
-        <mat-form-field>
+        <mat-form-field style="width: 100%;">
             <mat-label>{{'pet_birth' | transloco}}</mat-label>
             <input formControlName="birth" matInput [matDatepicker]="picker" (click)="picker.open()"
                 (dateInput)="onDateInput($event)" readonly required>
