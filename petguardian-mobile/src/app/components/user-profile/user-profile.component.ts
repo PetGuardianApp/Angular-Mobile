@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { TranslocoService } from '@ngneat/transloco';
 import { ClientModel } from 'src/app/models/client.model';
 import { ApiService } from 'src/app/services/api.service';
 import { StorageService } from 'src/app/services/storage.service';
@@ -19,7 +20,7 @@ export class UserProfileComponent {
   public flag: boolean = false;
 
   constructor(private apiService: ApiService, private storageService: StorageService, private fb: FormBuilder,
-    private router: Router) {
+    private router: Router, private translocoService: TranslocoService) {
 
     this.apiService.getSingleClient(this.storageService.SessionGetStorage("uid")).then((result) => {
       this.client = result;
@@ -68,5 +69,8 @@ export class UserProfileComponent {
 
   public enable(field: string) {
     this.registerUser.controls[field].enable();
+  }
+  changeLang(event: any){
+    this.translocoService.setActiveLang(event.target.value);
   }
 }

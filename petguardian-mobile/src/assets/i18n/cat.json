@@ -62,5 +62,6 @@
     "surnames": "Cognoms",
     "phone_number": "Numero Telefon",
     "save": "Guardar",
-    "yp":"Les teves mascotes"
+    "yp":"Les teves mascotes",
+    "LanguageLabel": "Idioma"
 }

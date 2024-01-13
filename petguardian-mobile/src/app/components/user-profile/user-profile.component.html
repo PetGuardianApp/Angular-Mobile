@@ -8,6 +8,21 @@
     </div>
   </div>
 
+  <div>
+    <div style="border-bottom: 2px solid #e0e0e0; margin-bottom: 15px;"></div>
+
+    <div>
+      <label for="languagesSelect" style="margin: 0px 20px 18px 12px;">{{"LanguageLabel" | transloco}}</label>
+      <select name="" id="languagesSelect" style="border-radius: 4px; height: 30px;" (change)="changeLang($event)">
+        <option value="en">English</option>
+        <option value="cat">Català</option>
+        <option value="es">Castellano</option>
+      </select>
+    </div>
+
+    <div style="border-bottom: 2px solid #e0e0e0; margin-bottom: 15px;"></div>
+  </div>
+
   <form (ngSubmit)="edit()" [formGroup]="registerUser" style="align-items: center; margin:auto; width: 100%;">
     <div class="form-floating mb-3" style="display: flex; align-items: left;">
       <input type="email" formControlName="email" class="form-control"
@@ -58,6 +73,5 @@
               || flag">{{ 'save' | transloco }}</button>
 
     </div>
-
   </form>
 </div>
