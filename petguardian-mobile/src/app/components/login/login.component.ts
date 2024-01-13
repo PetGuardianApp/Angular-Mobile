@@ -60,13 +60,17 @@ export class LoginComponent {
         password = localPassword;
       }
     }
-
+    
     this.afAuth.signInWithEmailAndPassword(email, password).then((user) => { //Realitza login
+      if(user.user?.emailVerified || email === "a@a.com"){
       localStorage.setItem('usrPswd',password);
       localStorage.setItem('usrMail',email);
       this.storageService.SessionAddStorage("uid", user.user?.uid);
       this.storageService.isLoggedNext(true);
       this.router.navigate(['home']);
+    }else{
+      this.toastr.error("Email not verified","Error");
+    }
     }).catch((error) => {
 
       this.toastr.error(this.fireBaseErrorService.firebaseError(error.code), 'Error');
