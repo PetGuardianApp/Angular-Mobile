@@ -34,11 +34,11 @@ export class PetProfilePageComponent {
     series: [
       {
         name: "Cardiac Frequency",
-        data: [90,80,70]
+        data: [90, 80, 70]
       },
       {
         name: "Steps",
-        data: [180,120,100]
+        data: [180, 120, 100]
       }
     ],
     chart: {
@@ -147,6 +147,8 @@ export class PetProfilePageComponent {
   formattedDate: any;
   base64Output: string = '';
   selectedFileName: string = '...';
+  showPopup = false;
+
   constructor(private petService: PetService, private fb: FormBuilder, private storageService: StorageService, private datePipe: DatePipe, private router: Router) {
     const urlParams = new URLSearchParams(window.location.search);
     this.petInfo = new PetModel;
@@ -362,11 +364,15 @@ export class PetProfilePageComponent {
   }
 
   deletePet(pet_id: string) {
-    console.log(pet_id)
     this.petService.deletePet(pet_id);
     this.router.navigate(['home'])
   }
-
+  opendeletePopup(){
+    this.showPopup = true;
+  }
+  closedeletePetPopup() {
+    this.showPopup = false;
+  }
 
   getBirth(birth: string | undefined) {
     if (birth != undefined) {
@@ -388,4 +394,7 @@ export class PetProfilePageComponent {
     }
     return null;
   }
+
+
+
 }
