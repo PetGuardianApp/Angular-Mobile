@@ -1,8 +1,18 @@
 <div>
     <h1 style="text-align: center;">{{petInfo.name}}<img id="petsIcon" src="/assets/imgs/delete_pet_icon.svg"
-            (click)="deletePet(petInfo.id || '')" alt="pets">
+            (click)="opendeletePopup()" alt="pets">
     </h1>
 </div>
+
+<div class="overlay-popup" *ngIf="showPopup">
+    <div class="popup">
+      <p>Are you sure you want to delete {{petInfo.name}}?</p>
+      <div style="text-align: center;">
+        <button class="button-accept" (click)="deletePet(petInfo.id || '')">Yes</button>
+        <button class="button-cancel" (click)="closedeletePetPopup()">Close</button>
+      </div>
+    </div>
+  </div>
 <div style="text-align: center;">
     <img src="{{petInfo.profile_image}}" style="width: 300px;" (click)="openUpdateImageForm()">
 </div>
