@@ -1,7 +1,7 @@
 <h1>{{ 'chat_list' | transloco }}</h1>
 <div *ngFor="let vet of vets" class="module" style="text-align: center;">
     <div class="image-container" (click)="redirectPetPage(vet.id || '')" id="{{vet.id}}" >
-        <img src="/assets/img/logo_default.svg" alt="vets" width="100%">
+        <img src="/assets/img/vet-profile.jpg" alt="vets" width="100%">
         <div class="overlay">
             <p>{{vet.name}}</p>
         </div>
