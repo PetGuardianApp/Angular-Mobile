@@ -58,10 +58,12 @@ export class UserProfileComponent {
     this.client.email = this.registerUser.get('email')!.value
     this.client.surnames = this.registerUser.get('surnames')!.value
     this.client.phone = this.registerUser.get('phone')!.value
-    this.apiService.editUser(this.client)
-    this.router.navigateByUrl('home', { skipLocationChange: true }).then(() => {
-      this.router.navigate(['profile']);
+    this.apiService.editUser(this.client).then(result =>{
+      this.router.navigateByUrl('home', { skipLocationChange: true }).then(() => {
+        this.router.navigate(['profile']);
+      })
     })
+    
   }
 
   public enable(field: string) {

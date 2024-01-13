@@ -235,6 +235,9 @@ export class ApiService {
             resolve(response);
           },
           (error) => {
+            if (error.status == 200) {
+              resolve("a")
+            }
             reject(error);
           }
         );

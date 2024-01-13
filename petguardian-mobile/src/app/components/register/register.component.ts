@@ -51,6 +51,11 @@ export class RegisterComponent {
   }
 
   
+  public redirect(component:string){
+    this.router.navigate([component]);
+  }
+
+  
 
   register(){
     const email = this.registerUser.value.email;

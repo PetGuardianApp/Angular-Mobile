@@ -1,6 +1,6 @@
-<div style="width: 100%;">
+<div style="width: 100%; ">
   <img width="100%" src="{{client.profile_image}}" alt="Client">
-  <div class="file-upload">
+  <div class="file-upload" style="margin-top: 15px; margin-bottom: 15px;">
     <div class="file-select">
       <div class="file-select-button" id="fileName">{{ 'profile_image' | transloco }}</div>
       <div class="file-select-name" id="noFile">{{ selectedFileName }}</div>
@@ -8,50 +8,50 @@
     </div>
   </div>
 
-  <form (ngSubmit)="edit()" [formGroup]="registerUser" style="align-items: center; margin:auto;">
-    <div class="form-floating mb-3" style="display: flex; align-items: center; margin-left: 130px;">
+  <form (ngSubmit)="edit()" [formGroup]="registerUser" style="align-items: center; margin:auto; width: 100%;">
+    <div class="form-floating mb-3" style="display: flex; align-items: left;">
       <input type="email" formControlName="email" class="form-control"
         [style.background-color]="registerUser.get('email')?.disabled ? 'transparent' : 'lightgray'"
         [style.border]="registerUser.get('email')?.disabled ? 'none' : '1px solid green'"
         [style.outline]="registerUser.get('email')?.disabled ? 'none' : '1px solid green'"
-        style="width: 50%; margin-right: 5px;" />
+        style=" margin-right: 5px;" />
       <label for="email" class="form-label" style="margin: 0;"><strong>Email</strong></label>
       <img class="editIcons" src="../../../assets/imgs/edit_icon.svg" (click)="enable('email')"
         *ngIf="registerUser.get('email')?.disabled" style="cursor: pointer;">
     </div>
-    <div class="form-floating mb-3" style="display: flex; align-items: center; margin-left: 130px;">
+    <div class="form-floating mb-3" style="display: flex; align-items: left">
       <input type="text" formControlName="name" class="form-control"
         [style.background-color]="registerUser.get('name')?.disabled ? 'transparent' : 'lightgray'"
         [style.border]="registerUser.get('name')?.disabled ? 'none' : '1px solid green'"
         [style.outline]="registerUser.get('name')?.disabled ? 'none' : '1px solid green'"
-        style="width: 50%; margin-right: 5px;" />
+        style=" margin-right: 5px;" />
       <label for="name" class="form-label" style="margin: 0;"><strong>{{ 'name' | transloco }}</strong></label>
       <img class="editIcons" src="../../../assets/imgs/edit_icon.svg" (click)="enable('name')"
         *ngIf="registerUser.get('name')?.disabled" style="cursor: pointer;">
     </div>
-    <div class="form-floating mb-3" style="display: flex; align-items: center; margin-left: 130px;">
+    <div class="form-floating mb-3" style="display: flex; align-items: left;">
       <input type="text" formControlName="surnames" class="form-control"
         [style.background-color]="registerUser.get('surnames')?.disabled ? 'transparent' : 'lightgray'"
         [style.border]="registerUser.get('surnames')?.disabled ? 'none' : '1px solid green'"
         [style.outline]="registerUser.get('surnames')?.disabled ? 'none' : '1px solid green'"
-        style="width: 50%; margin-right: 5px;">
-      <label for="name" class="form-label" style="margin: 0;"><strong>{{ 'surnames' | transloco }}</strong></label>
+        style=" margin-right: 5px;">
+      <label for="surnames" class="form-label" style="margin: 0;"><strong>{{ 'surnames' | transloco }}</strong></label>
       <img class="editIcons" src="../../../assets/imgs/edit_icon.svg" (click)="enable('surnames')"
         *ngIf="registerUser.get('surnames')?.disabled" style="cursor: pointer;">
 
     </div>
-    <div class="form-floating mb-3" style="display: flex; align-items: center; margin-left: 130px;">
+    <div class="form-floating mb-3" style="display: flex; align-items: left;">
       <input type="tel" formControlName="phone" class="form-control"
         [style.background-color]="registerUser.get('phone')?.disabled ? 'transparent' : 'lightgray'"
         [style.border]="registerUser.get('phone')?.disabled ? 'none' : '1px solid green'"
         [style.outline]="registerUser.get('phone')?.disabled ? 'none' : '1px solid green'"
-        style="width: 50%; margin-right: 5px;">
-      <label for="name" class="form-label" style="margin: 0;"><strong>{{ 'phone_number' | transloco }}</strong></label>
+        style=" margin-right: 5px;">
+      <label for="phone" class="form-label" style="margin: 0;"><strong>{{ 'phone_number' | transloco }}</strong></label>
       <img class="editIcons" src="../../../assets/imgs/edit_icon.svg" (click)="enable('phone')"
         *ngIf="registerUser.get('phone')?.disabled" style="cursor: pointer;">
     </div>
     <div class="d-grid gap-2">
-      <button class="btn btn-primary btn-lg" type="submit" *ngIf=" registerUser.controls['phone'].enabled 
+      <button class="btn btn-success btn-lg" type="submit" *ngIf=" registerUser.controls['phone'].enabled 
               || registerUser.controls['surnames'].enabled 
               || registerUser.controls['name'].enabled 
               || registerUser.controls['email'].enabled

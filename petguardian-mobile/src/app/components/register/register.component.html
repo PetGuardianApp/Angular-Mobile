@@ -59,7 +59,8 @@
                 </span>
               </div>
             <div class="d-grid gap-2">
-              <button class="btn btn-primary btn-lg" type="submit" [disabled]="registerUser.invalid">Register</button>
+              <button class="btn btn-success btn-lg" type="submit" [disabled]="registerUser.invalid">Register</button>
+              <button class="btn btn-danger btn-lg" (click)="redirect('')">Back</button>
             </div>
       </form>
     </div>
