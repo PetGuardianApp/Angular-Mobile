@@ -68,20 +68,18 @@ export class RegisterComponent {
 
     this.afAuth.createUserWithEmailAndPassword(email,password).then((user) => { //Realitza Registre
       
-      user.user?.sendEmailVerification().then(result => {
-
-        var dbuser : ClientModel = {
-          id:user.user?.uid,
-          name:this.registerUser.value.name,
-          address: {latitude:"0.0",longitude:"0.0"},
-          email: this.registerUser.value.email,
-          phone:this.registerUser.value.phone,
-          surnames:this.registerUser.value.surnames
-        }
-        this.apiService.addUser(dbuser);
-        this.toastr.success("Register completed","Verification mail sent!")
-
-      })
+      
+      var dbuser : ClientModel = {
+        id:user.user?.uid,
+        name:this.registerUser.value.name,
+        address: {latitude:"0.0",longitude:"0.0"},
+        email: this.registerUser.value.email,
+        phone:this.registerUser.value.phone,
+        surnames:this.registerUser.value.surnames
+      }
+      this.apiService.addUser(dbuser);
+      this.toastr.success("Register completed","Congratulations!")
+      this.router.navigate(['']);
       
       
     }).catch((error) => {

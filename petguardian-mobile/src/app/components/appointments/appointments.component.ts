@@ -86,8 +86,6 @@ export class AppointmentsComponent {
 
   viewDate: Date = new Date();
 
-  showPopup = false;
-
   modalData!: {
     action: string;
     event: CalendarEvent;
@@ -132,14 +130,6 @@ export class AppointmentsComponent {
 
   handleSelectChange(event: any): void {
     this.selectedValue = event.value; // Actualiza selectedValue con el valor seleccionado
-  }
-
-  triggerPopUp(){
-    if(this.showPopup){
-      this.showPopup = false
-    }else{
-      this.showPopup = true
-    }
   }
 
   public createFlag:boolean = false;
@@ -411,7 +401,6 @@ export class AppointmentsComponent {
     this.events.splice(this.events.indexOf(event),1);
     this.appointmentService.deleteEvent(event);
     this.apiService.deleteAppoint(event.id?.toString()!)
-    this.triggerPopUp();
 
   }
 

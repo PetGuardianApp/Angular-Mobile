@@ -1,5 +1,5 @@
-// http://localhost:4200/assets/pet-finder/?petId=KMbT71hK87FAiQcgK4yo
-// https://petguardian-mobile.web.app//assets/pet-finder/?petId=KMbT71hK87FAiQcgK4yo
+//http://localhost:4200/assets/pet-finder/?petId=KMbT71hK87FAiQcgK4yo
+//https://petguardian-mobile.web.app//assets/pet-finder/?petId=KMbT71hK87FAiQcgK4yo
 
 const currentUrl = window.location.href;
 var latitude = "";

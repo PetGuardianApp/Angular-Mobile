@@ -123,19 +123,8 @@
                   <p style="word-wrap: break-word; margin: 0;">{{ 'matter' | transloco }}: {{ event.matter }}</p>
               </div>
               <img class="editIcons" src="../../../assets/imgs/edit_icon.svg" (click)="edit_appoint(event)" >
-              <img class="editIcons" src="../../../assets/imgs/delete_icon.svg" (click)="triggerPopUp()">
-          </div>
-          <div class="overlay" *ngIf="showPopup">
-            <div class="popup">
-              <p> Are you sure you want to delete this appointment? </p>
-              <div style="text-align: center;">
-                <button (click)="delete_event(event)" class="btn btn-danger" style="margin-right: 20px;">Yes</button>
-                <button (click)="triggerPopUp()" class="btn btn-success">No</button>
-              </div>
-            </div>
+              <img class="editIcons" src="../../../assets/imgs/delete_icon.svg" (click)="delete_event(event)">
           </div>
         </div>
       </div>
-
-
     
