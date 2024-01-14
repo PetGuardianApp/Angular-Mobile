@@ -1,6 +1,6 @@
 <div>
     <h1 style="text-align: center;">{{petInfo.name}}<img id="petsIcon" src="/assets/imgs/delete_pet_icon.svg"
-            (click)="opendeletePopup()" alt="pets">
+            (click)="opendeletePopup()" alt="pets" style="padding-left: 2px;">
     </h1>
 </div>
 
@@ -34,7 +34,7 @@
     </div>
 </div>
 <div class="module" style="column-count: 2;">
-    <h1> {{ 'personal_info' | transloco }}<img id="petsIcon" src="/assets/imgs/pet_edit_icon.svg" alt="pets"
+    <h1> {{ 'personal_info' | transloco }}<img style="padding-left: 2px;" id="petsIcon" src="/assets/imgs/pet_edit_icon.svg" alt="pets"
             (click)="openPersonalPetInfoForm()"></h1>
     <div class="popup-background" [ngClass]="{ 'active': isPersonalInfoFormVisible }">
         <div class="popup-form" id="personalInfoForm" (click)="stopPropagation($event)">
@@ -81,7 +81,7 @@
 
         <div class="module" style="padding-right: 5px;">
             <h1>{{ 'pet_vaccines' | transloco }}<img id="petsIcon" src="/assets/imgs/add_icon.svg"
-                    (click)="openMandatoryVaccinesForm()" alt="pets">
+                    (click)="openMandatoryVaccinesForm()" alt="pets" style="padding-left: 2px;">
             </h1>
             <div class="popup-background" [ngClass]="{ 'active': isMandatoryVaccinesVisible }">
                 <div class="popup-form" id="MandatoryVaccinesForm" (click)="stopPropagation($event)">
@@ -106,7 +106,7 @@
 </div>
 <div class="module" style="padding-right: 5px;">
     <h1>{{ 'pet_resume' | transloco }}<img id="petsIcon" src="/assets/imgs/pet_edit_icon.svg"
-            (click)="openPetResumeForm()" alt="pets"></h1>
+            (click)="openPetResumeForm()" alt="pets" style="padding-left: 2px;"></h1>
     <div class="popup-background" [ngClass]="{ 'active': isPetResumeVisible }">
         <div class="popup-form" id="PetResumeForm" (click)="stopPropagation($event)">
             <form (ngSubmit)="updatePetResume()" [formGroup]="updatePetResumeForm" class="form-container">
@@ -126,7 +126,7 @@
 </div>
 <div class="module" style="padding-right: 5px;">
     <h1>{{ 'pet_statistics' | transloco }}<img id="petsIcon" (click)="openPetStatisticsForm()"
-            src="/assets/imgs/add_icon.svg" alt="pets"></h1>
+            src="/assets/imgs/add_icon.svg" alt="pets" style="padding-left: 2px;"></h1>
     <div class="popup-background" [ngClass]="{ 'active': isPetStatisticsVisible }">
         <div class="popup-form" id="PetStatisticsForm" (click)="stopPropagation($event)">
             <form (ngSubmit)="updatePetStatistics()" [formGroup]="updatePetStatisticsForm" class="form-container">
